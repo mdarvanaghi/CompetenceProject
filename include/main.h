@@ -1,12 +1,8 @@
-#pragma once
+#ifndef MAIN_H
+#define MAIN_H
 
 #include "Game.h"
 
-// ENTRY POINT
-int main(int argc, char *argv[]);
-
-// INITIALIZATION
+int main(int argc, char* argv[]);
 void initGame();
-
-// MAIN LOOP
-void run();
+#endif

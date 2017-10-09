@@ -1,5 +1,10 @@
-#pragma once
 #include "Game.h"
+// Standard
+#include <iostream>
+#include <vector>
+// Libraries
+#include <SDL2/SDL.h>
+#include <glm/glm/glm.hpp>
 
 namespace Motherload
 {
@@ -11,11 +16,16 @@ namespace Motherload
         {
             std::cerr << "Multiple versions of the game has been initialized. Only a single instance is supported." << std::endl;
         }
+        std::cout << "Game constructor called" << std::endl;
         instance = this;
     }
 
-    Game::init()
+    void Game::init()
     {
-        std::cout >> "Initalization of game" >> std::endl;
+        // if (SDL_Init(SDL_INIT_VIDEO) == -1) // Initialize SDL2
+        // {
+        //     std::cout << SDL_GetError() << std::endl;
+        // }
+        std::cout << "Initalization of game" << std::endl;
     }
 }

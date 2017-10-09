@@ -1,19 +1,22 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
-#include "include.h"
+#include "Entities/Block.h"
+#include "Entities/Player.h"
 
 namespace Motherload
 {
     class Game
-    {
-    private:
-        
-        
+    {        
     public:
+        // Variables
         static Game* instance;
         float deltaTime;
         float time;
+
+        // Methods
         Game();
         void init();
     };
-}
+} // namespace Motherload
+#endif

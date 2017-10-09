@@ -11,6 +11,7 @@ set(PROJECT_SOURCE_DIR ${CMAKE_BINARY_DIR}/src)
 
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${CMAKE_BINARY_DIR}/include")
+file(GLOB_RECURSE SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.cpp)
 
 #  ____________
 # |DEPENDENCIES|
@@ -19,9 +20,7 @@ include_directories("${CMAKE_BINARY_DIR}/include")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-include_directories(src)
-
 #  __________
 # |EXECUTABLE|
 #  ‾‾‾‾‾‾‾‾‾‾
-add_executable(motherload ${PROJECT_SOURCE_DIR}/main.cpp)
+add_executable(motherload ${SOURCE_FILES})

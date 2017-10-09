@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOCK_H
+#define BLOCK_H
 #include "Entities/PhysicalEntity.h"
 
 namespace Motherload
@@ -11,3 +12,4 @@ namespace Motherload
 
     };
 } // namespace Motherload
+#endif
