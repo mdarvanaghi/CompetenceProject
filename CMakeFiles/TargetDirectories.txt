@@ -1,2 +1,0 @@
-/home/mathias/Projects/Motherload/CMakeFiles/rebuild_cache.dir
-/home/mathias/Projects/Motherload/CMakeFiles/edit_cache.dir

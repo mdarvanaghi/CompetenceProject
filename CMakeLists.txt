@@ -6,6 +6,11 @@ project(Motherload CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+
+include_directories("${PROJECT_SOURCE_DIR}")
+include_directories("${CMAKE_SOURCE_DIR}/include")
 
 #  ____________
 # |DEPENDENCIES|
@@ -15,3 +20,8 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
 include_directories(src)
+
+#  __________
+# |EXECUTABLE|
+#  ‾‾‾‾‾‾‾‾‾‾
+add_executable(motherload ${PROJECT_SOURCE_DIR}/main.cpp)
