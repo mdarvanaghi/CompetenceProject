@@ -1,0 +1,57 @@
+Main.cpp
+
+Game loop:
+
+InitGame()
+while(true)
+{
+    Get player input
+    If (QuitPressed):
+        Quit()
+    
+    Update player position
+    Check for collisions
+    HandleCollisions()
+    RenderScene()
+}
+
+void InitGame()
+{
+    SpawnPlayerObject()
+    SpawnShops()
+    RandomlyFillBlockGrid()
+    foreach Row in BlockGrid()
+    {
+        foreach Column in BlockGrid()
+        {
+            Block = BlockGrid[Row][Column];
+            Block.Init(Vector2(Row, Column), Mineral);
+        }
+    }
+}
+
+void HandleCollisions()
+{
+    If (DrillIsPointingInTheDirectionOfThisCollision && PlayerIsDrilling)
+    {
+        Block.isBeingDrilled = true;
+
+    }
+}
+
+void RenderScene()
+{
+    // Update the camera transform based on interactive
+    // inputs or by following a predefined path.
+    updateCamera();
+
+    // Render a still frame into an off-screen frame
+    // buffer known as the "back buffer".
+    renderScene();
+
+    // Swap the back buffer with the front buffer, making
+    // the most recently rendered image visible
+    // on-screen. (Or, in windowed mode, copy (blit) the
+    // back buffer's contents to the front buffer.
+    swapBuffers();
+}

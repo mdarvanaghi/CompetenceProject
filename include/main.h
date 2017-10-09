@@ -1,5 +1,6 @@
-#include <iostream>
-#include <SDL2/SDL.h>
+#pragma once
+
+#include "Game.h"
 
 // ENTRY POINT
 int main(int argc, char *argv[]);

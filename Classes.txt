@@ -1,0 +1,96 @@
+class Entity 
+{ 
+    public virtual void Init() 
+    public virtual void Update() 
+} 
+ 
+class PhysicalEntity::Entity 
+{ 
+    private Transform 
+    private AABB 
+    public virtual void OnCollisionEnter() 
+    public virtual void OnCollisionStay() 
+    public virtual void OnCollisionExit() 
+} 
+ 
+class Block::PhysicalEntity 
+{ 
+    private MineralType 
+    public virtual override void Init(Vector2 position, MineralType) 
+    { 
+        transform.SetPosition(position.x, position.y) 
+        this.MineralType = MineralType 
+    } 
+} 
+ 
+class Player::PhysicalEntity 
+{ 
+    public void Translate(xValue, yValue) 
+    { 
+        transform.position.x += xValue 
+        transform.position.y += yValue 
+    } 
+ 
+    public void SetPosition(x, y) 
+    { 
+        transform.position.x = xValue 
+        transform.position.y = yValue 
+    } 
+ 
+    public void Rotate(xValue, yValue) 
+    { 
+        transform.rotation.x += xValue 
+        transform.rotation.y += yValue 
+    } 
+ 
+    public void SetRotation(x, y) 
+    { 
+        transform.rotation.x = x 
+        transform.rotation.y = y 
+    } 
+ 
+    public void Scale(xValue, yValue) 
+    { 
+        transform.scale.x += xValue 
+        transform.scale.y += yValue 
+    } 
+ 
+    public void SetScale(x, y) 
+    { 
+        transform.scale.x = x 
+        transform.scale.y = y 
+    } 
+ 
+    public virtual void PhysicsUpdate() 
+} 
+ 
+enum MineralType 
+{ 
+    Dirt = 0, 
+    Granite = 1, 
+    Iron = 2, 
+    Gold = 5 
+} 
+ 
+struct Transform 
+{ 
+    private Vector2 position; 
+    private Vector2 rotation; 
+    private Vector2 scale; 
+} 
+ 
+struct AABB 
+{ 
+    width 
+    height 
+} 
+ 
+class Constants 
+{ 
+    Cellwidth = 5 
+    Cellheight = 5 
+} 
+ 
+class InputHandler 
+ 
+class RenderSystem

@@ -6,11 +6,11 @@ project(Motherload CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set(PROJECT_SOURCE_DIR ${CMAKE_BINARY_DIR}/src)
 
 include_directories("${PROJECT_SOURCE_DIR}")
-include_directories("${CMAKE_SOURCE_DIR}/include")
+include_directories("${CMAKE_BINARY_DIR}/include")
 
 #  ____________
 # |DEPENDENCIES|
