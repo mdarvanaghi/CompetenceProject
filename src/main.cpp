@@ -7,6 +7,6 @@ using namespace Motherload;
 int main(int argc, char* argv[])
 {
     Game game;
-    Game::instance->initialize();
+    Game::instance->startup();
     return 0;
 }

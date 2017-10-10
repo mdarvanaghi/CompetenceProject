@@ -10,18 +10,22 @@
 #include "Entities/Block.h"
 #include "Entities/Player.h"
 #include "Constants.h"
+#include "Systems/RenderSystem.h"
 
 namespace Motherload
 {
     class Game
     {        
     private:
-        SDL_Window *window;
-
-        std::vector<Entity> entities;
-        std::vector<Entity> entitiesFlaggedForRemoval;
-        std::vector<Entity> entitiesToBeSpawned;
+        SDL_Window* window;
+        RenderSystem* renderSystem;
+        
+        std::vector<int> entitiesFlaggedForRemoval;
+        std::vector<Entity*> entitiesToBeSpawned;
     public:
+
+        std::vector<Entity*> entities;
+
         // Variables
         static Game* instance;
         float deltaTime;
@@ -29,9 +33,11 @@ namespace Motherload
 
         // Methods
         Game();
-        void initialize();
+        void startup();
+        void initializeSystems();
         void mainloop();
         void exit();
         void cleanup();
+        static void quitOnError();
     };
 } // namespace Motherload

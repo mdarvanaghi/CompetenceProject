@@ -13,12 +13,24 @@ namespace Motherload
         instance = this;
     }
 
-    void Game::initialize()
+    void Game::startup()
     {
-        std::cout << "Initializing game" << std::endl;
-        if (SDL_Init(SDL_INIT_VIDEO) == -1) // Initialize SDL2
+        initializeSystems();
+        mainloop();
+        exit();
+    }
+
+    void Game::initializeSystems()
+    {
+        std::cout << "Initializing systems..." << std::endl;
+        if (SDL_Init(SDL_INIT_VIDEO) == -1)
         {
-            std::cout << SDL_GetError() << std::endl;
+            quitOnError();
+        }
+
+        if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+        {
+            quitOnError();
         }
         
         window = SDL_CreateWindow
@@ -28,19 +40,21 @@ namespace Motherload
             SDL_WINDOWPOS_UNDEFINED,
             Constants::intitialWindowWidth,
             Constants::intitialWindowHeight,
-            0
+            SDL_WINDOW_SHOWN
         );
 
-        // Run mainloop
-        mainloop();
-        exit();
+        renderSystem = new RenderSystem();
+        renderSystem->initialize(window);
     }
 
     void Game::mainloop()
     {
         bool quit;
+        
         while(!quit)
         {
+            /* TEXTURE TEST */
+            renderSystem->renderScene();
             // TODO: Make input system
             SDL_Event sdlEvent;
             while (SDL_PollEvent(&sdlEvent)) 
@@ -72,5 +86,12 @@ namespace Motherload
     void Game::cleanup()
     {
         SDL_DestroyWindow(window);
+    }
+
+    void Game::quitOnError()
+    {
+        std::cerr << SDL_GetError() << std::endl;
+        std::cout << "Terminating..." << std::endl;
+        SDL_Quit();
     }
 } // namespace Motherload
