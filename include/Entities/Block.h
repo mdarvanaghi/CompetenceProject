@@ -3,6 +3,7 @@
 #include <string>
 #include "Entities/PhysicalEntity.h"
 #include "MineralType.h"
+#include "Systems/ResourceManager.h"
 
 namespace Motherload
 {
@@ -10,6 +11,7 @@ namespace Motherload
     {
     public:
         MineralType mineralType;
-        Block(MineralType mineralType);
+        Block(MineralType mineraltype, glm::vec2 position);
+        void initialize();
     };
 } // namespace Motherload

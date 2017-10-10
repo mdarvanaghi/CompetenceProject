@@ -14,7 +14,6 @@ namespace Motherload
     private:
         static std::map<std::string, SDL_Texture*> textures;
 
-        static SDL_Texture* loadTexture(const std::string &file);
     public:
         static SDL_Texture* getTexture(std::string name);
     };

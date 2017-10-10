@@ -3,7 +3,6 @@
 namespace Motherload
 {
     std::map<std::string, SDL_Texture*> ResourceManager::textures;
-
     
     SDL_Texture* ResourceManager::getTexture(std::string name)
     {

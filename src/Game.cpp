@@ -82,7 +82,8 @@ namespace Motherload
                 {
                     mineralType = MineralType::Dirt;
                 }
-                Block* block = new Block(mineralType);
+                Block* block = new Block(mineralType, glm::vec2(0));
+                block->initialize();
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
             }
