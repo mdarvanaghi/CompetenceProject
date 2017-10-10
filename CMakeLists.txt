@@ -21,7 +21,10 @@ file(GLOB_RECURSE SOURCE_FILES ${PROJECT_SOURCE_DIR}/*.cpp)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-set(EXTERNAL_LIBS ${SDL2_LIBRARY})
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+
+set(EXTERNAL_LIBS ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 
 include_directories(include)
 

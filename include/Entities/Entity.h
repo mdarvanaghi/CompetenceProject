@@ -1,5 +1,5 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
+
 namespace Motherload
 {
     class Entity
@@ -9,4 +9,3 @@ namespace Motherload
         virtual void update() {}
     };
 } // namespace Motherload
-#endif

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Entities/Entity.h"
 
 namespace Motherload

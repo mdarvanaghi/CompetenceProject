@@ -28,7 +28,7 @@ namespace Motherload
             SDL_WINDOWPOS_UNDEFINED,
             Constants::intitialWindowWidth,
             Constants::intitialWindowHeight,
-            SDL_WINDOW_OPENGL
+            0
         );
 
         // Run mainloop

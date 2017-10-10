@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
+
 #include "Entities/PhysicalEntity.h"
 
 namespace Motherload
@@ -9,4 +9,3 @@ namespace Motherload
     
     };
 } // namespace Motherload
-#endif
