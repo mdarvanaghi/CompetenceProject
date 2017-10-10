@@ -9,7 +9,7 @@ namespace Motherload
     class Block : public PhysicalEntity
     {
     public:
-        MineralType* mineralType;
-        Block(MineralType* mineralType);
+        MineralType mineralType;
+        Block(MineralType mineralType);
     };
 } // namespace Motherload

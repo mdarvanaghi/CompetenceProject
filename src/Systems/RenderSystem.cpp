@@ -3,6 +3,8 @@
 
 namespace Motherload
 {
+    SDL_Renderer* RenderSystem::renderer;
+
     void RenderSystem::initialize(SDL_Window* window)
     {
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -19,8 +21,6 @@ namespace Motherload
             Constants::clearColor.z,
             Constants::clearColor.w
         );
-
-        texture = loadTexture("data/textures/dirt.png");
     }
 
     SDL_Texture* RenderSystem::loadTexture(const std::string &file)
@@ -46,7 +46,6 @@ namespace Motherload
     void RenderSystem::renderScene()
     {
         SDL_RenderClear(renderer);
-        renderTexture(texture, Constants::intitialWindowWidth / 2, Constants::intitialWindowHeight / 2, Constants::cellSize, Constants::cellSize);
         SDL_RenderPresent(renderer);
     }
 }

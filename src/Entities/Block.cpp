@@ -2,7 +2,7 @@
 
 namespace Motherload
 {
-    Block::Block(MineralType* mineraltype)
+    Block::Block(MineralType mineraltype)
     {
         this->mineralType = mineralType;
     }

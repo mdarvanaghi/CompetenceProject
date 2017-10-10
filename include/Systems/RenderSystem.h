@@ -10,9 +10,10 @@ namespace Motherload
     {
     private:
         SDL_Texture* texture;
-        SDL_Renderer* renderer;
+        static SDL_Renderer* renderer;
+
     public:
-        SDL_Texture* loadTexture(const std::string &file);
+        static SDL_Texture* loadTexture(const std::string &file);
         void renderTexture(SDL_Texture *texture, int x, int y, int w, int h);
         void initialize(SDL_Window* window);
         void renderScene();

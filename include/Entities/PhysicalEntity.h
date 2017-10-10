@@ -9,6 +9,6 @@ namespace Motherload
     private:
     
     public:
-        const std::string textureName;
+        
     };
 } // namespace Motherload

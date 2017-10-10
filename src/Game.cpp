@@ -6,7 +6,7 @@ namespace Motherload
     
     Game::Game()
     {
-        if(instance != nullptr)
+        if (instance != nullptr)
         {
             std::cerr << "Multiple versions of the game has been initialized. Only a single instance is supported." << std::endl;
         }
@@ -16,6 +16,7 @@ namespace Motherload
     void Game::startup()
     {
         initializeSystems();
+        populateScene();
         mainloop();
         exit();
     }
@@ -45,6 +46,47 @@ namespace Motherload
 
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
+    }
+
+    void Game::populateScene()
+    {
+        populateBlockGrid();
+    }
+
+    void Game::populateBlockGrid()
+    {
+        blocks = std::vector<std::vector<Block*>>(Constants::worldDepth);
+        // TODO: Seed rand() with srand()
+        float randMax = (float) RAND_MAX;
+        horizontalBlocks = (int) Constants::intitialWindowWidth / Constants::cellSize;
+        for (int i = 0; i < Constants::worldDepth; i++)
+        {
+            blocks.at(i) = std::vector<Block*>();
+            for (int j = 0; j < horizontalBlocks; j++)
+            {
+                MineralType mineralType;
+                float roll = (float) std::rand() / randMax;
+                if (roll < Constants::spawnChanceGold)
+                {
+                    mineralType = MineralType::Gold;
+                }
+                else if (roll < Constants::spawnChanceIron)
+                {
+                    mineralType = MineralType::Iron;
+                }
+                else if (roll < Constants::spawnChanceGranite)
+                {
+                    mineralType = MineralType::Granite;
+                }
+                else
+                {
+                    mineralType = MineralType::Dirt;
+                }
+                Block* block = new Block(mineralType);
+                blocks.at(i).push_back(block);
+                entities.push_back(block);
+            }
+        }
     }
 
     void Game::mainloop()
@@ -85,6 +127,7 @@ namespace Motherload
 
     void Game::cleanup()
     {
+        blocks.clear();
         SDL_DestroyWindow(window);
     }
 
