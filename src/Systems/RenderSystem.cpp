@@ -61,12 +61,7 @@ namespace Motherload
                 {
                     std::cerr << "Texture is nullptr" << std::endl;
                 }
-                // std::cout << "X: " << block->transform->position.x << std::endl;
-                // std::cout << "Y: " << block->transform->position.y << std::endl;
-                // std::cout << "W: " << block->transform->scale.x << std::endl;
-                // std::cout << "H: " << block->transform->scale.y << std::endl;
-                // std::cout << "Texture: " << block->texture << std::endl;
-                renderTexture(block->texture, block->transform->position, block->transform->scale);
+                renderTexture(block->texture, block->transform->getPositionCameraSpace(), block->transform->getScaleCameraSpace());
             }
         }
     }

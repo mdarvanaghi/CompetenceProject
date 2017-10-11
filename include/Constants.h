@@ -13,7 +13,7 @@ namespace Motherload
         
         /* Blocks */
         const float cellSize = 40;
-        const int worldDepth = 18;
+        const int worldDepth = 50;
         const float spawnChanceGranite = 0.1;
         const float spawnChanceIron = 0.05;
         const float spawnChanceGold = 0.005;

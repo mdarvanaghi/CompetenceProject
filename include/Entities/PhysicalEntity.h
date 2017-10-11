@@ -5,7 +5,6 @@
 #include "Entities/Entity.h"
 #include "Components/Transform.h"
 
-
 namespace Motherload
 {
     class PhysicalEntity : public Entity

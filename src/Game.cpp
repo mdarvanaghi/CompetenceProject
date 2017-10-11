@@ -44,6 +44,7 @@ namespace Motherload
             SDL_WINDOW_SHOWN
         );
 
+        Camera::initialize();
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
         std::cout << " Done!" << std::endl;
@@ -56,6 +57,7 @@ namespace Motherload
 
     void Game::populateBlockGrid()
     {
+        std::cout << "Generating blocks...";
         blocks = std::vector<std::vector<Block*>>(Constants::worldDepth);
         // TODO: Seed rand() with srand()
         float randMax = (float) RAND_MAX;
@@ -85,34 +87,44 @@ namespace Motherload
                 entities.push_back(block);
             }
         }
+        std::cout << " Done!" << std::endl;
     }
 
     void Game::mainloop()
     {
-        bool quit;
+        Uint64 timeNow = SDL_GetPerformanceCounter();
+        Uint64 timeLast = 0.0f;
+        
         std::cout << "Starting game" << std::endl;
         while(!quit)
         {
-            /* TEXTURE TEST */
+            /* Update deltatime */
+            timeLast = timeNow;
+            timeNow = SDL_GetPerformanceCounter();
+            deltaTime = glm::clamp(((timeNow - timeLast) / (float) SDL_GetPerformanceFrequency()), 0.0f, 1.0f);
+            std::cout << "FPS: " << 1 / deltaTime << std::endl;
+
+            /* Get player inputs */
+            InputSystem::registerInputs();
+            handleInput();
+
+            /* Update camera position */
+            camera->updatePosition();
+
+            /* Render scene */
             renderSystem->renderScene();
-            // TODO: Make input system
-            SDL_Event sdlEvent;
-            while (SDL_PollEvent(&sdlEvent)) 
-            {
-                switch (sdlEvent.type)
-                {
-                    case SDL_KEYDOWN:
-                        if (sdlEvent.key.repeat == 0) 
-                        {
-                            if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q)
-                            {
-                                // Exit game on Q
-                                quit = true;
-                            }
-                        }
-                        break;
-                }
-            }
+        }
+    }
+
+    void Game::handleInput()
+    {
+        if (InputSystem::getKeyDown(SDL_SCANCODE_Q))
+        {
+            quit = true;
+        }
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F12))
+        {
+            debugMode = !debugMode;
         }
     }
 
@@ -126,6 +138,7 @@ namespace Motherload
     void Game::cleanup()
     {
         blocks.clear();
+        entities.clear();
         SDL_DestroyWindow(window);
     }
 

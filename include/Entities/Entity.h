@@ -5,7 +5,7 @@ namespace Motherload
     class Entity
     {
     public:
-        virtual void init() {}
+        virtual void initialize() {}
         virtual void update() {}
     };
 } // namespace Motherload
