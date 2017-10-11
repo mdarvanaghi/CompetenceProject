@@ -23,7 +23,7 @@ namespace Motherload
 
     void Game::initializeSystems()
     {
-        std::cout << "Initializing systems..." << std::endl;
+        std::cout << "Initializing systems...";
         if (SDL_Init(SDL_INIT_VIDEO) == -1)
         {
             quitOnError();
@@ -46,6 +46,7 @@ namespace Motherload
 
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
+        std::cout << " Done!" << std::endl;
     }
 
     void Game::populateScene()
@@ -64,7 +65,7 @@ namespace Motherload
             blocks.at(i) = std::vector<Block*>();
             for (int j = 0; j < horizontalBlocks; j++)
             {
-                MineralType mineralType;
+                MineralType mineralType = MineralType::Dirt;
                 float roll = (float) std::rand() / randMax;
                 if (roll < Constants::spawnChanceGold)
                 {
@@ -78,12 +79,8 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
-                else
-                {
-                    mineralType = MineralType::Dirt;
-                }
-                Block* block = new Block(mineralType, glm::vec2(0));
-                block->initialize();
+                Block* block = new Block(glm::vec2(j * Constants::cellSize, i * Constants::cellSize));
+                block->initialize(mineralType);
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
             }
@@ -93,7 +90,7 @@ namespace Motherload
     void Game::mainloop()
     {
         bool quit;
-        
+        std::cout << "Starting game" << std::endl;
         while(!quit)
         {
             /* TEXTURE TEST */
