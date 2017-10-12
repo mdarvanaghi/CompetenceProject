@@ -19,6 +19,9 @@ namespace Motherload
         const float spawnChanceGold = 0.005;
 
         /* Debug */
-        const glm::vec4 debugDrawColor(0, 155, 20, 0);
+        const float cameraSpeed = 300;
+        const glm::vec4 debugQuadColor(0, 155, 20, 0);
+        const glm::vec4 debugCircleColor(255, 0, 0, 0);
+        const int debugVertexCount = 8;
     } // namespace Constants
 } // namespace Motherload

@@ -21,6 +21,7 @@
 #include "Systems/ResourceManager.h"
 #include "Systems/InputSystem.h"
 #include "Systems/DebugSystem.h"
+#include "Systems/Physics/PhysicsSystem.h"
 
 namespace Motherload
 {

@@ -85,7 +85,7 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
-                Block* block = new Block(glm::vec2(j * Constants::cellSize, i * Constants::cellSize));
+                Block* block = new Block(glm::vec2(j * Constants::cellSize + Constants::cellSize / 2, i * Constants::cellSize + Constants::cellSize / 2));
                 block->initialize(mineralType);
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
@@ -116,7 +116,7 @@ namespace Motherload
             DebugSystem::update();
 
             /* Update camera position */
-            camera->updatePosition();
+            camera->updatePosition(deltaTime);
 
             /* Render scene */
             renderSystem->renderScene();

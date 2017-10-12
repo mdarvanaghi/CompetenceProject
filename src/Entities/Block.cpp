@@ -2,9 +2,9 @@
 
 namespace Motherload
 {
-    Block::Block(glm::vec2 position, glm::vec2 scale)
+    Block::Block(glm::vec2 position, glm::vec2 size)
     {
-        this->transform = new Transform(position, scale);
+        this->transform = new Transform(position, size);
     }
 
     void Block::initialize(MineralType mineralType)

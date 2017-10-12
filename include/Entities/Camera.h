@@ -11,7 +11,7 @@ namespace Motherload
     {
     public:
         static void initialize();
-        static void updatePosition();
+        static void updatePosition(float deltaTime);
         static glm::vec2 positionWorldSpace;
     };
 } // namespace Motherload

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Entities/PhysicalEntity.h"
+#include "Entities/PhysicsEntity.h"
 #include "glm/glm/glm.hpp"
 
 namespace Motherload
 {
-    class Player : public PhysicalEntity
+    class Player : public Physics::PhysicsEntity
     {
     public:
         Player(glm::vec2 position);

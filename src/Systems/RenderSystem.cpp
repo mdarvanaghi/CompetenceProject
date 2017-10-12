@@ -59,7 +59,7 @@ namespace Motherload
         );
         SDL_RenderClear(renderer);
         
-        /* Draw all physical entities */
+        /* Draw all entities */
         if (textureDraw)
         {
             drawEntities();
@@ -85,38 +85,89 @@ namespace Motherload
                 {
                     std::cerr << "Texture is nullptr" << std::endl;
                 }
-                renderTexture(block->texture, block->transform->getPositionCameraSpace(), block->transform->getScaleCameraSpace());
+                renderTexture
+                (
+                    block->texture,
+                    block->transform->getPositionCameraSpace() - (block->transform->sizeWorldSpace / 2.0f),
+                    block->transform->getSizeCameraSpace()
+                );
             }
         }
     }
 
     void RenderSystem::drawWireframe()
-    {
-        SDL_SetRenderDrawColor
-        (
-            renderer,
-            Constants::debugDrawColor.x,
-            Constants::debugDrawColor.y,
-            Constants::debugDrawColor.z,
-            Constants::debugDrawColor.w
-        );
-        
+    {       
         for (auto& vector : Game::instance->blocks)
         {
             for (auto& block : vector)
             {
-                drawWireframeQuad(block->transform->getPositionCameraSpace(), block->transform->getScaleCameraSpace());
+                drawWireframeQuad
+                (
+                    block->transform->getPositionCameraSpace() - (block->transform->sizeWorldSpace / 2.0f),
+                    block->transform->getSizeCameraSpace()
+                );
+
+                drawWireframeCircle(block->transform->getPositionCameraSpace());
             }
         }
     }
 
     void RenderSystem::drawWireframeQuad(glm::vec2 position, glm::vec2 scale)
     {
+        SDL_SetRenderDrawColor
+        (
+            renderer,
+            Constants::debugQuadColor.x,
+            Constants::debugQuadColor.y,
+            Constants::debugQuadColor.z,
+            Constants::debugQuadColor.w
+        );
+        
         textureRect->x = position.x;
         textureRect->y = position.y;
         textureRect->w = scale.x;
         textureRect->h = scale.y;
 
         SDL_RenderDrawRect(renderer, textureRect);
+    }
+
+    void RenderSystem::drawWireframeCircle(glm::vec2 position, float radius) 
+    {
+        SDL_SetRenderDrawColor
+        (
+            renderer,
+            Constants::debugCircleColor.x,
+            Constants::debugCircleColor.y,
+            Constants::debugCircleColor.z,
+            Constants::debugCircleColor.w
+        );
+
+        glm::vec2 points[Constants::debugVertexCount];
+
+        for(int i = 0; i < Constants::debugVertexCount; i++)
+        {
+            points[i] = position + glm::vec2(glm::cos(i * (2 * glm::pi<float>() / (float) Constants::debugVertexCount )) * radius, glm::sin(i * (2 * glm::pi<float>() / (float) Constants::debugVertexCount)) * radius);
+        }
+
+        for(int i = 0; i < Constants::debugVertexCount-1; i++)
+        {
+            SDL_RenderDrawLine
+            (
+                renderer,
+                points[i].x,
+                points[i].y, 
+                points[i+1].x,
+                points[i+1].y
+            ); 
+        }
+
+        SDL_RenderDrawLine
+        (
+            renderer,
+            points[Constants::debugVertexCount-1].x,
+            points[Constants::debugVertexCount-1].y, 
+            points[0].x,
+            points[0].y
+        ); 
     }
 }

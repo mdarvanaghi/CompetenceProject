@@ -4,6 +4,7 @@
 #include <iostream>
 #include "SDL_image.h"
 #include "glm/glm/glm.hpp"
+#include "glm/glm/gtc/constants.hpp"
 #include "Constants.h"
 #include "Game.h"
 
@@ -18,6 +19,7 @@ namespace Motherload
         static void drawEntities();
         static void drawWireframe();
         static void drawWireframeQuad(glm::vec2 position, glm::vec2 scale);
+        static void drawWireframeCircle(glm::vec2 position, float radius = 5.0f);
 
     public:
         // Variables
