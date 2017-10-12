@@ -18,6 +18,7 @@ namespace Motherload
 
     public:
         static bool debugDraw;
+        static bool textureDraw;
 
         static SDL_Texture* loadTexture(const std::string &file);
         static void renderTexture(SDL_Texture *texture, glm::vec2 position, glm::vec2 scale);
