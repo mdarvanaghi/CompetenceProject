@@ -10,8 +10,7 @@ namespace Motherload
     void RenderSystem::initialize(SDL_Window* window)
     {
         textureRect = new SDL_Rect();
-        debugDraw = false;
-        textureDraw = true;
+        
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr)
         {
