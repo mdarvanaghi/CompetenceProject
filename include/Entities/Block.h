@@ -4,6 +4,7 @@
 #include "Entities/PhysicalEntity.h"
 #include "MineralType.h"
 #include "Systems/ResourceManager.h"
+#include "Constants.h"
 
 namespace Motherload
 {
@@ -11,7 +12,8 @@ namespace Motherload
     {
     public:
         MineralType mineralType;
-        Block(MineralType mineraltype, glm::vec2 position);
-        void initialize();
+        Block(glm::vec2 position, glm::vec2 scale = glm::vec2(Constants::cellSize, Constants::cellSize));
+        void initialize(MineralType mineralType);
+        void setTexture();
     };
-} // namespace Motherload
+} // namespace Motherload    

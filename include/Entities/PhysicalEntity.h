@@ -1,17 +1,16 @@
 #pragma once
 
-#include "Entities/Entity.h"
 #include "SDL_image.h"
 #include "glm/glm/glm.hpp"
+#include "Entities/Entity.h"
+#include "Components/Transform.h"
 
 namespace Motherload
 {
     class PhysicalEntity : public Entity
     {
-    private:
-        
     public:
-        glm::vec2 position;
+        Transform* transform;
         SDL_Texture* texture;
     };
 } // namespace Motherload

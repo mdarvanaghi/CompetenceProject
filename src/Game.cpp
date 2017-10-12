@@ -23,7 +23,7 @@ namespace Motherload
 
     void Game::initializeSystems()
     {
-        std::cout << "Initializing systems..." << std::endl;
+        std::cout << "Initializing systems...";
         if (SDL_Init(SDL_INIT_VIDEO) == -1)
         {
             quitOnError();
@@ -44,8 +44,10 @@ namespace Motherload
             SDL_WINDOW_SHOWN
         );
 
+        Camera::initialize();
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
+        std::cout << " Done!" << std::endl;
     }
 
     void Game::populateScene()
@@ -55,6 +57,7 @@ namespace Motherload
 
     void Game::populateBlockGrid()
     {
+        std::cout << "Generating blocks...";
         blocks = std::vector<std::vector<Block*>>(Constants::worldDepth);
         // TODO: Seed rand() with srand()
         float randMax = (float) RAND_MAX;
@@ -64,7 +67,7 @@ namespace Motherload
             blocks.at(i) = std::vector<Block*>();
             for (int j = 0; j < horizontalBlocks; j++)
             {
-                MineralType mineralType;
+                MineralType mineralType = MineralType::Dirt;
                 float roll = (float) std::rand() / randMax;
                 if (roll < Constants::spawnChanceGold)
                 {
@@ -78,44 +81,50 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
-                else
-                {
-                    mineralType = MineralType::Dirt;
-                }
-                Block* block = new Block(mineralType, glm::vec2(0));
-                block->initialize();
+                Block* block = new Block(glm::vec2(j * Constants::cellSize, i * Constants::cellSize));
+                block->initialize(mineralType);
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
             }
         }
+        std::cout << " Done!" << std::endl;
     }
 
     void Game::mainloop()
     {
-        bool quit;
+        Uint64 timeNow = SDL_GetPerformanceCounter();
+        Uint64 timeLast = 0.0f;
         
+        std::cout << "Starting game" << std::endl;
         while(!quit)
         {
-            /* TEXTURE TEST */
+            /* Update deltatime */
+            timeLast = timeNow;
+            timeNow = SDL_GetPerformanceCounter();
+            deltaTime = glm::clamp(((timeNow - timeLast) / (float) SDL_GetPerformanceFrequency()), 0.0f, 1.0f);
+            std::cout << "FPS: " << 1 / deltaTime << std::endl;
+
+            /* Get player inputs */
+            InputSystem::registerInputs();
+            handleInput();
+
+            /* Update camera position */
+            camera->updatePosition();
+
+            /* Render scene */
             renderSystem->renderScene();
-            // TODO: Make input system
-            SDL_Event sdlEvent;
-            while (SDL_PollEvent(&sdlEvent)) 
-            {
-                switch (sdlEvent.type)
-                {
-                    case SDL_KEYDOWN:
-                        if (sdlEvent.key.repeat == 0) 
-                        {
-                            if (sdlEvent.key.keysym.scancode == SDL_SCANCODE_Q)
-                            {
-                                // Exit game on Q
-                                quit = true;
-                            }
-                        }
-                        break;
-                }
-            }
+        }
+    }
+
+    void Game::handleInput()
+    {
+        if (InputSystem::getKeyDown(SDL_SCANCODE_Q))
+        {
+            quit = true;
+        }
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F12))
+        {
+            debugMode = !debugMode;
         }
     }
 
@@ -129,6 +138,7 @@ namespace Motherload
     void Game::cleanup()
     {
         blocks.clear();
+        entities.clear();
         SDL_DestroyWindow(window);
     }
 

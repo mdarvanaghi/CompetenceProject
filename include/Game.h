@@ -18,6 +18,8 @@
 // Systems
 #include "Systems/RenderSystem.h"
 #include "Systems/ResourceManager.h"
+#include "Systems/InputSystem.h"
+#include "Entities/Camera.h"
 
 namespace Motherload
 {
@@ -26,7 +28,9 @@ namespace Motherload
     private:
         SDL_Window* window;
         RenderSystem* renderSystem;
-        int horizontalBlocks;
+        Camera* camera;
+        int horizontalBlocks = 0;
+        bool quit = 0;
         
         std::vector<int> entitiesFlaggedForRemoval;
         std::vector<Entity*> entitiesToBeSpawned;
@@ -38,6 +42,7 @@ namespace Motherload
         static Game* instance;
         float deltaTime;
         float time;
+        bool debugMode = 0;
 
         // Methods
         Game();
@@ -46,6 +51,7 @@ namespace Motherload
         void populateScene();
         void populateBlockGrid();
         void mainloop();
+        void handleInput();
         void exit();
         void cleanup();
         static void quitOnError();

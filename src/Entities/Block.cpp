@@ -2,36 +2,41 @@
 
 namespace Motherload
 {
-    Block::Block(MineralType mineraltype, glm::vec2 position)
+    Block::Block(glm::vec2 position, glm::vec2 scale)
     {
-        this->position = position;
-        this->mineralType = mineralType;
+        this->transform = new Transform(position, scale);
     }
 
-    void Block::initialize()
+    void Block::initialize(MineralType mineralType)
     {
-        switch (mineralType)
+        this->mineralType = mineralType;
+        setTexture();
+    }
+
+    void Block::setTexture()
+    {
+        switch (this->mineralType)
         {
             case (MineralType::Dirt):
             {
-                texture = ResourceManager::getTexture("dirt.png");
+                this->texture = ResourceManager::getTexture("data/textures/dirt.png");
                 break;
             }
             case (MineralType::Granite):
             {
-                texture = ResourceManager::getTexture("granite.png");
+                this->texture = ResourceManager::getTexture("data/textures/granite.png");
                 break;
             }
             case (MineralType::Iron):
             {
-                texture = ResourceManager::getTexture("iron.png");
+                this->texture = ResourceManager::getTexture("data/textures/iron.png");
                 break;
             }
             case (MineralType::Gold):
             {
-                texture = ResourceManager::getTexture("gold.png");
+                this->texture = ResourceManager::getTexture("data/textures/gold.png");
                 break;
             }
         }
     }
-}
+} // namespace Motherload
