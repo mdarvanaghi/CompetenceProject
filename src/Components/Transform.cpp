@@ -10,7 +10,7 @@ namespace Motherload
 
     glm::vec2 Transform::getPositionCameraSpace()
     {
-        return Camera::positionWorldSpace - positionWorldSpace;
+        return positionWorldSpace - Camera::positionWorldSpace;
     }
 
     glm::vec2 Transform::getScaleCameraSpace()

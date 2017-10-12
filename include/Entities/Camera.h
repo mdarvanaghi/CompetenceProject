@@ -1,11 +1,12 @@
 #pragma once
 
 #include "glm/glm/glm.hpp"
-#include "Components/Transform.h"
-#include "Entities/Entity.h"
 
 namespace Motherload
 {
+    // Forward declarations
+    class DebugSystem;
+
     class Camera
     {
     public:

@@ -7,6 +7,9 @@
 
 namespace Motherload
 {
+    // Forward declarations
+    class Transform;
+
     class PhysicalEntity : public Entity
     {
     public:

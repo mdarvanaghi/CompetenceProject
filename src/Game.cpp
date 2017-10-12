@@ -45,8 +45,12 @@ namespace Motherload
         );
 
         Camera::initialize();
+
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
+
+        DebugSystem::initialize();
+        
         std::cout << " Done!" << std::endl;
     }
 
@@ -67,8 +71,8 @@ namespace Motherload
             blocks.at(i) = std::vector<Block*>();
             for (int j = 0; j < horizontalBlocks; j++)
             {
-                MineralType mineralType = MineralType::Dirt;
                 float roll = (float) std::rand() / randMax;
+                MineralType mineralType = MineralType::Dirt;
                 if (roll < Constants::spawnChanceGold)
                 {
                     mineralType = MineralType::Gold;
@@ -104,9 +108,12 @@ namespace Motherload
             deltaTime = glm::clamp(((timeNow - timeLast) / (float) SDL_GetPerformanceFrequency()), 0.0f, 1.0f);
             std::cout << "FPS: " << 1 / deltaTime << std::endl;
 
-            /* Get player inputs */
+            /* Handle player inputs */
             InputSystem::registerInputs();
             handleInput();
+
+            /* Update debug system */
+            DebugSystem::update();
 
             /* Update camera position */
             camera->updatePosition();
@@ -121,10 +128,7 @@ namespace Motherload
         if (InputSystem::getKeyDown(SDL_SCANCODE_Q))
         {
             quit = true;
-        }
-        if (InputSystem::getKeyDown(SDL_SCANCODE_F12))
-        {
-            debugMode = !debugMode;
+            return;
         }
     }
 

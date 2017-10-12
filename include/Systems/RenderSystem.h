@@ -4,21 +4,26 @@
 #include <iostream>
 #include "SDL_image.h"
 #include "glm/glm/glm.hpp"
+#include "Constants.h"
+#include "Game.h"
 
 namespace Motherload
 {
     class RenderSystem
     {
     private:
-        SDL_Rect* textureRect;
-        SDL_Texture* texture;
+        static SDL_Rect* textureRect;
         static SDL_Renderer* renderer;
+        static void drawWireframeQuad(glm::vec2 position, glm::vec2 scale);
 
     public:
+        static bool debugDraw;
+
         static SDL_Texture* loadTexture(const std::string &file);
-        void renderTexture(SDL_Texture *texture, glm::vec2 position, glm::vec2 scale);
-        void initialize(SDL_Window* window);
-        void renderScene();
-        void drawEntities();
+        static void renderTexture(SDL_Texture *texture, glm::vec2 position, glm::vec2 scale);
+        static void initialize(SDL_Window* window);
+        static void renderScene();
+        static void drawEntities();
+        static void drawWireframe();
     };
-}
+} // namespace Motherload
