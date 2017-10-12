@@ -88,6 +88,15 @@ namespace Motherload
 
     void RenderSystem::drawWireframe()
     {
+        SDL_SetRenderDrawColor
+        (
+            renderer,
+            Constants::debugDrawColor.x,
+            Constants::debugDrawColor.y,
+            Constants::debugDrawColor.z,
+            Constants::debugDrawColor.w
+        );
+        
         for (auto& vector : Game::instance->blocks)
         {
             for (auto& block : vector)
@@ -99,15 +108,6 @@ namespace Motherload
 
     void RenderSystem::drawWireframeQuad(glm::vec2 position, glm::vec2 scale)
     {
-        SDL_SetRenderDrawColor
-        (
-            renderer,
-            Constants::debugDrawColor.x,
-            Constants::debugDrawColor.y,
-            Constants::debugDrawColor.z,
-            Constants::debugDrawColor.w
-        );
-
         textureRect->x = position.x;
         textureRect->y = position.y;
         textureRect->w = scale.x;
