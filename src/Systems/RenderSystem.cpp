@@ -43,7 +43,7 @@ namespace Motherload
         textureRect->y = position.y;
         textureRect->w = scale.x;
         textureRect->h = scale.y;
-        SDL_RenderCopy(renderer, texture, NULL, textureRect);
+        SDL_RenderCopy(renderer, texture, nullptr, textureRect);
     }
 
     void RenderSystem::renderScene()

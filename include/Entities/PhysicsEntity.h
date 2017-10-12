@@ -11,7 +11,7 @@ namespace Motherload
         class PhysicsEntity : public Entity
         {
         public:
-            Physics::Collider collider;
+            Collider* collider;
         }; 
     } // namespace Physics
 } // namespace Motherload

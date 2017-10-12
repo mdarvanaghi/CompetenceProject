@@ -2,8 +2,9 @@
 
 namespace Motherload
 {
-    Transform::Transform(glm::vec2 position, glm::vec2 size, glm::vec2 scale)
+    Transform::Transform(Entity* entity, glm::vec2 position, glm::vec2 size, glm::vec2 scale)
     {
+        this->entity = entity;
         this->positionWorldSpace = position;
         this->sizeWorldSpace = size;
         this->scaleWorldSpace = scale;

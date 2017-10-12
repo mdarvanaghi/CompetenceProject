@@ -5,6 +5,9 @@
 
 namespace Motherload
 {
+    // Forward declarations
+    class Transform;
+    
     class Entity
     {
     public:
