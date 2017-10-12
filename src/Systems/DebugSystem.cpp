@@ -13,6 +13,11 @@ namespace Motherload
 
     void DebugSystem::update()
     {
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F10))
+        {
+            RenderSystem::textureDraw = !RenderSystem::textureDraw;
+        }
+        
         if (InputSystem::getKeyDown(SDL_SCANCODE_F11))
         {
             RenderSystem::debugDraw = !RenderSystem::debugDraw;

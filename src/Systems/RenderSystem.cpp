@@ -5,11 +5,13 @@ namespace Motherload
     SDL_Renderer* RenderSystem::renderer;
     SDL_Rect* RenderSystem::textureRect;
     bool RenderSystem::debugDraw;
+    bool RenderSystem::textureDraw;
 
     void RenderSystem::initialize(SDL_Window* window)
     {
         textureRect = new SDL_Rect();
         debugDraw = false;
+        textureDraw = true;
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr)
         {
@@ -59,7 +61,10 @@ namespace Motherload
         SDL_RenderClear(renderer);
         
         /* Draw all physical entities */
-        drawEntities();
+        if (textureDraw)
+        {
+            drawEntities();
+        }
 
         /* Draw wireframe if in debug mode */
         if (debugDraw)
