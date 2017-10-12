@@ -13,16 +13,22 @@
 // Classes
 #include "Constants.h"
 // Entities
-#include "Entities/Block.h"
 #include "Entities/Player.h"
+#include "Entities/Camera.h"
+#include "Entities/Block.h"
 // Systems
 #include "Systems/RenderSystem.h"
 #include "Systems/ResourceManager.h"
 #include "Systems/InputSystem.h"
-#include "Entities/Camera.h"
+#include "Systems/DebugSystem.h"
 
 namespace Motherload
 {
+    // Forward declarations
+    class RenderSystem;
+    class Block;
+    class Camera;
+
     class Game
     {        
     private:
@@ -42,7 +48,6 @@ namespace Motherload
         static Game* instance;
         float deltaTime;
         float time;
-        bool debugMode = 0;
 
         // Methods
         Game();

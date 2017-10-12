@@ -17,5 +17,8 @@ namespace Motherload
         const float spawnChanceGranite = 0.1;
         const float spawnChanceIron = 0.05;
         const float spawnChanceGold = 0.005;
+
+        /* Debug */
+        const glm::vec4 debugDrawColor(0, 155, 20, 0);
     } // namespace Constants
 } // namespace Motherload

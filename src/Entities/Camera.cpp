@@ -12,25 +12,25 @@ namespace Motherload
 
     void Camera::updatePosition()
     {
-        if (!Game::instance->debugMode)
+        if (!DebugSystem::debugMode)
         {
             return;
         }
         if (InputSystem::getKey(SDL_SCANCODE_W))
         {
-            positionWorldSpace.y += 5;
+            positionWorldSpace.y -= 5;
         }
         if (InputSystem::getKey(SDL_SCANCODE_A))
         {
-            positionWorldSpace.x += 5;
+            positionWorldSpace.x -= 5;
         }
         if (InputSystem::getKey(SDL_SCANCODE_S))
         {
-            positionWorldSpace.y -= 5;
+            positionWorldSpace.y += 5;
         }
         if (InputSystem::getKey(SDL_SCANCODE_D))
         {
-            positionWorldSpace.x -= 5;
+            positionWorldSpace.x += 5;
         }
     }
 } // namespace Motherload
