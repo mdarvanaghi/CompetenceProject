@@ -11,10 +11,11 @@ namespace Motherload
     class Entity
     {
     public:
+        const char* name;
         Transform* transform;
         SDL_Texture* texture;
 
         virtual void initialize() {}
-        virtual void update() {}
+        virtual void update(float deltaTime) {}
     };
 } // namespace Motherload

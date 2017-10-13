@@ -12,6 +12,7 @@ namespace Motherload
             
             glm::vec2 aTopLeft = a->getTopLeft();
             glm::vec2 bTopLeft = b->getTopLeft();
+
             glm::vec2 aBottomRight = a->getBottomRight();
             glm::vec2 bBottomRight = b->getBottomRight();
             
@@ -43,21 +44,21 @@ namespace Motherload
                 // Find out which axis is axis of least penetration
                 if (xOverlap < yOverlap)
                 {
-                    // Point towards B knowing that n points from A to B
+                    // Point towards B knowing that deltaDirection points from A to B
                     if (deltaDirection.x < 0.0f)
                     {
                         normal = glm::vec2(-1.0f, 0.0f);
                     }
                     else
                     {
-                        normal = glm::vec2(0.0f, 0.0f);
+                        normal = glm::vec2(1.0f, 0.0f);
                     }
 
                     return new Collision(a->entity, b->entity, normal, xOverlap);
                 }
                 else
                 {
-                    // Point toward B knowing that n points from A to B
+                    // Point toward B knowing that deltaDirection points from A to B
                     if (deltaDirection.y < 0.0f)
                     {
                         normal = glm::vec2(0.0f, -1.0f);
@@ -70,30 +71,87 @@ namespace Motherload
                     return new Collision(a->entity, b->entity, normal, yOverlap);
                 }
             }
-            
+            return nullptr;
         }
 
         void PhysicsSystem::resolveCollision(Collision* collision)
         {
-            
+            DebugSystem::addDebugLine
+            (
+                collision->a->transform->positionWorldSpace,
+                collision->normal,
+                50.0f,
+                Constants::debugLineColor,
+                0.1f
+            );
+
+            DebugSystem::addDebugLine
+            (
+                collision->a->transform->positionWorldSpace,
+                collision->b->transform->positionWorldSpace,
+                collision->penetration, Constants::debugPenetrationColor,
+                0.1f
+            );
         }
 
         // Public
         void PhysicsSystem::step(float deltaTime)
         {
-            /* Move all physics entities */
+            /* Update dynamic entity positions */
+            for (auto& entity : Game::instance->dynamicPhysicsEntities)
+            {
+                // Call physicsUpdate()
+                entity->physicsUpdate(deltaTime);
+                
+                // Add gravity
+                entity->velocity.y += Constants::gravity * deltaTime;
+
+                // Limit velocity
+                if (entity->velocity.x > entity->maxSpeedX) entity->velocity.x = entity->maxSpeedX;
+                if (entity->velocity.x < -entity->maxSpeedX) entity->velocity.x = -entity->maxSpeedX;
+                if (entity->velocity.y < -entity->maxSpeedY) entity->velocity.y = -entity->maxSpeedY;
+                if (entity->velocity.y > entity->maxSpeedY) entity->velocity.y = entity->maxSpeedY;
+
+                // Translate entity by velocity
+                entity->transform->positionWorldSpace += entity->velocity;
+            }
             /* Detect collisions */
+            std::vector<Collision*> collisions = detectCollisions();
+            if (!collisions.empty())
+            {
+                resolveCollisions(collisions);
+            }
+
             /* Resolve collisions */
         }
 
-        std::vector<Physics::Collision*> PhysicsSystem::detectCollisions()
+        std::vector<Collision*> PhysicsSystem::detectCollisions()
         {
-            // for all physicsentities: detect collisions
+            std::vector<Collision*> collisions = std::vector<Collision*>();
+            for (auto& entity : Game::instance->staticPhysicsEntities)
+            {
+                /* Don't check for collisions if entities are far apart */
+                if(glm::distance(Game::instance->player->transform->positionWorldSpace, entity->transform->positionWorldSpace) > 100.0f)
+                {
+                    continue;
+                }
+
+                Collision* collision = detectCollision(Game::instance->player->collider, entity->collider);
+                
+                if (collision != nullptr)
+                {
+                    collisions.push_back(collision);
+                }
+            }
+            return collisions;
         }
 
         void PhysicsSystem::resolveCollisions(std::vector<Collision*> collisions)
         {
-            // for all collisions: resolve collisions
+            for (auto& collision : collisions)
+            {
+                resolveCollision(collision);
+            }
         }
     } // namespace Physics
 } // namespace Motherload

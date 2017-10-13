@@ -40,6 +40,6 @@ namespace Motherload
         static SDL_Texture* loadTexture(const std::string &file);
         static void initialize(SDL_Window* window);
         static void renderScene();
-        static void addDebugLine(glm::vec2 a, glm::vec2 b, glm::vec4 color = Constants::debugLineColor, float time = 2.0f);
+        static void addDebugLine(DebugLine* line);
     };
 } // namespace Motherload

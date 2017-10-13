@@ -10,10 +10,12 @@ namespace Motherload
 {
     class Block : public Physics::PhysicsEntity
     {
+    private:
+        void setTexture();
+
     public:
         MineralType mineralType;
         Block(glm::vec2 position, glm::vec2 size = glm::vec2(Constants::cellSize, Constants::cellSize));
         void initialize(MineralType mineralType);
-        void setTexture();
     };
 } // namespace Motherload    

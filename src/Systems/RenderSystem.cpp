@@ -60,6 +60,9 @@ namespace Motherload
             drawEntities();
         }
 
+        /* Draw player after entities */
+        // renderTexture(Game::instance->player->texture);
+
         /* Draw wireframe if in debug mode */
         if (debugDraw)
         {
@@ -72,21 +75,19 @@ namespace Motherload
 
     void RenderSystem::drawEntities()
     {
-        for (auto& vector : Game::instance->blocks)
+        for (auto& entity : Game::instance->entities)
         {
-            for (auto& block : vector)
+            
+            if (entity->texture == nullptr)
             {
-                if (block->texture == nullptr)
-                {
-                    std::cerr << "Texture is nullptr" << std::endl;
-                }
-                renderTexture
-                (
-                    block->texture,
-                    block->transform->getPositionCameraSpace() - (block->transform->sizeWorldSpace / 2.0f),
-                    block->transform->getSizeCameraSpace()
-                );
+                std::cerr << "Texture is nullptr" << std::endl;
             }
+            renderTexture
+            (
+                entity->texture,
+                entity->transform->getPositionCameraSpace() - (entity->transform->sizeWorldSpace / 2.0f),
+                entity->transform->getSizeCameraSpace()
+            );
         }
     }
 
@@ -104,18 +105,16 @@ namespace Motherload
 
     void RenderSystem::drawWireframe()
     {       
-        for (auto& vector : Game::instance->blocks)
+        for (auto& entity : Game::instance->entities)
         {
-            for (auto& block : vector)
-            {
                 drawWireframeQuad
                 (
-                    block->transform->getPositionCameraSpace() - (block->transform->sizeWorldSpace / 2.0f),
-                    block->transform->getSizeCameraSpace()
+                    entity->transform->getPositionCameraSpace() - (entity->transform->sizeWorldSpace / 2.0f),
+                    entity->transform->getSizeCameraSpace()
                 );
 
-                drawWireframeCircle(block->transform->getPositionCameraSpace());
-            }
+                drawWireframeCircle(entity->transform->getPositionCameraSpace());
+            
         }
 
         int lineIndex = 0;
@@ -194,9 +193,9 @@ namespace Motherload
         );
     }
 
-    void RenderSystem::addDebugLine(glm::vec2 a, glm::vec2 b, glm::vec4 color, float time)
+    void RenderSystem::addDebugLine(DebugLine* line)
     {
-        debugLines.push_back(new DebugLine(a, b, color, time));
+        debugLines.push_back(line);
     }
 
     void RenderSystem::clearDebugLines()

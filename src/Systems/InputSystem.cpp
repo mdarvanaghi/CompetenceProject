@@ -38,6 +38,12 @@ namespace Motherload
                     }
                     break;
                 }
+
+                case SDL_QUIT:
+                {
+                    Game::instance->quit = true;
+                    break;
+                }
     
                 case SDL_KEYUP:
                 {

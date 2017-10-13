@@ -29,6 +29,7 @@ namespace Motherload
     class RenderSystem;
     class Block;
     class Camera;
+    class Player;
 
     class Game
     {        
@@ -37,7 +38,6 @@ namespace Motherload
         RenderSystem* renderSystem;
         Camera* camera;
         int horizontalBlocks = 0;
-        bool quit = 0;
         
         std::vector<int> entitiesFlaggedForRemoval;
         std::vector<Entity*> entitiesToBeSpawned;
@@ -45,8 +45,10 @@ namespace Motherload
         // Variables
         Player* player;
         std::vector<Entity*> entities;
-        std::vector<Physics::PhysicsEntity*> physicsEntities;
+        std::vector<Physics::PhysicsEntity*> dynamicPhysicsEntities;
+        std::vector<Physics::PhysicsEntity*> staticPhysicsEntities;
         std::vector<std::vector<Block*>> blocks;
+        bool quit = 0;
 
         static Game* instance;
         float deltaTime;

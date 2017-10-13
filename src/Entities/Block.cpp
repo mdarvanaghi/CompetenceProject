@@ -9,7 +9,12 @@ namespace Motherload
 
     void Block::initialize(MineralType mineralType)
     {
+        this->name = "Block";
         this->mineralType = mineralType;
+
+        /* Physics */
+        this->collider = new Collider(this);
+        this->isDynamic = false;
         setTexture();
     }
 

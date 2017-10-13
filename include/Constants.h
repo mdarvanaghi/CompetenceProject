@@ -10,6 +10,14 @@ namespace Motherload
         const float intitialWindowHeight = 720;
         const float intitialWindowWidth = 1280;
         const glm::vec4 clearColor = glm::vec4(0, 40, 130, 0);
+     
+        /* Player */
+        const float playerAccelerationX = 20.0f;
+        const float playerDecelerationX = 30.0f;
+        const float playerAccelerationY = 30.0f;
+        const float playerMaxSpeedX = 5.0f;
+        const float playerTerminalVelocity = 9.0f; 
+        const float gravity = 9.82f;
         
         /* Blocks */
         const float cellSize = 40;
@@ -23,6 +31,7 @@ namespace Motherload
         const glm::vec4 debugQuadColor(0, 155, 20, 0);
         const glm::vec4 debugCircleColor(255, 0, 0, 0);
         const glm::vec4 debugLineColor(0, 0, 255, 0);
+        const glm::vec4 debugPenetrationColor(140, 140, 0, 0);
         const int debugVertexCount = 8;
     } // namespace Constants
 } // namespace Motherload
