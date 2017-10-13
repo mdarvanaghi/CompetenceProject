@@ -34,4 +34,10 @@ namespace Motherload
             positionWorldSpace.x += Constants::cameraSpeed * deltaTime;
         }
     }
+
+    glm::vec2* Camera::toCameraSpace(glm::vec2 position)
+    {
+        glm::vec2 cameraSpacePosition = position - positionWorldSpace;
+        return &cameraSpacePosition;
+    }
 } // namespace Motherload

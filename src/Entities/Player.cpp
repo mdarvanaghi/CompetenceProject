@@ -6,4 +6,9 @@ namespace Motherload
     {
         this->transform = new Transform(this, position);
     }
+
+    void Player::update(float deltaTime)
+    {
+
+    }
 } // namespace Motherload

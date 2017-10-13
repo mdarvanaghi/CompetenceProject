@@ -41,7 +41,7 @@ namespace Motherload
                 float penetration;
 
                 // Find out which axis is axis of least penetration
-                if (xOverlap > yOverlap)
+                if (xOverlap < yOverlap)
                 {
                     // Point towards B knowing that n points from A to B
                     if (deltaDirection.x < 0.0f)
@@ -58,7 +58,7 @@ namespace Motherload
                 else
                 {
                     // Point toward B knowing that n points from A to B
-                    if (deltaDirection.y < 0)
+                    if (deltaDirection.y < 0.0f)
                     {
                         normal = glm::vec2(0.0f, -1.0f);
                     }
@@ -73,23 +73,25 @@ namespace Motherload
             
         }
 
-        void PhysicsSystem::resolveCollision()
+        void PhysicsSystem::resolveCollision(Collision* collision)
         {
-
+            
         }
 
         // Public
         void PhysicsSystem::step(float deltaTime)
         {
-
+            /* Move all physics entities */
+            /* Detect collisions */
+            /* Resolve collisions */
         }
 
-        Physics::Collision* PhysicsSystem::detectCollisions()
+        std::vector<Physics::Collision*> PhysicsSystem::detectCollisions()
         {
             // for all physicsentities: detect collisions
         }
 
-        void PhysicsSystem::resolveCollisions()
+        void PhysicsSystem::resolveCollisions(std::vector<Collision*> collisions)
         {
             // for all collisions: resolve collisions
         }

@@ -9,5 +9,6 @@ namespace Motherload
     {
     public:
         Player(glm::vec2 position);
+        void update(float deltaTime);
     };
 } // namespace Motherload

@@ -10,15 +10,15 @@ namespace Motherload
         struct Collision
         {
         public:
-            Physics::PhysicsEntity* a;
-            Physics::PhysicsEntity* b;
+            Entity* a;
+            Entity* b;
             glm::vec2 normal;
             float penetration;
 
             Collision
             (
-                Physics::PhysicsEntity* a,
-                Physics::PhysicsEntity* b,
+                Entity* a,
+                Entity* b,
                 glm::vec2 normal,
                 float penetration
             );

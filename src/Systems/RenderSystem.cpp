@@ -4,6 +4,8 @@ namespace Motherload
 {
     SDL_Renderer* RenderSystem::renderer;
     SDL_Rect* RenderSystem::textureRect;
+    std::vector<DebugLine*> RenderSystem::debugLines;
+    std::vector<int> RenderSystem::debugLinesToBeRemoved;
     bool RenderSystem::debugDraw;
     bool RenderSystem::textureDraw;
 
@@ -49,14 +51,7 @@ namespace Motherload
     void RenderSystem::renderScene()
     {
         /* Clear renderer */
-        SDL_SetRenderDrawColor
-        (
-            renderer,
-            Constants::clearColor.x,
-            Constants::clearColor.y,
-            Constants::clearColor.z,
-            Constants::clearColor.w
-        );
+        setDrawingColor(Constants::clearColor);
         SDL_RenderClear(renderer);
         
         /* Draw all entities */
@@ -95,6 +90,18 @@ namespace Motherload
         }
     }
 
+    void RenderSystem::setDrawingColor(glm::vec4 color)
+    {
+        SDL_SetRenderDrawColor
+        (
+            renderer,
+            color.x,
+            color.y,
+            color.z,
+            color.w
+        );
+    }
+
     void RenderSystem::drawWireframe()
     {       
         for (auto& vector : Game::instance->blocks)
@@ -110,18 +117,24 @@ namespace Motherload
                 drawWireframeCircle(block->transform->getPositionCameraSpace());
             }
         }
+
+        int lineIndex = 0;
+        for (auto& line : debugLines)
+        {
+            drawLine(line);
+            line->time -= Game::instance->deltaTime;
+            if (line->time <= 0.0f)
+            {
+                debugLinesToBeRemoved.push_back(lineIndex);
+            }
+        }
+
+        clearDebugLines();
     }
 
     void RenderSystem::drawWireframeQuad(glm::vec2 position, glm::vec2 scale)
     {
-        SDL_SetRenderDrawColor
-        (
-            renderer,
-            Constants::debugQuadColor.x,
-            Constants::debugQuadColor.y,
-            Constants::debugQuadColor.z,
-            Constants::debugQuadColor.w
-        );
+        setDrawingColor(Constants::debugQuadColor);
         
         textureRect->x = position.x;
         textureRect->y = position.y;
@@ -133,23 +146,16 @@ namespace Motherload
 
     void RenderSystem::drawWireframeCircle(glm::vec2 position, float radius) 
     {
-        SDL_SetRenderDrawColor
-        (
-            renderer,
-            Constants::debugCircleColor.x,
-            Constants::debugCircleColor.y,
-            Constants::debugCircleColor.z,
-            Constants::debugCircleColor.w
-        );
+        setDrawingColor(Constants::debugCircleColor);
 
         glm::vec2 points[Constants::debugVertexCount];
 
-        for(int i = 0; i < Constants::debugVertexCount; i++)
+        for (int i = 0; i < Constants::debugVertexCount; i++)
         {
             points[i] = position + glm::vec2(glm::cos(i * (2 * glm::pi<float>() / (float) Constants::debugVertexCount )) * radius, glm::sin(i * (2 * glm::pi<float>() / (float) Constants::debugVertexCount)) * radius);
         }
 
-        for(int i = 0; i < Constants::debugVertexCount-1; i++)
+        for (int i = 0; i < Constants::debugVertexCount-1; i++)
         {
             SDL_RenderDrawLine
             (
@@ -169,5 +175,40 @@ namespace Motherload
             points[0].x,
             points[0].y
         ); 
+    }
+
+    void RenderSystem::drawLine(DebugLine* line)
+    {
+        setDrawingColor(line->color);
+
+        glm::vec2 posA = line->a - Camera::positionWorldSpace;
+        glm::vec2 posB = line->b - Camera::positionWorldSpace;
+
+        SDL_RenderDrawLine
+        (
+            renderer,
+            posA.x,
+            posA.y,
+            posB.x,
+            posB.y
+        );
+    }
+
+    void RenderSystem::addDebugLine(glm::vec2 a, glm::vec2 b, glm::vec4 color, float time)
+    {
+        debugLines.push_back(new DebugLine(a, b, color, time));
+    }
+
+    void RenderSystem::clearDebugLines()
+    {
+        std::sort(debugLinesToBeRemoved.begin(),debugLinesToBeRemoved.end());
+        
+        int index = 0;
+        while (debugLinesToBeRemoved.size() > 0) 
+        {
+            index = debugLinesToBeRemoved.back();
+            debugLines.erase(debugLines.begin() + index);
+            debugLinesToBeRemoved.pop_back();
+        }
     }
 }

@@ -56,6 +56,17 @@ namespace Motherload
 
     void Game::populateScene()
     {
+        player = new Player
+        (
+            glm::vec2
+            (
+                Constants::intitialWindowWidth / 2,
+                Constants::intitialWindowHeight / 2
+            )
+        );
+
+        entities.push_back(player);
+        physicsEntities.push_back(player);
         populateBlockGrid();
     }
 
@@ -88,7 +99,7 @@ namespace Motherload
                 Block* block = new Block(glm::vec2(j * Constants::cellSize + Constants::cellSize / 2, i * Constants::cellSize + Constants::cellSize / 2));
                 block->initialize(mineralType);
                 blocks.at(i).push_back(block);
-                entities.push_back(block);
+                physicsEntities.push_back(block);
             }
         }
         std::cout << " Done!" << std::endl;
@@ -111,6 +122,9 @@ namespace Motherload
             /* Handle player inputs */
             InputSystem::registerInputs();
             handleInput();
+
+            /* Update physics system */
+            Physics::PhysicsSystem::step(deltaTime);
 
             /* Update debug system */
             DebugSystem::update();

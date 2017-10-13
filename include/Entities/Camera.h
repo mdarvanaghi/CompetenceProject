@@ -13,5 +13,7 @@ namespace Motherload
         static void initialize();
         static void updatePosition(float deltaTime);
         static glm::vec2 positionWorldSpace;
+
+        static glm::vec2* toCameraSpace(glm::vec2 position);
     };
 } // namespace Motherload

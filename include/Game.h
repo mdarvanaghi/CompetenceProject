@@ -43,7 +43,9 @@ namespace Motherload
         std::vector<Entity*> entitiesToBeSpawned;
     public:
         // Variables
+        Player* player;
         std::vector<Entity*> entities;
+        std::vector<Physics::PhysicsEntity*> physicsEntities;
         std::vector<std::vector<Block*>> blocks;
 
         static Game* instance;

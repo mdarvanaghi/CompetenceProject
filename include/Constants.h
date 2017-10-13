@@ -22,6 +22,7 @@ namespace Motherload
         const float cameraSpeed = 300;
         const glm::vec4 debugQuadColor(0, 155, 20, 0);
         const glm::vec4 debugCircleColor(255, 0, 0, 0);
+        const glm::vec4 debugLineColor(0, 0, 255, 0);
         const int debugVertexCount = 8;
     } // namespace Constants
 } // namespace Motherload
