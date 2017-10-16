@@ -2,14 +2,21 @@
 
 namespace Motherload
 {
-    Block::Block(glm::vec2 position, glm::vec2 scale)
+    Block::Block(glm::vec2 position, glm::vec2 size)
     {
-        this->transform = new Transform(position, scale);
+        this->transform = new Transform(this, position, size);
     }
 
     void Block::initialize(MineralType mineralType)
     {
+        this->name = "Block";
         this->mineralType = mineralType;
+
+        /* Physics */
+        this->collider = new Physics::Collider(this);
+        this->restitution = 1.0f;
+        this->isDynamic = false;
+        setMass(0.0f); // Static object with infinite mass
         setTexture();
     }
 

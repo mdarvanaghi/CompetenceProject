@@ -4,11 +4,13 @@ namespace Motherload
 {
     // Forward declarations
     bool DebugSystem::debugMode;
+    bool DebugSystem::detachedCamera;
 
     void DebugSystem::initialize()
     {
         // TODO: Change at compile-time instead
         debugMode = true;
+        detachedCamera = false;
         RenderSystem::debugDraw = false;
         RenderSystem::textureDraw = true;
     }
@@ -27,6 +29,11 @@ namespace Motherload
             return;
         }
 
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F9))
+        {
+            detachedCamera = !detachedCamera;
+        }
+
         if (InputSystem::getKeyDown(SDL_SCANCODE_F10))
         {
             RenderSystem::textureDraw = !RenderSystem::textureDraw;
@@ -36,5 +43,16 @@ namespace Motherload
         {
             RenderSystem::debugDraw = !RenderSystem::debugDraw;
         }
+    }
+
+    void DebugSystem::addDebugLine(glm::vec2 a, glm::vec2 b, glm::vec4 color, float time)
+    {
+        RenderSystem::addDebugLine(new DebugLine(a, b, color, time));
+    }
+
+    void DebugSystem::addDebugLine(glm::vec2 position, glm::vec2 direction, float length, glm::vec4 color, float time)
+    {
+        glm::vec2 b = position + direction * length;
+        addDebugLine(position, b, color, time);
     }
 } // namespace Motherload

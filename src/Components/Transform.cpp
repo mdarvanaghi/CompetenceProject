@@ -2,9 +2,11 @@
 
 namespace Motherload
 {
-    Transform::Transform(glm::vec2 position, glm::vec2 scale)
+    Transform::Transform(Entity* entity, glm::vec2 position, glm::vec2 size, glm::vec2 scale)
     {
+        this->entity = entity;
         this->positionWorldSpace = position;
+        this->sizeWorldSpace = size;
         this->scaleWorldSpace = scale;
     }
 
@@ -13,10 +15,10 @@ namespace Motherload
         return positionWorldSpace - Camera::positionWorldSpace;
     }
 
-    glm::vec2 Transform::getScaleCameraSpace()
+    glm::vec2 Transform::getSizeCameraSpace()
     {
         // TODO: Maybe implement zoom if fitting
-        return scaleWorldSpace;
+        return sizeWorldSpace * scaleWorldSpace;
     }
 
 } // namespace Motherload

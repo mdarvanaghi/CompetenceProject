@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include <map>
 #include <iostream>
+#include "Game.h"
 
 namespace Motherload
 {

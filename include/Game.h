@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 // Libraries
 #include "SDL.h"
 #include <glm/glm/glm.hpp>
@@ -21,6 +22,7 @@
 #include "Systems/ResourceManager.h"
 #include "Systems/InputSystem.h"
 #include "Systems/DebugSystem.h"
+#include "Systems/Physics/PhysicsSystem.h"
 
 namespace Motherload
 {
@@ -28,6 +30,7 @@ namespace Motherload
     class RenderSystem;
     class Block;
     class Camera;
+    class Player;
 
     class Game
     {        
@@ -36,14 +39,21 @@ namespace Motherload
         RenderSystem* renderSystem;
         Camera* camera;
         int horizontalBlocks = 0;
-        bool quit = 0;
         
-        std::vector<int> entitiesFlaggedForRemoval;
+        std::vector<int> entitiesFlaggedForDestruction;
+        std::vector<int> dynamicPhysicsEntitiesFlaggedForDestruction;
+        std::vector<int> staticPhysicsEntitiesFlaggedForDestruction;
         std::vector<Entity*> entitiesToBeSpawned;
+
+        void destroyFlaggedEntities();
     public:
         // Variables
+        Player* player;
         std::vector<Entity*> entities;
+        std::vector<Physics::PhysicsEntity*> dynamicPhysicsEntities;
+        std::vector<Physics::PhysicsEntity*> staticPhysicsEntities;
         std::vector<std::vector<Block*>> blocks;
+        bool quit = 0;
 
         static Game* instance;
         float deltaTime;
@@ -59,6 +69,7 @@ namespace Motherload
         void handleInput();
         void exit();
         void cleanup();
-        static void quitOnError();
+        void destroyEntity(Entity* entity); 
+        void quitOnError();
     };
 } // namespace Motherload
