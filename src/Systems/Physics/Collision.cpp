@@ -4,7 +4,7 @@ namespace Motherload
 {
     namespace Physics
     {
-        Collision::Collision(Entity* a, Entity* b, glm::vec2 normal, float penetration)
+        Collision::Collision(PhysicsEntity* a, PhysicsEntity* b, glm::vec2 normal, float penetration)
         {
             this->a = a;
             this->b = b;

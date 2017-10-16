@@ -13,8 +13,9 @@ namespace Motherload
 
     void Camera::updatePosition(float deltaTime)
     {
-        if (!DebugSystem::debugMode)
+        if (!DebugSystem::detachedCamera)
         {
+            positionWorldSpace.y = Game::instance->player->transform->positionWorldSpace.y - Constants::midScreen.y;
             return;
         }
         if (InputSystem::getKey(SDL_SCANCODE_W))

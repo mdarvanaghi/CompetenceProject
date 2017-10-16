@@ -114,17 +114,19 @@ namespace Motherload
                 );
 
                 drawWireframeCircle(entity->transform->getPositionCameraSpace());
-            
         }
 
         int lineIndex = 0;
         for (auto& line : debugLines)
         {
             drawLine(line);
-            line->time -= Game::instance->deltaTime;
             if (line->time <= 0.0f)
             {
                 debugLinesToBeRemoved.push_back(lineIndex);
+            }
+            else
+            {
+                line->time -= Game::instance->deltaTime;
             }
         }
 
@@ -200,7 +202,7 @@ namespace Motherload
 
     void RenderSystem::clearDebugLines()
     {
-        std::sort(debugLinesToBeRemoved.begin(),debugLinesToBeRemoved.end());
+        std::sort(debugLinesToBeRemoved.begin(), debugLinesToBeRemoved.end());
         
         int index = 0;
         while (debugLinesToBeRemoved.size() > 0) 

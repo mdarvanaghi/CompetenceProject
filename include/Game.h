@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 // Libraries
 #include "SDL.h"
 #include <glm/glm/glm.hpp>
@@ -39,8 +40,12 @@ namespace Motherload
         Camera* camera;
         int horizontalBlocks = 0;
         
-        std::vector<int> entitiesFlaggedForRemoval;
+        std::vector<int> entitiesFlaggedForDestruction;
+        std::vector<int> dynamicPhysicsEntitiesFlaggedForDestruction;
+        std::vector<int> staticPhysicsEntitiesFlaggedForDestruction;
         std::vector<Entity*> entitiesToBeSpawned;
+
+        void destroyFlaggedEntities();
     public:
         // Variables
         Player* player;
@@ -64,6 +69,7 @@ namespace Motherload
         void handleInput();
         void exit();
         void cleanup();
-        static void quitOnError();
+        void destroyEntity(Entity* entity); 
+        void quitOnError();
     };
 } // namespace Motherload

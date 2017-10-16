@@ -48,7 +48,7 @@ namespace Motherload
 
         renderSystem = new RenderSystem();
         renderSystem->initialize(window);
-
+        Physics::PhysicsSystem::initialize();
         DebugSystem::initialize();
         
         std::cout << " Done!" << std::endl;
@@ -62,7 +62,7 @@ namespace Motherload
             glm::vec2
             (
                 Constants::intitialWindowWidth / 2,
-                Constants::intitialWindowHeight / 2
+                -100.0f
             )
         );
 
@@ -126,15 +126,15 @@ namespace Motherload
             InputSystem::registerInputs();
             handleInput();
 
+            /* Update physics system */
+            Physics::PhysicsSystem::step(deltaTime);
+
             /* Update entities */
             for (auto& entity : entities)
             {
                 entity->update(deltaTime);
             }
-
-            /* Update physics system */
-            Physics::PhysicsSystem::step(deltaTime);
-
+           
             /* Update debug system */
             DebugSystem::update();
 
@@ -143,6 +143,9 @@ namespace Motherload
 
             /* Render scene */
             renderSystem->renderScene();
+
+            /* Destroy entities flagged for destruction */
+            destroyFlaggedEntities();
         }
     }
 
@@ -167,6 +170,69 @@ namespace Motherload
         blocks.clear();
         entities.clear();
         SDL_DestroyWindow(window);
+    }
+
+    void Game::destroyEntity(Entity* entity)
+    {
+        int i = 0;
+        for (auto& element : entities) 
+        {
+            if (element == entity)
+            {
+                entitiesFlaggedForDestruction.push_back(i);
+            }
+            i++;
+        }
+
+        i = 0;
+        for (auto & element : dynamicPhysicsEntities) 
+        {
+            if (element == entity)
+            {
+                dynamicPhysicsEntitiesFlaggedForDestruction.push_back(i);
+            }
+            i++;
+        }
+
+        i = 0;
+        for (auto & element : staticPhysicsEntities) 
+        {
+            if (element == entity)
+            {
+                staticPhysicsEntitiesFlaggedForDestruction.push_back(i);
+            }
+            i++;
+        }
+    }
+
+    void Game::destroyFlaggedEntities()
+    {
+        std::sort(Game::instance->entitiesFlaggedForDestruction.begin(), Game::instance->entitiesFlaggedForDestruction.end());
+        std::sort(Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.begin(), Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.end());
+        std::sort(Game::instance->staticPhysicsEntitiesFlaggedForDestruction.begin(), Game::instance->staticPhysicsEntitiesFlaggedForDestruction.end());
+        
+        int index = 0;
+
+        while (Game::instance->entitiesFlaggedForDestruction.size() > 0) 
+        {
+            index = Game::instance->entitiesFlaggedForDestruction.back();
+            Game::instance->entities.erase(Game::instance->entities.begin() + index);
+            Game::instance->entitiesFlaggedForDestruction.pop_back();
+        }
+
+        while (Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.size() > 0) 
+        {
+            index = Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.back();
+            Game::instance->dynamicPhysicsEntities.erase(Game::instance->dynamicPhysicsEntities.begin() + index);
+            Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.pop_back();
+        }
+
+        while (Game::instance->staticPhysicsEntitiesFlaggedForDestruction.size() > 0) 
+        {
+            index = Game::instance->staticPhysicsEntitiesFlaggedForDestruction.back();
+            Game::instance->staticPhysicsEntities.erase(Game::instance->staticPhysicsEntities.begin() + index);
+            Game::instance->staticPhysicsEntitiesFlaggedForDestruction.pop_back();
+        }
     }
 
     void Game::quitOnError()

@@ -4,6 +4,7 @@ namespace Motherload
 {
     namespace Physics
     {
+        std::vector<Collision*> PhysicsSystem::collisions;
         // Private
         Collision* PhysicsSystem::detectCollision(Collider* a, Collider* b)
         {
@@ -47,11 +48,11 @@ namespace Motherload
                     // Point towards B knowing that deltaDirection points from A to B
                     if (deltaDirection.x < 0.0f)
                     {
-                        normal = glm::vec2(-1.0f, 0.0f);
+                        normal = Constants::right;
                     }
                     else
                     {
-                        normal = glm::vec2(1.0f, 0.0f);
+                        normal = Constants::left;
                     }
 
                     return new Collision(a->entity, b->entity, normal, xOverlap);
@@ -61,11 +62,11 @@ namespace Motherload
                     // Point toward B knowing that deltaDirection points from A to B
                     if (deltaDirection.y < 0.0f)
                     {
-                        normal = glm::vec2(0.0f, -1.0f);
+                        normal = Constants::down;
                     }
                     else
                     {
-                        normal = glm::vec2(0.0f, 1.0f);
+                        normal = Constants::up;
                     }
 
                     return new Collision(a->entity, b->entity, normal, yOverlap);
@@ -74,32 +75,64 @@ namespace Motherload
             return nullptr;
         }
 
-        void PhysicsSystem::resolveCollision(Collision* collision)
+        void PhysicsSystem::resolveCollision(Collision* collision, float deltaTime)
         {
             DebugSystem::addDebugLine
             (
                 collision->a->transform->positionWorldSpace,
                 collision->normal,
-                50.0f,
-                Constants::debugLineColor,
-                0.1f
+                40.0f,
+                Constants::debugLineColor
             );
 
-            DebugSystem::addDebugLine
-            (
-                collision->a->transform->positionWorldSpace,
-                collision->b->transform->positionWorldSpace,
-                collision->penetration, Constants::debugPenetrationColor,
-                0.1f
-            );
+            glm::vec2 relativeVelocity = (collision->a->velocity - collision->b->velocity) * deltaTime;
+            float velocityAlongNormal = glm::dot(relativeVelocity, collision->normal);
+
+            if (velocityAlongNormal > 0.0f)
+            {
+                return;
+            }
+
+            float minRestitution = glm::min(collision->a->restitution, collision->b->restitution);
+
+            float impulseScalar = -(1.0f + minRestitution) * velocityAlongNormal;
+            float massSum = collision->a->mass + collision->b->mass;
+            glm::vec2 impulse = Constants::baseImpulse * impulseScalar * collision->normal;
+            impulseScalar /= 1.0f / collision->a->mass + 1 / collision->b->mass;
+            
+            // Apply impulse to a
+            float ratio = collision->a->mass / massSum;
+            collision->a->addForce(ratio * impulse);
+
+            // Apply impulse to b
+            ratio = collision->b->mass / massSum;
+            collision->b->addForce(ratio * impulse);
+
+            // Adjust for sinking by correcting positions
+            glm::vec2 correction = 
+                glm::max(collision->penetration - Constants::correctionSlop, 0.0f)
+                / (collision->a->inverseMass + collision->b->inverseMass)
+                * Constants::correctionPercent * -collision->normal;
+
+            collision->a->transform->positionWorldSpace -= collision->a->inverseMass * correction;
+            collision->b->transform->positionWorldSpace += collision->b->inverseMass * correction;
         }
 
         // Public
+        void PhysicsSystem::initialize()
+        {
+            collisions = std::vector<Collision*>();
+        }
+
         void PhysicsSystem::step(float deltaTime)
         {
             /* Update dynamic entity positions */
             for (auto& entity : Game::instance->dynamicPhysicsEntities)
             {
+                if (!entity->isDynamic)
+                {
+                    continue;
+                }
                 // Call physicsUpdate()
                 entity->physicsUpdate(deltaTime);
                 
@@ -116,18 +149,21 @@ namespace Motherload
                 entity->transform->positionWorldSpace += entity->velocity;
             }
             /* Detect collisions */
-            std::vector<Collision*> collisions = detectCollisions();
+            detectCollisions();
             if (!collisions.empty())
             {
-                resolveCollisions(collisions);
+                resolveCollisions(deltaTime);
             }
 
             /* Resolve collisions */
         }
 
-        std::vector<Collision*> PhysicsSystem::detectCollisions()
+        void PhysicsSystem::detectCollisions()
         {
-            std::vector<Collision*> collisions = std::vector<Collision*>();
+            if (!Game::instance->player->isDynamic)
+            {
+                return;
+            }
             for (auto& entity : Game::instance->staticPhysicsEntities)
             {
                 /* Don't check for collisions if entities are far apart */
@@ -143,15 +179,17 @@ namespace Motherload
                     collisions.push_back(collision);
                 }
             }
-            return collisions;
         }
 
-        void PhysicsSystem::resolveCollisions(std::vector<Collision*> collisions)
+        void PhysicsSystem::resolveCollisions(float deltaTime)
         {
             for (auto& collision : collisions)
             {
-                resolveCollision(collision);
+                resolveCollision(collision, deltaTime);
+                collision->a->isColliding(collision->b);
+                collision->b->isColliding(collision->a);
             }
+            collisions.clear();
         }
     } // namespace Physics
 } // namespace Motherload

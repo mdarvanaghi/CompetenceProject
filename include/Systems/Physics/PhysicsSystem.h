@@ -13,12 +13,14 @@ namespace Motherload
         class PhysicsSystem
         {
         private:
+            static std::vector<Collision*> collisions;
             static Collision* detectCollision(Collider* a, Collider* b);
-            static void resolveCollision(Collision* collision);
+            static void resolveCollision(Collision* collision, float deltaTime);
         public:
+            static void initialize();
             static void step(float deltaTime);
-            static std::vector<Physics::Collision*> detectCollisions();
-            static void resolveCollisions(std::vector<Collision*> collisions);
+            static void detectCollisions();
+            static void resolveCollisions(float deltaTime);
         };
     } // namespace Physics
 } // namespace Motherload

@@ -4,11 +4,13 @@ namespace Motherload
 {
     // Forward declarations
     bool DebugSystem::debugMode;
+    bool DebugSystem::detachedCamera;
 
     void DebugSystem::initialize()
     {
         // TODO: Change at compile-time instead
         debugMode = true;
+        detachedCamera = false;
         RenderSystem::debugDraw = false;
         RenderSystem::textureDraw = true;
     }
@@ -25,6 +27,11 @@ namespace Motherload
         if (!debugMode)
         {
             return;
+        }
+
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F9))
+        {
+            detachedCamera = !detachedCamera;
         }
 
         if (InputSystem::getKeyDown(SDL_SCANCODE_F10))

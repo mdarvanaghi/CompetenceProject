@@ -13,8 +13,10 @@ namespace Motherload
         this->mineralType = mineralType;
 
         /* Physics */
-        this->collider = new Collider(this);
+        this->collider = new Physics::Collider(this);
+        this->restitution = 1.0f;
         this->isDynamic = false;
+        setMass(0.0f); // Static object with infinite mass
         setTexture();
     }
 
