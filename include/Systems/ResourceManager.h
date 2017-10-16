@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include "SDL_image.h"
+#include "SDL2/SDL_image.h"
 #include "RenderSystem.h"
 
 namespace Motherload

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 namespace Motherload
 {
     namespace Constants

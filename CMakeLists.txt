@@ -1,4 +1,4 @@
-#  ____________
+﻿#  ____________
 # |CMAKE CONFIG|
 #  ‾‾‾‾‾‾‾‾‾‾‾‾
 cmake_minimum_required(VERSION 3.7)
@@ -38,4 +38,4 @@ target_link_libraries(motherload ${EXTERNAL_LIBS})
 #  _________
 # |GAME DATA|
 #  ‾‾‾‾‾‾‾‾‾
-file(COPY ${PROJECT_SOURCE_DIR}/data DESTINATION .)
+file(COPY ${CMAKE_BINARY_DIR}/data DESTINATION .)

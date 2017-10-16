@@ -1,0 +1,109 @@
+﻿  Block.cpp
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  C:\Users\Mathias\Projects\CompetenceProject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Camera.cpp
+c:\users\mathias\projects\competenceproject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Player.cpp
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  C:\Users\Mathias\Projects\CompetenceProject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Game.cpp
+c:\users\mathias\projects\competenceproject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Game.cpp(45): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Game.cpp(81): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Game.cpp(114): warning C4244: 'initializing': conversion from 'float' to 'Uint64', possible loss of data
+  DebugSystem.cpp
+c:\users\mathias\projects\competenceproject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  InputSystem.cpp
+c:\users\mathias\projects\competenceproject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  PhysicsSystem.cpp
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  C:\Users\Mathias\Projects\CompetenceProject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+C:\Users\Mathias\Projects\CompetenceProject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\Physics\PhysicsSystem.cpp(43): warning C4101: 'penetration': unreferenced local variable
+  RenderSystem.cpp
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(29): warning C4244: 'argument': conversion from 'const float' to 'Uint8', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(44): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(45): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(47): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(103): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(140): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(141): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(142): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(143): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(168): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(178): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mathias\Projects\CompetenceProject\src\Systems\RenderSystem.cpp(195): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  ResourceManager.cpp
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Mathias\Projects\CompetenceProject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+c:\users\mathias\projects\competenceproject\include\Constants.h(27): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(28): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Constants.h(29): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\mathias\projects\competenceproject\include\Entities/Entity.h(9): warning C4099: 'Motherload::Transform': type name first seen using 'struct' now seen using 'class'
+  c:\users\mathias\projects\competenceproject\include\Components/Transform.h(10): note: see declaration of 'Motherload::Transform'
+c:\users\mathias\projects\competenceproject\include\Entities/PhysicsEntity.h(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+c:\users\mathias\projects\competenceproject\src\entities\camera.cpp(42): warning C4172: returning address of local variable or temporary: cameraSpacePosition
+     Creating library C:/Users/Mathias/Projects/CompetenceProject/bin/Debug/motherload.lib and object C:/Users/Mathias/Projects/CompetenceProject/bin/Debug/motherload.exp
+Game.obj : error LNK2019: unresolved external symbol _SDL_GetError referenced in function "public: void __thiscall Motherload::Game::quitOnError(void)" (?quitOnError@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_CreateWindow referenced in function "public: void __thiscall Motherload::Game::initializeSystems(void)" (?initializeSystems@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_DestroyWindow referenced in function "public: void __thiscall Motherload::Game::cleanup(void)" (?cleanup@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_GetPerformanceCounter referenced in function "public: void __thiscall Motherload::Game::mainloop(void)" (?mainloop@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_GetPerformanceFrequency referenced in function "public: void __thiscall Motherload::Game::mainloop(void)" (?mainloop@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_Init referenced in function "public: void __thiscall Motherload::Game::initializeSystems(void)" (?initializeSystems@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_Quit referenced in function "public: void __thiscall Motherload::Game::exit(void)" (?exit@Game@Motherload@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _IMG_Init referenced in function "public: void __thiscall Motherload::Game::initializeSystems(void)" (?initializeSystems@Game@Motherload@@QAEXXZ)
+InputSystem.obj : error LNK2019: unresolved external symbol _SDL_PollEvent referenced in function "public: static void __cdecl Motherload::InputSystem::registerInputs(void)" (?registerInputs@InputSystem@Motherload@@SAXXZ)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_CreateRenderer referenced in function "public: static void __cdecl Motherload::RenderSystem::initialize(struct SDL_Window *)" (?initialize@RenderSystem@Motherload@@SAXPAUSDL_Window@@@Z)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_SetRenderDrawColor referenced in function "private: static void __cdecl Motherload::RenderSystem::setDrawingColor(struct glm::vec<4,float,0>)" (?setDrawingColor@RenderSystem@Motherload@@CAXU?$vec@$03M$0A@@glm@@@Z)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_RenderClear referenced in function "public: static void __cdecl Motherload::RenderSystem::renderScene(void)" (?renderScene@RenderSystem@Motherload@@SAXXZ)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_RenderDrawLine referenced in function "private: static void __cdecl Motherload::RenderSystem::drawWireframeCircle(struct glm::vec<2,float,0>,float)" (?drawWireframeCircle@RenderSystem@Motherload@@CAXU?$vec@$01M$0A@@glm@@M@Z)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_RenderDrawRect referenced in function "private: static void __cdecl Motherload::RenderSystem::drawWireframeQuad(struct glm::vec<2,float,0>,struct glm::vec<2,float,0>)" (?drawWireframeQuad@RenderSystem@Motherload@@CAXU?$vec@$01M$0A@@glm@@0@Z)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_RenderCopy referenced in function "private: static void __cdecl Motherload::RenderSystem::renderTexture(struct SDL_Texture *,struct glm::vec<2,float,0>,struct glm::vec<2,float,0>)" (?renderTexture@RenderSystem@Motherload@@CAXPAUSDL_Texture@@U?$vec@$01M$0A@@glm@@1@Z)
+RenderSystem.obj : error LNK2019: unresolved external symbol _SDL_RenderPresent referenced in function "public: static void __cdecl Motherload::RenderSystem::renderScene(void)" (?renderScene@RenderSystem@Motherload@@SAXXZ)
+RenderSystem.obj : error LNK2019: unresolved external symbol _IMG_LoadTexture referenced in function "public: static struct SDL_Texture * __cdecl Motherload::RenderSystem::loadTexture(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadTexture@RenderSystem@Motherload@@SAPAUSDL_Texture@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\Mathias\Projects\CompetenceProject\bin\Debug\motherload.exe : fatal error LNK1120: 18 unresolved externals

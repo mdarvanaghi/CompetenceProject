@@ -9,8 +9,8 @@
 #include <time.h>
 #include <algorithm>
 // Libraries
-#include "SDL.h"
-#include <glm/glm/glm.hpp>
+#include <SDL2/SDL.h>
+#include <glm/glm.hpp>
 // Classes
 #include "Constants.h"
 // Entities
