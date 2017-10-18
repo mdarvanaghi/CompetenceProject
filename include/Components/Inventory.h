@@ -1,10 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
+#include <string>
 #include "MineralType.h"
 #include "Components/Upgrade.h"
 #include "Entities/Entity.h"
+#include "Game.h"
 
 namespace Motherload
 {

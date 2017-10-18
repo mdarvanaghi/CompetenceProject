@@ -17,5 +17,11 @@ namespace Motherload
     void Inventory::addMineral(MineralType mineral)
     {
         this->minerals[mineral]++;
+        std::string inventoryUiText = "Inventory:\n";
+        for (int i = 0; i < MineralType::NUM_MINERALS; i++)
+        {
+            inventoryUiText += std::to_string((MineralType) i) + std::to_string(minerals[i]);
+        }
+        Game::instance->inventoryPanel->setText(inventoryUiText.c_str());
     }
 } // namespace Motherload

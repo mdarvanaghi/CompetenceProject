@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "SDL.h"
 #include "glm/glm/glm.hpp"
 namespace Motherload
 {
@@ -10,7 +11,7 @@ namespace Motherload
         const float intitialWindowHeight = 720;
         const float intitialWindowWidth = 1280;
         const glm::vec2 midScreen = glm::vec2(intitialWindowWidth / 2, intitialWindowHeight / 2);
-        const glm::vec4 clearColor = glm::vec4(0, 40, 130, 0);
+        const glm::vec4 clearColor(0, 40, 130, 0);
      
         /* Player */
         const float playerAccelerationX = 10.0f;
@@ -35,6 +36,8 @@ namespace Motherload
         const glm::vec4 debugLineColor(0, 0, 255, 0);
         const glm::vec4 debugPenetrationColor(140, 140, 0, 0);
         const int debugVertexCount = 8;
+        static const char* debugFont = "data/fonts/VCR_OSD_MONO_1.001.ttf";
+        const glm::vec2 fpsPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, 30);
 
         /* Physics */
         const float baseImpulse = 60.0f;
@@ -44,5 +47,13 @@ namespace Motherload
         const glm::vec2 down = glm::vec2(0.0f, 1.0f);
         const glm::vec2 left = glm::vec2(-1.0f, 0.0f);
         const glm::vec2 right = glm::vec2(1.0f, 0.0f);
+
+        /* UI */
+        const glm::vec2 moneyPanelPosition(intitialWindowWidth / 2, 40);
+        const glm::vec2 inventoryPanelPosition(40, intitialWindowHeight / 2);
+        const SDL_Color textColor = {100, 255, 100, 255};
+        static const char* uiFont = "data/fonts/Capture_it.ttf";
+        const int fontSize = 20;
+
     } // namespace Constants
 } // namespace Motherload

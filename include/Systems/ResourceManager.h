@@ -1,10 +1,9 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <map>
-#include <algorithm>
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 #include "RenderSystem.h"
 
 namespace Motherload
@@ -13,8 +12,10 @@ namespace Motherload
     {
     private:
         static std::map<std::string, SDL_Texture*> textures;
+        static std::map<std::string, TTF_Font*> fonts;
 
     public:
         static SDL_Texture* getTexture(std::string name);
+        static TTF_Font* getFont(std::string name);
     };
 } // namespace Motherload

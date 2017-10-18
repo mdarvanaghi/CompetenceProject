@@ -10,18 +10,20 @@
 #include "Constants.h"
 #include "Game.h"
 #include "Systems/Debug/DebugLine.h"
+#include "Systems/UI/UISystem.h"
 
 namespace Motherload
 {
     class RenderSystem
     {
     private:
-        static SDL_Rect* textureRect;
         static SDL_Renderer* renderer;
+        static SDL_Rect* textureRect;
         static void renderTexture(SDL_Texture *texture, glm::vec2 position, glm::vec2 scale);
         static void drawEntities();
+        static void drawUIPanels();
         static void setDrawingColor(glm::vec4 color);
-
+        
         /* Debugging */
         static std::vector<DebugLine*> debugLines;
         static std::vector<int> debugLinesToBeRemoved;
@@ -30,14 +32,16 @@ namespace Motherload
         static void drawWireframeCircle(glm::vec2 position, float radius = 5.0f);
         static void drawLine(DebugLine* line);
         static void clearDebugLines();
-
+        
     public:
         // Variables
         static bool debugDraw;
         static bool textureDraw;
+        static bool uiDraw;
 
         // Methods
         static SDL_Texture* loadTexture(const std::string &file);
+        static SDL_Texture* createSurfaceTexture(SDL_Surface* surface);
         static void initialize(SDL_Window* window);
         static void renderScene();
         static void addDebugLine(DebugLine* line);

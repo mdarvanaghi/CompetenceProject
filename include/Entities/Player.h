@@ -12,6 +12,8 @@
 namespace Motherload
 {
     class Block;
+    class Inventory;
+    
     class Player : public Physics::PhysicsEntity
     {
     private:
