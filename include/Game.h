@@ -23,6 +23,7 @@
 #include "Systems/InputSystem.h"
 #include "Systems/DebugSystem.h"
 #include "Systems/Physics/PhysicsSystem.h"
+#include "Systems/UISystem.h"
 
 namespace Motherload
 {

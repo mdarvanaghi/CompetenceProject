@@ -13,7 +13,7 @@ FIND_PATH( GLM_INCLUDE_DIR glm/glm.hpp
         $ENV{GLM_ROOT_DIR} 
         DOC "The directory where glm/glm.hpp resides") 
 ELSE(WIN32) 
-FIND_PATH( GLM_INCLUDE_DIR glm/glm.hpp 
+FIND_PATH( GLM_INCLUDE_DIR glm/glm/glm.hpp 
         /usr/include 
         /usr/local/include 
         /sw/include 

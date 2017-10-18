@@ -5,6 +5,7 @@ namespace Motherload
     Player::Player(glm::vec2 position)
     {
         this->transform = new Transform(this, position);
+        this->inventory = new Inventory(this);
     }
 
     void Player::initialize()
@@ -63,13 +64,13 @@ namespace Motherload
         {
             if (currentBlockBelow == nullptr)
             {
-                currentBlockBelow = block;
+                currentBlockBelow = (Block*) block;
             }
             else if 
             (glm::abs(block->transform->positionWorldSpace.x - transform->positionWorldSpace.x)
                 < glm::abs(currentBlockBelow->transform->positionWorldSpace.x - transform->positionWorldSpace.x)) 
             {
-                currentBlockBelow = block;
+                currentBlockBelow = (Block*) block;
             }
         }
     }
@@ -135,6 +136,7 @@ namespace Motherload
 
     void Player::collectMineral()
     {
+        inventory->addMineral(currentBlockBelow->mineralType);
         Game::instance->destroyEntity(currentBlockBelow);
     }
 

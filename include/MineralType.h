@@ -1,7 +1,10 @@
+#pragma once
+
 enum MineralType
 { 
-    Dirt = 0, 
-    Granite = 1, 
-    Iron = 2, 
-    Gold = 5
+    Dirt, 
+    Granite, 
+    Iron, 
+    Gold,
+    NUM_MINERALS
 };

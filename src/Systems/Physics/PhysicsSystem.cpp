@@ -185,7 +185,10 @@ namespace Motherload
         {
             for (auto& collision : collisions)
             {
-                resolveCollision(collision, deltaTime);
+                if (!collision->a->collider->isTrigger && !collision->b->collider->isTrigger)
+                {
+                    resolveCollision(collision, deltaTime);
+                }
                 collision->a->isColliding(collision->b);
                 collision->b->isColliding(collision->a);
             }

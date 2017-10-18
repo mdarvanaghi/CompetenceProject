@@ -25,7 +25,13 @@ include_directories(${SDL2_INCLUDE_DIR})
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 
-set(EXTERNAL_LIBS ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+find_package(SDL2_ttf REQUIRED)
+include_directories(${SDL2_TTF_INCLUDE_DIR})
+
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIR})
+
+set(EXTERNAL_LIBS ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_TTF_LIBRARY})
 
 include_directories(include)
 
