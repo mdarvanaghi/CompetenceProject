@@ -59,6 +59,9 @@ namespace Motherload
 
         UIPanel* moneyPanel;
         UIPanel* inventoryPanel;
+        UIPanel* granitePanel;
+        UIPanel* ironPanel;
+        UIPanel* goldPanel;
 
         static Game* instance;
         float deltaTime;

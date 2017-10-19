@@ -120,7 +120,10 @@ namespace Motherload
     void Game::addUiPanels()
     {
         moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$100", true);
-        inventoryPanel = UISystem::addPanel(Constants::inventoryPanelPosition, "Inventory:", false);
+        // inventoryPanel = UISystem::addPanel(Constants::inventoryPanelPosition, "Inventory", false);
+        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite 0", false);
+        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron 0", false);
+        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold 0", false);
     }
 
     void Game::mainloop()

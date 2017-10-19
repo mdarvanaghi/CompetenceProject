@@ -16,12 +16,28 @@ namespace Motherload
 
     void Inventory::addMineral(MineralType mineral)
     {
+        std::string mineralString;
         this->minerals[mineral]++;
-        std::string inventoryUiText = "Inventory:\n";
-        for (int i = 0; i < MineralType::NUM_MINERALS; i++)
+        switch (mineral)
         {
-            inventoryUiText += std::to_string((MineralType) i) + std::to_string(minerals[i]);
+            case (MineralType::Granite):
+            {
+                mineralString = "Granite " + std::to_string(minerals[mineral]);
+                Game::instance->granitePanel->setText(mineralString.c_str());
+                break;
+            }
+            case (MineralType::Iron):
+            {
+                mineralString = "Iron " + std::to_string(minerals[mineral]);
+                Game::instance->ironPanel->setText(mineralString.c_str());
+                break;
+            }
+            case (MineralType::Gold):
+            {
+                mineralString = "Gold " + std::to_string(minerals[mineral]);
+                Game::instance->goldPanel->setText(mineralString.c_str());
+                break;
+            }
         }
-        Game::instance->inventoryPanel->setText(inventoryUiText.c_str());
     }
 } // namespace Motherload

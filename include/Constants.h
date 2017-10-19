@@ -51,6 +51,9 @@ namespace Motherload
         /* UI */
         const glm::vec2 moneyPanelPosition(intitialWindowWidth / 2, 40);
         const glm::vec2 inventoryPanelPosition(40, intitialWindowHeight / 2);
+        const glm::vec2 granitePanelPosition(40, intitialWindowHeight / 2 + cellSize);
+        const glm::vec2 ironPanelPosition(40, intitialWindowHeight / 2 + cellSize * 2);
+        const glm::vec2 goldPanelPosition(40, intitialWindowHeight / 2 + cellSize * 3);
         const SDL_Color textColor = {100, 255, 100, 255};
         static const char* uiFont = "data/fonts/Capture_it.ttf";
         const int fontSize = 20;

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include "MineralType.h"
 #include "Components/Upgrade.h"
 #include "Entities/Entity.h"
