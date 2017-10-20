@@ -140,16 +140,41 @@ namespace Motherload
         Game::instance->destroyEntity(currentBlockBelow);
     }
 
-    std::vector<Block*> Player::getNeighborBlocks(int range)
+    std::vector<std::vector<Block*>> Player::getNeighborBlocks(int range)
     {
         glm::vec2 coordinates = transform->getPositionCoordinates();
-        std::vector<Block*> blocks = std::vector<Block*>();
+        std::vector<std::vector<Block*>> neighbors = std::vector<std::vector<Block*>>();
         int depth = Game::instance->blocks.size();
-        if (depth > 0)
+        if (depth < 0)
         {
-            int width = Game::instance->blocks[0].size();
+            return neighbors;
         }
-        
+
+        int width = Game::instance->blocks[0].size();
+        int iCounter = 0;
+        int jCounter = 0;
+        for (int i = coordinates.y - range; i <= coordinates.y + range; i++)
+        {
+            if (i >= 0 && i < depth)
+            {
+                neighbors.at(i) = std::vector<Block*>();
+                for (int j = coordinates.x - range; j <= coordinates.x + range; j++)
+                {
+                    if (j >= 0 && j < width && (i != coordinates.y && j != coordinates.x))
+                    {
+                        neighbors[iCounter][jCounter] = Game::instance->blocks[i][j];
+                    }
+                    else 
+                    {
+                        neighbors[iCounter][jCounter] = nullptr;
+                    }
+                    jCounter++;
+                }
+            }
+            jCounter = 0;
+            iCounter++;
+        }
+        return neighbors;
     }
 
 } // namespace Motherload
