@@ -4,10 +4,13 @@ namespace Motherload
 {
     SDL_Renderer* RenderSystem::renderer;
     SDL_Rect* RenderSystem::textureRect;
+
     std::vector<DebugLine*> RenderSystem::debugLines;
     std::vector<int> RenderSystem::debugLinesToBeRemoved;
+
     bool RenderSystem::debugDraw;
     bool RenderSystem::textureDraw;
+    bool RenderSystem::uiDraw;
 
     void RenderSystem::initialize(SDL_Window* window)
     {
@@ -39,6 +42,11 @@ namespace Motherload
         return texture;
     }
 
+    SDL_Texture* RenderSystem::createSurfaceTexture(SDL_Surface* surface)
+    {
+        return SDL_CreateTextureFromSurface(renderer, surface);
+    }
+
     void RenderSystem::renderTexture(SDL_Texture* texture, glm::vec2 position, glm::vec2 scale)
     {
         textureRect->x = position.x;
@@ -60,13 +68,16 @@ namespace Motherload
             drawEntities();
         }
 
-        /* Draw player after entities */
-        // renderTexture(Game::instance->player->texture);
-
         /* Draw wireframe if in debug mode */
         if (debugDraw)
         {
             drawWireframe();
+        }
+
+        /* Lastly, draw all UI Panels */
+        if (uiDraw)
+        {
+            drawUIPanels();
         }
 
         /* Swap buffers */
@@ -87,6 +98,24 @@ namespace Motherload
                 entity->texture,
                 entity->transform->getPositionCameraSpace() - (entity->transform->sizeWorldSpace / 2.0f),
                 entity->transform->getSizeCameraSpace()
+            );
+        }
+    }
+
+    void RenderSystem::drawUIPanels()
+    {
+        for (auto& panel : UISystem::panels)
+        {
+            if (panel->texture == nullptr)
+            {
+                std::cerr << "Texture is nullptr" << std::endl;
+            }
+
+            renderTexture
+            (
+                panel->texture,
+                panel->centered ? panel->position - panel->size / 2.0f : panel->position,
+                panel->size
             );
         }
     }

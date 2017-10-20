@@ -6,6 +6,9 @@ namespace Motherload
     bool DebugSystem::debugMode;
     bool DebugSystem::detachedCamera;
 
+
+    // Static variables
+    UIPanel* DebugSystem::fpsPanel;
     void DebugSystem::initialize()
     {
         // TODO: Change at compile-time instead
@@ -13,9 +16,15 @@ namespace Motherload
         detachedCamera = false;
         RenderSystem::debugDraw = false;
         RenderSystem::textureDraw = true;
+        RenderSystem::uiDraw = true;
+
+        if (debugMode)
+        {
+            fpsPanel = UISystem::addPanel(Constants::fpsPanelPosition, "FPS: ", Constants::debugFont);
+        }
     }
 
-    void DebugSystem::update()
+    void DebugSystem::update(float deltaTime)
     {
         if (InputSystem::getKeyDown(SDL_SCANCODE_F12))
         {
@@ -27,6 +36,14 @@ namespace Motherload
         if (!debugMode)
         {
             return;
+        }
+
+        /* Update FPS meter */
+        fpsPanel->setText(("FPS: " + std::to_string(1 / deltaTime)).c_str());
+
+        if (InputSystem::getKeyDown(SDL_SCANCODE_F8))
+        {
+            RenderSystem::uiDraw = !RenderSystem::uiDraw;
         }
 
         if (InputSystem::getKeyDown(SDL_SCANCODE_F9))

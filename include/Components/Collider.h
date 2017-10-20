@@ -15,7 +15,9 @@ namespace Motherload
             glm::vec2 topLeft;
             glm::vec2 bottomRight;
         public:
+            bool isTrigger;
             PhysicsEntity* entity;
+
             Collider(PhysicsEntity* entity);
             glm::vec2 getTopLeft();
             glm::vec2 getBottomRight();

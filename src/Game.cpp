@@ -17,6 +17,7 @@ namespace Motherload
     {
         initializeSystems();
         populateScene();
+        addUiPanels();
         mainloop();
         exit();
     }
@@ -24,12 +25,19 @@ namespace Motherload
     void Game::initializeSystems()
     {
         std::cout << "Initializing systems...";
+
+        /* SDL SYSTEMS */
         if (SDL_Init(SDL_INIT_VIDEO) == -1)
         {
             quitOnError();
         }
 
         if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+        {
+            quitOnError();
+        }
+
+        if (TTF_Init() == -1)
         {
             quitOnError();
         }
@@ -43,11 +51,12 @@ namespace Motherload
             Constants::intitialWindowHeight,
             SDL_WINDOW_SHOWN
         );
-
+        /* /SDL SYSTEMS */
+        
+        
         Camera::initialize();
-
-        renderSystem = new RenderSystem();
-        renderSystem->initialize(window);
+        RenderSystem::initialize(window);
+        UISystem::initialize();
         Physics::PhysicsSystem::initialize();
         DebugSystem::initialize();
         
@@ -98,7 +107,11 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
-                Block* block = new Block(glm::vec2(j * Constants::cellSize + Constants::cellSize / 2, i * Constants::cellSize + Constants::cellSize / 2));
+                Block* block = new Block
+                (
+                    glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
+                    i * Constants::cellSize + Constants::cellSize / 2)
+                );
                 block->initialize(mineralType);
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
@@ -106,6 +119,15 @@ namespace Motherload
             }
         }
         std::cout << " Done!" << std::endl;
+    }
+
+    void Game::addUiPanels()
+    {
+        moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$100", true);
+        // inventoryPanel = UISystem::addPanel(Constants::inventoryPanelPosition, "Inventory", false);
+        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite 0", false);
+        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron 0", false);
+        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold 0", false);
     }
 
     void Game::mainloop()
@@ -120,7 +142,6 @@ namespace Motherload
             timeLast = timeNow;
             timeNow = SDL_GetPerformanceCounter();
             deltaTime = glm::clamp(((timeNow - timeLast) / (float) SDL_GetPerformanceFrequency()), 0.0f, 1.0f);
-            std::cout << "FPS: " << 1 / deltaTime << std::endl;
 
             /* Handle player inputs */
             InputSystem::registerInputs();
@@ -136,7 +157,7 @@ namespace Motherload
             }
            
             /* Update debug system */
-            DebugSystem::update();
+            DebugSystem::update(deltaTime);
 
             /* Update camera position */
             camera->updatePosition(deltaTime);
@@ -158,20 +179,14 @@ namespace Motherload
         }
     }
 
-    void Game::exit()
-    {
-        cleanup();
-        std::cout << "Quitting game" << std::endl;
-        SDL_Quit();
-    }
-
+    
     void Game::cleanup()
     {
         blocks.clear();
         entities.clear();
         SDL_DestroyWindow(window);
     }
-
+    
     void Game::destroyEntity(Entity* entity)
     {
         int i = 0;
@@ -183,7 +198,7 @@ namespace Motherload
             }
             i++;
         }
-
+        
         i = 0;
         for (auto & element : dynamicPhysicsEntities) 
         {
@@ -193,7 +208,7 @@ namespace Motherload
             }
             i++;
         }
-
+        
         i = 0;
         for (auto & element : staticPhysicsEntities) 
         {
@@ -204,7 +219,7 @@ namespace Motherload
             i++;
         }
     }
-
+    
     void Game::destroyFlaggedEntities()
     {
         std::sort(Game::instance->entitiesFlaggedForDestruction.begin(), Game::instance->entitiesFlaggedForDestruction.end());
@@ -212,33 +227,41 @@ namespace Motherload
         std::sort(Game::instance->staticPhysicsEntitiesFlaggedForDestruction.begin(), Game::instance->staticPhysicsEntitiesFlaggedForDestruction.end());
         
         int index = 0;
-
-        while (Game::instance->entitiesFlaggedForDestruction.size() > 0) 
-        {
-            index = Game::instance->entitiesFlaggedForDestruction.back();
-            Game::instance->entities.erase(Game::instance->entities.begin() + index);
-            Game::instance->entitiesFlaggedForDestruction.pop_back();
-        }
-
+        
+        
         while (Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.size() > 0) 
         {
             index = Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.back();
             Game::instance->dynamicPhysicsEntities.erase(Game::instance->dynamicPhysicsEntities.begin() + index);
             Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.pop_back();
         }
-
+        
         while (Game::instance->staticPhysicsEntitiesFlaggedForDestruction.size() > 0) 
         {
             index = Game::instance->staticPhysicsEntitiesFlaggedForDestruction.back();
             Game::instance->staticPhysicsEntities.erase(Game::instance->staticPhysicsEntities.begin() + index);
             Game::instance->staticPhysicsEntitiesFlaggedForDestruction.pop_back();
         }
+        
+        while (Game::instance->entitiesFlaggedForDestruction.size() > 0) 
+        {
+            index = Game::instance->entitiesFlaggedForDestruction.back();
+            Game::instance->entities.erase(Game::instance->entities.begin() + index);
+            Game::instance->entitiesFlaggedForDestruction.pop_back();
+        }
     }
-
+    
     void Game::quitOnError()
     {
         std::cerr << SDL_GetError() << std::endl;
         std::cout << "Terminating..." << std::endl;
+        SDL_Quit();
+    }
+    
+    void Game::exit()
+    {
+        cleanup();
+        std::cout << "Quitting game" << std::endl;
         SDL_Quit();
     }
 } // namespace Motherload

@@ -23,6 +23,8 @@
 #include "Systems/InputSystem.h"
 #include "Systems/DebugSystem.h"
 #include "Systems/Physics/PhysicsSystem.h"
+#include "Systems/UI/UISystem.h"
+#include "Systems/UI/UIPanel.h"
 
 namespace Motherload
 {
@@ -38,7 +40,7 @@ namespace Motherload
         SDL_Window* window;
         RenderSystem* renderSystem;
         Camera* camera;
-        int horizontalBlocks = 0;
+        int horizontalBlocks;
         
         std::vector<int> entitiesFlaggedForDestruction;
         std::vector<int> dynamicPhysicsEntitiesFlaggedForDestruction;
@@ -55,6 +57,12 @@ namespace Motherload
         std::vector<std::vector<Block*>> blocks;
         bool quit = 0;
 
+        UIPanel* moneyPanel;
+        UIPanel* inventoryPanel;
+        UIPanel* granitePanel;
+        UIPanel* ironPanel;
+        UIPanel* goldPanel;
+
         static Game* instance;
         float deltaTime;
         float time;
@@ -65,6 +73,8 @@ namespace Motherload
         void initializeSystems();
         void populateScene();
         void populateBlockGrid();
+        void addUiPanels();
+        void updateUiPanels();
         void mainloop();
         void handleInput();
         void exit();

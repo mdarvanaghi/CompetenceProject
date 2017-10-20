@@ -7,10 +7,13 @@
 #include "Constants.h"
 #include "Entities/Block.h"
 #include "Extensions.h"
+#include "Components/Inventory.h"
 
 namespace Motherload
 {
     class Block;
+    class Inventory;
+    
     class Player : public Physics::PhysicsEntity
     {
     private:
@@ -22,7 +25,11 @@ namespace Motherload
         float accelerationX, decelerationX;
         float accelerationY;
 
-        PhysicsEntity* currentBlockBelow;
+        Inventory* inventory;
+
+        Block* currentBlockBelow;
+        Block* currentBlockLeft;
+        Block* currentBlockRight;
         glm::vec2 drillOrigin;
 
         float timeDrilled;
