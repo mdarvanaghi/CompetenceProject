@@ -107,7 +107,11 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
-                Block* block = new Block(glm::vec2(j * Constants::cellSize + Constants::cellSize / 2, i * Constants::cellSize + Constants::cellSize / 2));
+                Block* block = new Block
+                (
+                    glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
+                    i * Constants::cellSize + Constants::cellSize / 2)
+                );
                 block->initialize(mineralType);
                 blocks.at(i).push_back(block);
                 entities.push_back(block);

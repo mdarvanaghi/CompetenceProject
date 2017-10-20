@@ -43,8 +43,8 @@ namespace Motherload
         if (startDrilling)
         {
             setDrillingMode(true);
-            startDrilling = false;
         }
+        startDrilling = false;
     }
 
     void Player::physicsUpdate(float deltaTime)

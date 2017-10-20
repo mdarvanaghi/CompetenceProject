@@ -4,6 +4,7 @@ namespace Motherload
 {
     UIPanel::UIPanel(glm::vec2 position, bool centered,  const char* fontFamily)
     {
+        this->texture = nullptr;
         this->position = position;
         this->size = size;
         this->centered = centered;
@@ -20,6 +21,10 @@ namespace Motherload
         TTF_SizeText(font, text, &width, &height);
         size = glm::vec2(width, height);
         surface = TTF_RenderText_Solid(font, text, Constants::textColor);
+        if (texture != nullptr)
+        {
+            SDL_DestroyTexture(texture);
+        }
         texture = RenderSystem::createSurfaceTexture(surface);
         SDL_FreeSurface(surface);
     }
