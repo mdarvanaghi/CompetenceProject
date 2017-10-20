@@ -140,4 +140,16 @@ namespace Motherload
         Game::instance->destroyEntity(currentBlockBelow);
     }
 
+    std::vector<Block*> Player::getNeighborBlocks(int range)
+    {
+        glm::vec2 coordinates = transform->getPositionCoordinates();
+        std::vector<Block*> blocks = std::vector<Block*>();
+        int depth = Game::instance->blocks.size();
+        if (depth > 0)
+        {
+            int width = Game::instance->blocks[0].size();
+        }
+        
+    }
+
 } // namespace Motherload

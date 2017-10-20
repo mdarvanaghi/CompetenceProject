@@ -46,5 +46,6 @@ namespace Motherload
         void initialize();
         void physicsUpdate(float deltaTime);
         void isColliding(PhysicsEntity* block);
+        std::vector<Block*> getNeighborBlocks(int range = 1);
     };
 } // namespace Motherload
