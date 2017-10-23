@@ -16,9 +16,11 @@ namespace Motherload
         // Variables
         std::vector<int> minerals;
         std::vector<Upgrade> upgrades;
+        int money = Constants::startMoney;
 
         // Methods
         Inventory(Entity* entity);
         void addMineral(MineralType mineral);
+        void upgradeItem(UpgradeType type);
     };
 } // namespace Motherload

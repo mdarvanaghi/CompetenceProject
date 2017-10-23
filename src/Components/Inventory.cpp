@@ -12,6 +12,10 @@ namespace Motherload
         }
         
         this->upgrades = std::vector<Upgrade>();
+        for (int i = 0; i < UpgradeType::NUM_UPGRADES; i++)
+        {
+            upgrades.push_back(Upgrade((UpgradeType) i, 0.3f));
+        }
     }
 
     void Inventory::addMineral(MineralType mineral)
@@ -22,22 +26,28 @@ namespace Motherload
         {
             case (MineralType::Granite):
             {
-                mineralString = "Granite " + std::to_string(minerals[mineral]);
+                mineralString = "Granite: " + std::to_string(minerals[mineral]);
                 Game::instance->granitePanel->setText(mineralString.c_str());
                 break;
             }
             case (MineralType::Iron):
             {
-                mineralString = "Iron " + std::to_string(minerals[mineral]);
+                mineralString = "Iron: " + std::to_string(minerals[mineral]);
                 Game::instance->ironPanel->setText(mineralString.c_str());
                 break;
             }
             case (MineralType::Gold):
             {
-                mineralString = "Gold " + std::to_string(minerals[mineral]);
+                mineralString = "Gold: " + std::to_string(minerals[mineral]);
                 Game::instance->goldPanel->setText(mineralString.c_str());
                 break;
             }
         }
     }
+
+    void Inventory::upgradeItem(UpgradeType type)
+    {
+
+    }
+
 } // namespace Motherload

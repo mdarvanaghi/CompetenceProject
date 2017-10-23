@@ -20,5 +20,6 @@ namespace Motherload
         glm::vec2 getPositionCameraSpace();
         glm::vec2 getSizeCameraSpace();
         glm::vec2 getScaleCameraSpace();
+        glm::vec2 getPositionCoordinates();
     };
 } // namespace Motherload

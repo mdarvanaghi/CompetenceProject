@@ -17,6 +17,7 @@
 #include "Entities/Player.h"
 #include "Entities/Camera.h"
 #include "Entities/Block.h"
+#include "Entities/Store.h"
 // Systems
 #include "Systems/RenderSystem.h"
 #include "Systems/ResourceManager.h"
@@ -33,6 +34,7 @@ namespace Motherload
     class Block;
     class Camera;
     class Player;
+    class Store;
 
     class Game
     {        
@@ -47,21 +49,33 @@ namespace Motherload
         std::vector<int> staticPhysicsEntitiesFlaggedForDestruction;
         std::vector<Entity*> entitiesToBeSpawned;
 
+        Store* fuelStore;
+        Store* refinery;
+        Store* upgradeStore;
+
         void destroyFlaggedEntities();
     public:
         // Variables
         Player* player;
+        int lowestDepth = 0;
+
         std::vector<Entity*> entities;
         std::vector<Physics::PhysicsEntity*> dynamicPhysicsEntities;
         std::vector<Physics::PhysicsEntity*> staticPhysicsEntities;
         std::vector<std::vector<Block*>> blocks;
         bool quit = 0;
 
+        UIPanel* depthPanel;
+        UIPanel* lowestDepthPanel;
         UIPanel* moneyPanel;
-        UIPanel* inventoryPanel;
+
         UIPanel* granitePanel;
         UIPanel* ironPanel;
         UIPanel* goldPanel;
+
+        UIPanel* drillPanel;
+        UIPanel* hullPanel;
+        UIPanel* gastankPanel;
 
         static Game* instance;
         float deltaTime;
@@ -72,6 +86,7 @@ namespace Motherload
         void startup();
         void initializeSystems();
         void populateScene();
+        void spawnStores();
         void populateBlockGrid();
         void addUiPanels();
         void updateUiPanels();
@@ -79,6 +94,7 @@ namespace Motherload
         void handleInput();
         void exit();
         void cleanup();
+        void destroyBlock(Block* block);
         void destroyEntity(Entity* entity); 
         void quitOnError();
     };

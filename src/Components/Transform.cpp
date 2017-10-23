@@ -21,4 +21,9 @@ namespace Motherload
         return sizeWorldSpace * scaleWorldSpace;
     }
 
+    glm::vec2 Transform::getPositionCoordinates()
+    {
+        return positionWorldSpace / Constants::cellSize;
+    }
+
 } // namespace Motherload

@@ -66,6 +66,7 @@ namespace Motherload
     void Game::populateScene()
     {
         populateBlockGrid();
+        spawnStores();
         player = new Player
         (
             glm::vec2
@@ -74,11 +75,26 @@ namespace Motherload
                 -100.0f
             )
         );
-
         player->initialize();
-
         entities.push_back(player);
         dynamicPhysicsEntities.push_back(player);
+    }
+    void Game::spawnStores()
+    {
+        fuelStore = new Store(Constants::fuelStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
+        fuelStore->initialize(StoreType::FuelStore, "data/textures/fuelstore.png");
+        entities.push_back(fuelStore);
+        staticPhysicsEntities.push_back(fuelStore);
+
+        refinery = new Store(Constants::refineryPosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
+        refinery->initialize(StoreType::Refinery, "data/textures/refinery.png");
+        entities.push_back(refinery);
+        staticPhysicsEntities.push_back(refinery);
+
+        upgradeStore = new Store(Constants::upgradeStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
+        upgradeStore->initialize(StoreType::UpgradeStore, "data/textures/upgradestore.png");
+        entities.push_back(upgradeStore);
+        staticPhysicsEntities.push_back(upgradeStore);
     }
 
     void Game::populateBlockGrid()
@@ -112,7 +128,7 @@ namespace Motherload
                     glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
                     i * Constants::cellSize + Constants::cellSize / 2)
                 );
-                block->initialize(mineralType);
+                block->initialize(mineralType, glm::vec2(i, j));
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
                 staticPhysicsEntities.push_back(block);
@@ -123,11 +139,15 @@ namespace Motherload
 
     void Game::addUiPanels()
     {
-        moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$100", true);
-        // inventoryPanel = UISystem::addPanel(Constants::inventoryPanelPosition, "Inventory", false);
-        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite 0", false);
-        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron 0", false);
-        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold 0", false);
+        depthPanel = UISystem::addPanel(Constants::depthPanelPosition, "Depth: 0", false);
+        lowestDepthPanel = UISystem::addPanel(Constants::lowestDepthPanelPosition, "Lowest depth: 0", false);
+        moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$20", true);
+        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite: 0", false);
+        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron: 0", false);
+        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold: 0", false);
+        drillPanel = UISystem::addPanel(Constants::drillPanelPosition, "Drill level: 0", false);
+        hullPanel = UISystem::addPanel(Constants::hullPanelPosition, "Hull level: 0", false);
+        gastankPanel = UISystem::addPanel(Constants::gastankPanelPosition, "Gas tank level: 0", false);
     }
 
     void Game::mainloop()
@@ -147,7 +167,7 @@ namespace Motherload
             InputSystem::registerInputs();
             handleInput();
 
-            /* Update physics system */
+            /* Step physics system */
             Physics::PhysicsSystem::step(deltaTime);
 
             /* Update entities */
@@ -158,6 +178,9 @@ namespace Motherload
            
             /* Update debug system */
             DebugSystem::update(deltaTime);
+
+            /* Update UI System */
+            UISystem::update(deltaTime);
 
             /* Update camera position */
             camera->updatePosition(deltaTime);
@@ -185,6 +208,12 @@ namespace Motherload
         blocks.clear();
         entities.clear();
         SDL_DestroyWindow(window);
+    }
+
+    void Game::destroyBlock(Block* block)
+    {
+        blocks[block->coordinates.x][block->coordinates.y] = nullptr;
+        destroyEntity(block);
     }
     
     void Game::destroyEntity(Entity* entity)
@@ -227,7 +256,6 @@ namespace Motherload
         std::sort(Game::instance->staticPhysicsEntitiesFlaggedForDestruction.begin(), Game::instance->staticPhysicsEntitiesFlaggedForDestruction.end());
         
         int index = 0;
-        
         
         while (Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.size() > 0) 
         {
