@@ -32,6 +32,8 @@ namespace Motherload
         static void drawWireframeCircle(glm::vec2 position, float radius = 5.0f);
         static void drawLine(DebugLine* line);
         static void clearDebugLines();
+        static void setClearColor(glm::vec4 color);
+        static void updateClearColor();
         
     public:
         // Variables

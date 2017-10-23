@@ -6,6 +6,11 @@ namespace Motherload
     {
         this->transform = new Transform(this, position);
         this->inventory = new Inventory(this);
+        this->isDrilling = false;
+        this->isGrounded = false;
+        this->accelerating = false;
+        this->startDrilling = false;
+        this->collidingWithBlockDrilling = false;
     }
 
     void Player::initialize()

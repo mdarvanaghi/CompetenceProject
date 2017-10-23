@@ -22,13 +22,18 @@ namespace Motherload
             std::cerr << "Could not create SDL Renderer." << std::endl;
         }
 
+        setClearColor(Constants::firstClearColor);
+    }
+
+    void RenderSystem::setClearColor(glm::vec4 color)
+    {
         SDL_SetRenderDrawColor
         (
             renderer,
-            Constants::firstClearColor.x,
-            Constants::firstClearColor.y,
-            Constants::firstClearColor.z,
-            Constants::firstClearColor.w
+            color.x,
+            color.y,
+            color.z,
+            color.w
         );
     }
 
@@ -59,7 +64,7 @@ namespace Motherload
     void RenderSystem::renderScene()
     {
         /* Clear renderer */
-        setDrawingColor(Constants::firstClearColor);
+        updateClearColor();
         SDL_RenderClear(renderer);
         
         /* Draw all entities */
@@ -106,9 +111,22 @@ namespace Motherload
     {
         for (auto& panel : UISystem::panels)
         {
+            /* Render background panel first */
+            if (panel->backgroundPanel != nullptr)
+            {
+                renderTexture
+                (
+                    panel->backgroundPanel,
+                    panel->centered ? panel->position - (panel->size / 2.0f + panel->padding) : panel->position - panel->padding,
+                    panel->size + panel->padding * 2
+                );
+            }
+
+            /* Then render the text */
             if (panel->texture == nullptr)
             {
-                std::cerr << "Texture is nullptr" << std::endl;
+                std::cerr << "UI Panel texture is nullptr" << std::endl;
+                continue;
             }
 
             renderTexture
@@ -256,6 +274,23 @@ namespace Motherload
             index = debugLinesToBeRemoved.back();
             debugLines.erase(debugLines.begin() + index);
             debugLinesToBeRemoved.pop_back();
+        }
+    }
+
+    void RenderSystem::updateClearColor()
+    {
+        float currentPlayerDepth = Game::instance->player->transform->positionWorldSpace.y;
+        if (currentPlayerDepth <= 0)
+        {
+            setClearColor(Constants::firstClearColor);
+        }
+        else if (currentPlayerDepth < Constants::firstColorCutoff)
+        {
+            setClearColor(Extensions::Vector4::lerp(Constants::firstClearColor, Constants::secondClearColor, currentPlayerDepth / Constants::firstColorCutoff));
+        }
+        else if (currentPlayerDepth < Constants::secondColorCutoff)
+        {
+            setClearColor(Extensions::Vector4::lerp(Constants::secondClearColor, Constants::thirdClearColor, (currentPlayerDepth - Constants::firstColorCutoff) * 2 / Constants::secondColorCutoff));
         }
     }
 }
