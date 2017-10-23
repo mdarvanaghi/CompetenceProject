@@ -112,7 +112,7 @@ namespace Motherload
                     glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
                     i * Constants::cellSize + Constants::cellSize / 2)
                 );
-                block->initialize(mineralType);
+                block->initialize(mineralType, glm::vec2(i, j));
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
                 staticPhysicsEntities.push_back(block);
@@ -186,6 +186,12 @@ namespace Motherload
         entities.clear();
         SDL_DestroyWindow(window);
     }
+
+    void Game::destroyBlock(Block* block)
+    {
+        blocks[block->coordinates.x][block->coordinates.y] = nullptr;
+        destroyEntity(block);
+    }
     
     void Game::destroyEntity(Entity* entity)
     {
@@ -227,7 +233,6 @@ namespace Motherload
         std::sort(Game::instance->staticPhysicsEntitiesFlaggedForDestruction.begin(), Game::instance->staticPhysicsEntitiesFlaggedForDestruction.end());
         
         int index = 0;
-        
         
         while (Game::instance->dynamicPhysicsEntitiesFlaggedForDestruction.size() > 0) 
         {

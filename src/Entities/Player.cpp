@@ -23,7 +23,25 @@ namespace Motherload
         this->maxSpeedY = Constants::playerTerminalVelocity;
         this->isDynamic = true;
     }
+    
+    void Player::physicsUpdate(float deltaTime)
+    {
+        neighbors = getNeighborBlocks();
+        if (neighbors.size() > 0)
+        {
+            currentBlockBelow = neighbors[2][1];
+            currentBlockLeft = neighbors[1][0];
+            currentBlockRight = neighbors[1][2];
+        }
 
+        accelerating = false;
+        handleInput(deltaTime);
+        if (!accelerating)
+        {
+            decelerate();
+        }
+    }
+    
     void Player::update(float deltaTime)
     {
         if (isDrilling)
@@ -32,46 +50,42 @@ namespace Motherload
             return;
         }
 
-        if (!collidingThisFrame)
+        if (!isGrounded)
         {
             currentBlockBelow = nullptr;
+            currentBlockLeft = nullptr;
+            currentBlockRight = nullptr;
+            blockCurrentlyDrilling = nullptr;
             startDrilling = false;
             return;
         }
-        collidingThisFrame = false;
-
+        isGrounded = false;
+        if (!collidingWithBlockDrilling)
+        {
+            return;
+        }
+        collidingWithBlockDrilling = false;
+        checkDrillRequest();
+    }
+    
+    void Player::checkDrillRequest()
+    {
         if (startDrilling)
         {
-            setDrillingMode(true);
+            requestDrillingMode(true);
         }
         startDrilling = false;
     }
 
-    void Player::physicsUpdate(float deltaTime)
-    {
-        accelerating = false;
-        handleInput(deltaTime);
-        if (!accelerating)
-        {
-            decelerate();
-        }
-    }
-
     void Player::isColliding(PhysicsEntity* block)
     {
-        collidingThisFrame = true;
-        if (block->transform->positionWorldSpace.y > transform->positionWorldSpace.y)
+        if ((PhysicsEntity*) currentBlockBelow == block)
         {
-            if (currentBlockBelow == nullptr)
-            {
-                currentBlockBelow = (Block*) block;
-            }
-            else if 
-            (glm::abs(block->transform->positionWorldSpace.x - transform->positionWorldSpace.x)
-                < glm::abs(currentBlockBelow->transform->positionWorldSpace.x - transform->positionWorldSpace.x)) 
-            {
-                currentBlockBelow = (Block*) block;
-            }
+            isGrounded = true;
+        }
+        if ((PhysicsEntity*) blockCurrentlyDrilling == block)
+        {
+            collidingWithBlockDrilling = true;
         }
     }
 
@@ -81,19 +95,24 @@ namespace Motherload
         {
             addForce(Constants::up * accelerationY * deltaTime);
         }
-        if (InputSystem::getKey(SDL_SCANCODE_DOWN))
-        {
-            startDrilling = true;
-        }
         if (InputSystem::getKey(SDL_SCANCODE_LEFT))
         {
             addForce(Constants::left * accelerationX * deltaTime);
             accelerating = true;
+            blockCurrentlyDrilling = currentBlockLeft;
+            startDrilling = true;
         }
         if (InputSystem::getKey(SDL_SCANCODE_RIGHT))
         {
             addForce(Constants::right * accelerationY * deltaTime);
             accelerating = true;
+            blockCurrentlyDrilling = currentBlockRight;
+            startDrilling = true;
+        }
+        if (InputSystem::getKey(SDL_SCANCODE_DOWN))
+        {
+            blockCurrentlyDrilling = currentBlockBelow;
+            startDrilling = true;
         }
     }
 
@@ -107,72 +126,85 @@ namespace Motherload
         if (velocity.x < 0.0f && velocity.x > -decelerationX) velocity.x = 0.0f;
     }
 
-    void Player::setDrillingMode(bool value)
+    void Player::requestDrillingMode(bool value)
     {
+        
         isDrilling = value;
         isDynamic = !value;
+        velocity = glm::vec2(0);
+        
         if (isDrilling)
         {
+            if (blockCurrentlyDrilling == nullptr)
+            {
+                return;
+            }
             drillOrigin = transform->positionWorldSpace;
             timeDrilled = 0.0f;
         }
         else 
         {
-            currentBlockBelow = nullptr;
+            blockCurrentlyDrilling = nullptr;
         }
     }
 
     void Player::drill(float deltaTime)
     {
+        if (blockCurrentlyDrilling == nullptr)
+        {
+            requestDrillingMode(false);
+            return;
+        }
         timeDrilled += deltaTime;
         float progress = timeDrilled / Constants::drillTime;
-        transform->positionWorldSpace = Extensions::Vector2::lerp(drillOrigin, currentBlockBelow->transform->positionWorldSpace, progress);
+        transform->positionWorldSpace = Extensions::Vector2::lerp(drillOrigin, blockCurrentlyDrilling->transform->positionWorldSpace, progress);
         if (progress >= 1.0f)
         {
             collectMineral();
-            setDrillingMode(false);
+            requestDrillingMode(false);
         }
     }
 
     void Player::collectMineral()
     {
-        inventory->addMineral(currentBlockBelow->mineralType);
-        Game::instance->destroyEntity(currentBlockBelow);
+        inventory->addMineral(blockCurrentlyDrilling->mineralType);
+        Game::instance->destroyBlock(blockCurrentlyDrilling);
     }
 
     std::vector<std::vector<Block*>> Player::getNeighborBlocks(int range)
     {
+        int span = range * 2 + 1;
         glm::vec2 coordinates = transform->getPositionCoordinates();
-        std::vector<std::vector<Block*>> neighbors = std::vector<std::vector<Block*>>();
         int depth = Game::instance->blocks.size();
-        if (depth < 0)
+        std::vector<std::vector<Block*>> neighbors = std::vector<std::vector<Block*>>(span);
+        if (depth <= 0)
         {
             return neighbors;
         }
-
         int width = Game::instance->blocks[0].size();
-        int iCounter = 0;
-        int jCounter = 0;
-        for (int i = coordinates.y - range; i <= coordinates.y + range; i++)
+        
+        for (int i = 0; i < span; i++)
         {
-            if (i >= 0 && i < depth)
+            neighbors.at(i) = std::vector<Block*>(span);
+            for (int j = 0; j < span; j++)
             {
-                neighbors.at(i) = std::vector<Block*>();
-                for (int j = coordinates.x - range; j <= coordinates.x + range; j++)
+                int worldCoordinateY = coordinates.y + (i - range);
+                int worldCoordinateX = coordinates.x + (j - range);
+
+                if
+                (
+                    (worldCoordinateY >= 0 && worldCoordinateY < depth) // Depth not out of range
+                    && (worldCoordinateX >= 0 && worldCoordinateX < width) // Width not out of range
+                    && (worldCoordinateY != coordinates.y && worldCoordinateX != coordinates.x) // Is not player
+                )
                 {
-                    if (j >= 0 && j < width && (i != coordinates.y && j != coordinates.x))
-                    {
-                        neighbors[iCounter][jCounter] = Game::instance->blocks[i][j];
-                    }
-                    else 
-                    {
-                        neighbors[iCounter][jCounter] = nullptr;
-                    }
-                    jCounter++;
+                    neighbors[i][j] = Game::instance->blocks[worldCoordinateY][worldCoordinateX];
+                }
+                else 
+                {
+                    neighbors[i][j] = nullptr;
                 }
             }
-            jCounter = 0;
-            iCounter++;
         }
         return neighbors;
     }

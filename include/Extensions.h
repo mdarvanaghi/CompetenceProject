@@ -10,5 +10,10 @@ namespace Extensions
         {
             return b * t + a * (1.0f - t);
         }
+
+        static glm::vec4 lerp(glm::vec4 a, glm::vec4 b, float t)
+        {
+            return b * t + a * (1.0f - t);
+        }
     } // namespace Vector2
 } // namespace Extensions

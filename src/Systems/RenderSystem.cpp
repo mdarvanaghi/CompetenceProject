@@ -25,10 +25,10 @@ namespace Motherload
         SDL_SetRenderDrawColor
         (
             renderer,
-            Constants::clearColor.x,
-            Constants::clearColor.y,
-            Constants::clearColor.z,
-            Constants::clearColor.w
+            Constants::firstClearColor.x,
+            Constants::firstClearColor.y,
+            Constants::firstClearColor.z,
+            Constants::firstClearColor.w
         );
     }
 
@@ -59,7 +59,7 @@ namespace Motherload
     void RenderSystem::renderScene()
     {
         /* Clear renderer */
-        setDrawingColor(Constants::clearColor);
+        setDrawingColor(Constants::firstClearColor);
         SDL_RenderClear(renderer);
         
         /* Draw all entities */
@@ -133,16 +133,33 @@ namespace Motherload
     }
 
     void RenderSystem::drawWireframe()
-    {       
+    {    
         for (auto& entity : Game::instance->entities)
         {
+            drawWireframeQuad
+            (
+                entity->transform->getPositionCameraSpace() - (entity->transform->sizeWorldSpace / 2.0f),
+                entity->transform->getSizeCameraSpace()
+            );
+
+                // drawWireframeCircle(entity->transform->getPositionCameraSpace());
+        }
+
+        for (auto& vector : Game::instance->player->neighbors)
+        {
+            for (auto& entity : vector)
+            {
+                if (entity == nullptr)
+                {
+                    continue;
+                }
                 drawWireframeQuad
                 (
                     entity->transform->getPositionCameraSpace() - (entity->transform->sizeWorldSpace / 2.0f),
-                    entity->transform->getSizeCameraSpace()
+                    entity->transform->getSizeCameraSpace(),
+                    Constants::debugNeighborQuadColor
                 );
-
-                drawWireframeCircle(entity->transform->getPositionCameraSpace());
+            }
         }
 
         int lineIndex = 0;
@@ -162,9 +179,9 @@ namespace Motherload
         clearDebugLines();
     }
 
-    void RenderSystem::drawWireframeQuad(glm::vec2 position, glm::vec2 scale)
+    void RenderSystem::drawWireframeQuad(glm::vec2 position, glm::vec2 scale, glm::vec4 color)
     {
-        setDrawingColor(Constants::debugQuadColor);
+        setDrawingColor(color);
         
         textureRect->x = position.x;
         textureRect->y = position.y;

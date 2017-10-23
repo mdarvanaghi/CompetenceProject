@@ -79,6 +79,7 @@ namespace Motherload
         void handleInput();
         void exit();
         void cleanup();
+        void destroyBlock(Block* block);
         void destroyEntity(Entity* entity); 
         void quitOnError();
     };

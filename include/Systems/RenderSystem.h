@@ -28,7 +28,7 @@ namespace Motherload
         static std::vector<DebugLine*> debugLines;
         static std::vector<int> debugLinesToBeRemoved;
         static void drawWireframe();
-        static void drawWireframeQuad(glm::vec2 position, glm::vec2 scale);
+        static void drawWireframeQuad(glm::vec2 position, glm::vec2 scale, glm::vec4 = Constants::debugQuadColor);
         static void drawWireframeCircle(glm::vec2 position, float radius = 5.0f);
         static void drawLine(DebugLine* line);
         static void clearDebugLines();

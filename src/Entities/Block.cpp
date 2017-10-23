@@ -7,10 +7,11 @@ namespace Motherload
         this->transform = new Transform(this, position, size);
     }
 
-    void Block::initialize(MineralType mineralType)
+    void Block::initialize(MineralType mineralType, glm::vec2 coordinates)
     {
         this->name = "Block";
         this->mineralType = mineralType;
+        this->coordinates = coordinates;
 
         /* Physics */
         this->collider = new Physics::Collider(this);
