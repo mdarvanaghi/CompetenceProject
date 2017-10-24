@@ -5,11 +5,16 @@ namespace Motherload
 {
     void Store::update(float deltaTime)
     {
-        uiPanel->setActive(active);
         if (active)
         {
-            updateUi();
+            activeUpdate();
+            if (!activeLastFrame)
+            {
+                resetUi();
+            }
         }
+        uiPanel->setActive(active);
+        activeLastFrame = active;
         active = false;
     }
 

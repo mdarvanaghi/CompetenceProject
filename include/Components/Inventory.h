@@ -12,6 +12,8 @@ namespace Motherload
 {
     class Inventory : public Component
     {
+    private:
+        void updateMineral(MineralType mineral);
     public:
         // Variables
         std::vector<int> minerals;
@@ -25,6 +27,8 @@ namespace Motherload
         // Methods
         Inventory(Entity* entity);
         void addMineral(MineralType mineral);
+        void resetMinerals();
+        void addMoney(int amount);
         void upgradeItem(UpgradeType type);
     };
 } // namespace Motherload

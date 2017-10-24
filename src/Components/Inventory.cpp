@@ -16,7 +16,7 @@ namespace Motherload
         {
             upgrades.push_back(Upgrade((UpgradeType) i, 0.3f));
         }
-
+        this->money = Constants::startMoney;
         this->maxFuel = 100.0f;
         this->maxHealth = 100.0f;
         this->fuel = 50.0f;
@@ -25,8 +25,13 @@ namespace Motherload
 
     void Inventory::addMineral(MineralType mineral)
     {
-        std::string mineralString;
         this->minerals[mineral]++;
+        updateMineral(mineral);
+    }
+
+    void Inventory::updateMineral(MineralType mineral)
+    {
+        std::string mineralString;
         switch (mineral)
         {
             case (MineralType::Granite):
@@ -48,6 +53,20 @@ namespace Motherload
                 break;
             }
         }
+    }
+
+    void Inventory::resetMinerals()
+    {
+        for (int i = 0; i < MineralType::NUM_MINERALS; i++)
+        {
+            updateMineral((MineralType) i);
+        }
+    }
+
+    void Inventory::addMoney(int amount)
+    {
+        money += amount;
+        Game::instance->moneyPanel->setText("$" + std::to_string(money));
     }
 
     void Inventory::upgradeItem(UpgradeType type)

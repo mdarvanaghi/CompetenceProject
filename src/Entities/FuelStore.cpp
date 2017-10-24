@@ -17,18 +17,33 @@ namespace Motherload
     {
         this->fuelPrice = Constants::fuelPrice;
         this->buyString = "Press SPACE to fill tank ($" + std::to_string(fuelPrice) + ").";
+        this->tankFullString = "Tank is now full.";
         this->texture = ResourceManager::getTexture("data/textures/fuelstore.png");
         uiPanel = UISystem::addPanel(Constants::centerScreen, buyString, true);
         uiPanel->setBackgroundPanel(ResourceManager::getTexture("data/textures/uipanel.png"), 30.0f);
         uiPanel->setActive(false);
     }
 
-    void FuelStore::updateUi()
+    void FuelStore::activeUpdate()
     {
         if (InputSystem::getKeyDown(SDL_SCANCODE_SPACE))
         {
-            Game::instance->player->inventory->fuel = Game::instance->player->inventory->maxFuel;
-            Game::instance->player->inventory->money -= 20;
+            if (Game::instance->player->inventory->money >= fuelPrice)
+            {
+                buyFuel();
+            }
         }
+    }
+
+    void FuelStore::buyFuel()
+    {
+        Game::instance->player->inventory->fuel = Game::instance->player->inventory->maxFuel;
+        Game::instance->player->inventory->addMoney(-20);
+        uiPanel->setText(tankFullString);
+    }
+
+    void FuelStore::resetUi()
+    {
+        uiPanel->setText(buyString);
     }
 }

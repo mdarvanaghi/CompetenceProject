@@ -32,11 +32,9 @@ namespace Motherload
         /* Stores */
         const glm::vec2 storeSize(Constants::cellSize*3, Constants::cellSize*2);
         const glm::vec2 fuelStorePosition(cellSize * 4, -cellSize);
-        const int fuelPrice = 20;
+        const int fuelPrice = 8;
         const glm::vec2 refineryPosition(cellSize * 16, -cellSize);
-        const int granitePrice = 2;
-        const int ironPrice = 4;
-        const int goldPrice = 10;
+        const int mineralPrices[] = {0, 2, 4, 10};
         const glm::vec2 upgradeStorePosition(cellSize * 28, -cellSize);
         
         /* Debug */

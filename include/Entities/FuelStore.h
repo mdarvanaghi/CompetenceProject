@@ -11,7 +11,11 @@ namespace Motherload
     private:
         int fuelPrice;
         std::string buyString;
-        void updateUi();
+        std::string tankFullString;
+
+        void buyFuel();
+        void activeUpdate();
+        void resetUi();
     public:
         FuelStore(glm::vec2 position, glm::vec2 size);
         void initialize();

@@ -10,11 +10,12 @@ namespace Motherload
     {
     private:
         std::vector<std::string> buyStrings;
-        int granitePrice;
-        int ironPrice;
-        int goldPrice;
 
-        void updateUi();
+        int totalMoney;
+
+        void activeUpdate();
+        void resetUi();
+        void sellMinerals();
     public:
         Refinery(glm::vec2 position, glm::vec2 size);
         void initialize();

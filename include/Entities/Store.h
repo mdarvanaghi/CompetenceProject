@@ -9,9 +9,11 @@ namespace Motherload
     {
     protected:
         bool active;
+        bool activeLastFrame = false;
         UIPanel* uiPanel;
 
-        virtual void updateUi() {}
+        virtual void activeUpdate() {}
+        virtual void resetUi() {}
     public:
         void update(float deltaTime);
         void isColliding(Physics::PhysicsEntity* other);

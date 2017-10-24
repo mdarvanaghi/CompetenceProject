@@ -68,8 +68,6 @@ namespace Motherload
         return panel;
     }
 
-
-
     void UISystem::removePanel(UIPanel* panel)
     {
         int i = 0;
