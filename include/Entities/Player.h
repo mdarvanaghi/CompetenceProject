@@ -26,7 +26,6 @@ namespace Motherload
         float accelerationX, decelerationX;
         float accelerationY;
 
-        Inventory* inventory;
 
         Block* currentBlockBelow;
         Block* currentBlockLeft;
@@ -45,6 +44,7 @@ namespace Motherload
         
     public:
         std::vector<std::vector<Block*>> neighbors;
+        Inventory* inventory;
         
         Player(glm::vec2 position);
         void update(float deltaTime);

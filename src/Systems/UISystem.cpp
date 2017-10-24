@@ -22,33 +22,53 @@ namespace Motherload
     {
         int currentDepth = int (Game::instance->player->transform->positionWorldSpace.y);
         std::string depthString = "Depth: " + std::to_string(currentDepth);
-        Game::instance->depthPanel->setText(depthString.c_str());
+        Game::instance->depthPanel->setText(depthString);
 
         if (currentDepth > Game::instance->lowestDepth)
         {
             Game::instance->lowestDepth = currentDepth;
             std::string lowestDepthString = "Lowest depth: " + std::to_string(Game::instance->lowestDepth);
-            Game::instance->lowestDepthPanel->setText(lowestDepthString.c_str());
+            Game::instance->lowestDepthPanel->setText(lowestDepthString);
         }
     }
 
-    UIPanel* UISystem::addPanel(glm::vec2 position, const char* text, bool centered)
+    UIPanel* UISystem::addPanel(glm::vec2 position, std::string text, bool centered)
     {
         return addPanel(position, text, Constants::debugFont, centered);
     }
 
-    UIPanel* UISystem::addPanel(glm::vec2 position, const char* text, const char* fontFamily, bool centered)
+    UIPanel* UISystem::addPanel(glm::vec2 position, std::string text, const char* fontFamily, bool centered)
     {
         UIPanel* panel = new UIPanel(position, centered, fontFamily);
         return addPanel(panel, text);
     }
 
-    UIPanel* UISystem::addPanel(UIPanel* panel, const char* text)
+    UIPanel* UISystem::addPanel(UIPanel* panel, std::string text)
     {
         panel->setText(text);
         panels.push_back(panel);
         return panel;
     }
+
+    UIPanel* UISystem::addPanel(glm::vec2 position, std::vector<std::string> textStrings, bool centered)
+    {
+        return addPanel(position, textStrings, Constants::debugFont, centered);
+    }
+
+    UIPanel* UISystem::addPanel(glm::vec2 position, std::vector<std::string> textStrings, const char* fontFamily, bool centered)
+    {
+        UIPanel* panel = new UIPanel(position, centered, fontFamily);
+        return addPanel(panel, textStrings);
+    }
+
+    UIPanel* UISystem::addPanel(UIPanel* panel, std::vector<std::string> textStrings)
+    {
+        panel->setText(textStrings);
+        panels.push_back(panel);
+        return panel;
+    }
+
+
 
     void UISystem::removePanel(UIPanel* panel)
     {

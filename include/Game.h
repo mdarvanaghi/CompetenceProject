@@ -17,6 +17,8 @@
 #include "Entities/Player.h"
 #include "Entities/Camera.h"
 #include "Entities/Block.h"
+#include "Entities/FuelStore.h"
+#include "Entities/Refinery.h"
 #include "Entities/Store.h"
 // Systems
 #include "Systems/RenderSystem.h"
@@ -35,6 +37,8 @@ namespace Motherload
     class Camera;
     class Player;
     class Store;
+    class FuelStore;
+    class Refinery;
 
     class Game
     {        
@@ -49,9 +53,9 @@ namespace Motherload
         std::vector<int> staticPhysicsEntitiesFlaggedForDestruction;
         std::vector<Entity*> entitiesToBeSpawned;
 
-        Store* fuelStore;
-        Store* refinery;
-        Store* upgradeStore;
+        FuelStore* fuelStore;
+        Refinery* refinery;
+//        Store* upgradeStore;
 
         void destroyFlaggedEntities();
     public:

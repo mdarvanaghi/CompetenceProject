@@ -179,6 +179,30 @@ namespace Motherload
                 );
             }
         }
+        // if 
+        // (
+        //     Game::instance->player->neighbors[2][1] != nullptr &&
+        //     Game::instance->player->neighbors[1][0] != nullptr &&
+        //     Game::instance->player->neighbors[1][2] != nullptr
+        // )
+        // drawWireframeQuad
+        // (
+        //     Game::instance->player->neighbors[2][1]->transform->getPositionCameraSpace() - (Game::instance->player->neighbors[2][1]->transform->sizeWorldSpace / 2.0f),
+        //     Game::instance->player->neighbors[2][1]->transform->getSizeCameraSpace(),
+        //     Constants::debugNeighborQuadColor
+        // );
+        // drawWireframeQuad
+        // (
+        //     Game::instance->player->neighbors[1][0]->transform->getPositionCameraSpace() - (Game::instance->player->neighbors[1][0]->transform->sizeWorldSpace / 2.0f),
+        //     Game::instance->player->neighbors[1][0]->transform->getSizeCameraSpace(),
+        //     Constants::debugNeighborQuadColor
+        // );
+        // drawWireframeQuad
+        // (
+        //     Game::instance->player->neighbors[1][2]->transform->getPositionCameraSpace() - (Game::instance->player->neighbors[1][2]->transform->sizeWorldSpace / 2.0f),
+        //     Game::instance->player->neighbors[1][2]->transform->getSizeCameraSpace(),
+        //     Constants::debugNeighborQuadColor
+        // );
 
         int lineIndex = 0;
         for (auto& line : debugLines)

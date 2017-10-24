@@ -4,3 +4,11 @@ include/Entities
 include/Systems
 include/Systems/Debug
 include/Systems/Physics
+include/Systems/UI
+src/Components
+src
+src/Systems/Debug
+src/Systems/Physics
+src/Systems
+src/Systems/UI
+src/Entities

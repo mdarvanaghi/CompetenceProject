@@ -71,7 +71,7 @@ namespace Motherload
         (
             glm::vec2
             (
-                Constants::intitialWindowWidth / 2,
+                Constants::intitialWindowWidth / 2 - 100.0f,
                 -100.0f
             )
         );
@@ -81,27 +81,27 @@ namespace Motherload
     }
     void Game::spawnStores()
     {
-        fuelStore = new Store(Constants::fuelStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
-        fuelStore->initialize(StoreType::FuelStore, "data/textures/fuelstore.png");
+        fuelStore = new FuelStore(Constants::fuelStorePosition, Constants::storeSize);
+        fuelStore->initialize();
         entities.push_back(fuelStore);
         staticPhysicsEntities.push_back(fuelStore);
 
-        refinery = new Store(Constants::refineryPosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
-        refinery->initialize(StoreType::Refinery, "data/textures/refinery.png");
+        refinery = new Refinery(Constants::refineryPosition, Constants::storeSize);
+        refinery->initialize();
         entities.push_back(refinery);
         staticPhysicsEntities.push_back(refinery);
 
-        upgradeStore = new Store(Constants::upgradeStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
-        upgradeStore->initialize(StoreType::UpgradeStore, "data/textures/upgradestore.png");
-        entities.push_back(upgradeStore);
-        staticPhysicsEntities.push_back(upgradeStore);
+//        upgradeStore = new Store(Constants::upgradeStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
+//        upgradeStore->initialize(StoreType::UpgradeStore, "data/textures/upgradestore.png");
+//        entities.push_back(upgradeStore);
+//        staticPhysicsEntities.push_back(upgradeStore);
     }
 
     void Game::populateBlockGrid()
     {
         std::cout << "Generating blocks...";
         blocks = std::vector<std::vector<Block*>>(Constants::worldDepth);
-        // TODO: Seed rand() with srand()
+        std::srand(SDL_GetPerformanceCounter());
         float randMax = (float) RAND_MAX;
         horizontalBlocks = (int) Constants::intitialWindowWidth / Constants::cellSize;
         for (int i = 0; i < Constants::worldDepth; i++)

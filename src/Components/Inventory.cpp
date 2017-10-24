@@ -16,6 +16,11 @@ namespace Motherload
         {
             upgrades.push_back(Upgrade((UpgradeType) i, 0.3f));
         }
+
+        this->maxFuel = 100.0f;
+        this->maxHealth = 100.0f;
+        this->fuel = 50.0f;
+        this->health = 70.0f;
     }
 
     void Inventory::addMineral(MineralType mineral)
@@ -27,19 +32,19 @@ namespace Motherload
             case (MineralType::Granite):
             {
                 mineralString = "Granite: " + std::to_string(minerals[mineral]);
-                Game::instance->granitePanel->setText(mineralString.c_str());
+                Game::instance->granitePanel->setText(mineralString);
                 break;
             }
             case (MineralType::Iron):
             {
                 mineralString = "Iron: " + std::to_string(minerals[mineral]);
-                Game::instance->ironPanel->setText(mineralString.c_str());
+                Game::instance->ironPanel->setText(mineralString);
                 break;
             }
             case (MineralType::Gold):
             {
                 mineralString = "Gold: " + std::to_string(minerals[mineral]);
-                Game::instance->goldPanel->setText(mineralString.c_str());
+                Game::instance->goldPanel->setText(mineralString);
                 break;
             }
         }

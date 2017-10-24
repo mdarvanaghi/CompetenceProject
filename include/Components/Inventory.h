@@ -17,6 +17,10 @@ namespace Motherload
         std::vector<int> minerals;
         std::vector<Upgrade> upgrades;
         int money = Constants::startMoney;
+        float fuel;
+        float maxFuel;
+        float health;
+        float maxHealth;
 
         // Methods
         Inventory(Entity* entity);

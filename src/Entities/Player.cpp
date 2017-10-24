@@ -28,15 +28,23 @@ namespace Motherload
         this->maxSpeedY = Constants::playerTerminalVelocity;
         this->isDynamic = true;
     }
-    
+
     void Player::physicsUpdate(float deltaTime)
     {
         neighbors = getNeighborBlocks();
         if (neighbors.size() > 0)
         {
             currentBlockBelow = neighbors[2][1];
-            currentBlockLeft = neighbors[1][0];
-            currentBlockRight = neighbors[1][2];
+            if (transform->positionWorldSpace.y > 0)
+            {
+                currentBlockLeft = neighbors[1][0];
+                currentBlockRight = neighbors[1][2];
+            }
+            else
+            {
+                currentBlockLeft = nullptr;
+                currentBlockRight = nullptr;
+            }
         }
 
         accelerating = false;
@@ -46,7 +54,7 @@ namespace Motherload
             decelerate();
         }
     }
-    
+
     void Player::update(float deltaTime)
     {
         if (isDrilling)
@@ -72,7 +80,7 @@ namespace Motherload
         collidingWithBlockDrilling = false;
         checkDrillRequest();
     }
-    
+
     void Player::checkDrillRequest()
     {
         if (startDrilling)
@@ -125,7 +133,7 @@ namespace Motherload
     {
         if (velocity.x < 0.0f) velocity.x += decelerationX;
         if (velocity.x > 0.0f) velocity.x -= decelerationX;
-        
+
         // Make sure player stops completely
         if (velocity.x > 0.0f && velocity.x < decelerationX) velocity.x = 0.0f;
         if (velocity.x < 0.0f && velocity.x > -decelerationX) velocity.x = 0.0f;
@@ -133,11 +141,11 @@ namespace Motherload
 
     void Player::requestDrillingMode(bool value)
     {
-        
+
         isDrilling = value;
         isDynamic = !value;
         velocity = glm::vec2(0);
-        
+
         if (isDrilling)
         {
             if (blockCurrentlyDrilling == nullptr)
@@ -147,7 +155,7 @@ namespace Motherload
             drillOrigin = transform->positionWorldSpace;
             timeDrilled = 0.0f;
         }
-        else 
+        else
         {
             blockCurrentlyDrilling = nullptr;
         }
@@ -187,7 +195,7 @@ namespace Motherload
             return neighbors;
         }
         int width = Game::instance->blocks[0].size();
-        
+
         for (int i = 0; i < span; i++)
         {
             neighbors.at(i) = std::vector<Block*>(span);
@@ -205,7 +213,7 @@ namespace Motherload
                 {
                     neighbors[i][j] = Game::instance->blocks[worldCoordinateY][worldCoordinateX];
                 }
-                else 
+                else
                 {
                     neighbors[i][j] = nullptr;
                 }

@@ -4,12 +4,12 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include "Systems/RenderSystem.h"
 #include "Systems/UI/UIPanel.h"
 
 namespace Motherload
 {
     struct UIPanel;
+    class RenderSystem;
 
     class UISystem
     {
@@ -23,9 +23,14 @@ namespace Motherload
 
         static void initialize();
         static void update(float deltaTime);
-        static UIPanel* addPanel(glm::vec2 position, const char* text = "", bool centered = false);
-        static UIPanel* addPanel(glm::vec2 position, const char* text = "", const char* fontFamily = Constants::uiFont, bool centered = false);
-        static UIPanel* addPanel(UIPanel* panel, const char* text);
+        // Single line overloads
+        static UIPanel* addPanel(glm::vec2 position, std::string text = "", bool centered = false);
+        static UIPanel* addPanel(glm::vec2 position, std::string text = "", const char* fontFamily = Constants::uiFont, bool centered = false);
+        static UIPanel* addPanel(UIPanel* panel, std::string text);
+        // Multiple line overloads
+        static UIPanel* addPanel(glm::vec2 position, std::vector<std::string> textStrings, bool centered);
+        static UIPanel* addPanel(glm::vec2 position, std::vector<std::string> textStrings, const char* fontFamily, bool centered);
+        static UIPanel* addPanel(UIPanel* panel, std::vector<std::string> textStrings);
         static void removePanel(UIPanel* panel);
     };
 } // namespace Motherload

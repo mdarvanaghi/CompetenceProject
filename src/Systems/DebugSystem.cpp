@@ -39,7 +39,7 @@ namespace Motherload
         }
 
         /* Update FPS meter */
-        fpsPanel->setText(("FPS: " + std::to_string(1 / deltaTime)).c_str());
+        fpsPanel->setText(("FPS: " + std::to_string(1 / deltaTime)));
 
         if (InputSystem::getKeyDown(SDL_SCANCODE_F8))
         {

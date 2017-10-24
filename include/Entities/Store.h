@@ -1,30 +1,18 @@
 #pragma once
 #include <string>
 #include "Entities/PhysicsEntity.h"
-#include "Systems/ResourceManager.h"
-#include "Systems/UI/UIPanel.h"
 
 namespace Motherload
 {
-    class UIPanel;
-
-    enum StoreType
-    {
-        UpgradeStore,
-        Refinery,
-        FuelStore
-    };
-
+    struct UIPanel;
     class Store : public Physics::PhysicsEntity
     {
-    private:
-        StoreType type;
+    protected:
         bool active;
         UIPanel* uiPanel;
 
+        virtual void updateUi() {}
     public:
-        Store(glm::vec2 position, glm::vec2 size);
-        void initialize(StoreType type, std::string texture);
         void update(float deltaTime);
         void isColliding(Physics::PhysicsEntity* other);
     };

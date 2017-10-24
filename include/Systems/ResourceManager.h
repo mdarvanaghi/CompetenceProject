@@ -4,7 +4,7 @@
 #include <map>
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "RenderSystem.h"
+#include "Systems/RenderSystem.h"
 
 namespace Motherload
 {

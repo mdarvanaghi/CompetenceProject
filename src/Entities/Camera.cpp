@@ -36,9 +36,8 @@ namespace Motherload
         }
     }
 
-    glm::vec2* Camera::toCameraSpace(glm::vec2 position)
+    glm::vec2 Camera::toCameraSpace(glm::vec2 position)
     {
-        glm::vec2 cameraSpacePosition = position - positionWorldSpace;
-        return &cameraSpacePosition;
+        return position - positionWorldSpace;
     }
 } // namespace Motherload

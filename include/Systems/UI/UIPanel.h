@@ -14,19 +14,21 @@ namespace Motherload
         SDL_Surface* surface;
         TTF_Font* font;
         bool active;
-        const char* text;
+        std::vector<std::string> text;
 
     public:
         SDL_Texture* backgroundPanel;
         SDL_Texture* texture;
+        int wrapAfterPixels;
         float padding;
         glm::vec2 position;
         glm::vec2 size;
         bool centered;
 
-        UIPanel(glm::vec2 position, bool centered, const char* fontFamily);
+        UIPanel(glm::vec2 position, bool centered, const char* fontFamily, int wrapAfterPixels = 0);
         void setBackgroundPanel(SDL_Texture* texture, float padding = 5.0f);
-        void setText(const char* text);
+        void setText(std::string text);
+        void setText(std::vector<std::string> text);
         void setActive(bool value);
     };
 } // namespace Motherload
