@@ -26,7 +26,7 @@ namespace Motherload
         this->padding = padding;
     }
 
-    void UIPanel::setText(std::vector<std::string> textStrings)
+    void UIPanel::setText(std::vector<std::string> textStrings, SDL_Color textColor)
     {
         this->text = textStrings;
         int height;
@@ -46,21 +46,20 @@ namespace Motherload
         const char* cString = combinedString.c_str();
 
         size = glm::vec2(width, height);
-        surface = TTF_RenderText_Blended_Wrapped(font, cString, Constants::textColor, width);
+        surface = TTF_RenderText_Blended_Wrapped(font, cString, textColor, width);
         if (texture != nullptr)
         {
             SDL_DestroyTexture(texture);
         }
         texture = RenderSystem::createSurfaceTexture(surface);
         SDL_FreeSurface(surface);
-//        delete cText;
     }
 
-    void UIPanel::setText(std::string text)
+    void UIPanel::setText(std::string text, SDL_Color textColor)
     {
         std::vector<std::string> textStrings = std::vector<std::string>();
         textStrings.push_back(text);
-        setText(textStrings);
+        setText(textStrings, textColor);
     }
 
     void UIPanel::setActive(bool value)

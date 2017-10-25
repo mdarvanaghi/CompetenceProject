@@ -48,19 +48,27 @@ namespace Motherload
         );
         this->buyStrings.push_back
         (
-            "Iron: " +
+            "Iron:    " +
             std::to_string(Game::instance->player->inventory->minerals[MineralType::Iron]) +
                 " x $" + std::to_string(Constants::mineralPrices[MineralType::Iron])
         );
         this->buyStrings.push_back
         (
-            "Gold: " +
+            "Gold:    " +
             std::to_string(Game::instance->player->inventory->minerals[MineralType::Gold]) +
                 " x $" + std::to_string(Constants::mineralPrices[MineralType::Gold])
         );
-        this->buyStrings.push_back("Total: $" + std::to_string(totalMoney));
         this->buyStrings.push_back("----------------------------");
-        this->buyStrings.push_back("Press SPACE to sell minerals.");
+        this->buyStrings.push_back("Total:       $" + std::to_string(totalMoney));
+        this->buyStrings.push_back("----------------------------");
+        if (Game::instance->player->inventory->hasMinerals)
+        {
+            this->buyStrings.push_back("Press SPACE to sell minerals.");
+        }
+        else
+        {
+            this->buyStrings.push_back("No minerals in inventory.");
+        }
         uiPanel->setText(buyStrings);
     }
 
@@ -74,4 +82,6 @@ namespace Motherload
         Game::instance->player->inventory->resetMinerals();
         resetUi();
     }
+
+
 } // namespace Motherload

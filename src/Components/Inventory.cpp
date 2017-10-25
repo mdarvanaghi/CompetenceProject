@@ -21,12 +21,25 @@ namespace Motherload
         this->maxHealth = 100.0f;
         this->fuel = 50.0f;
         this->health = 70.0f;
+        this->hasMinerals = false;
+    }
+
+    void Inventory::initializeUi()
+    {
+        moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$20", true);
+        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite: 0", false);
+        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron: 0", false);
+        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold: 0", false);
+        drillPanel = UISystem::addPanel(Constants::drillPanelPosition, "Drill level: 0", false);
+        hullPanel = UISystem::addPanel(Constants::hullPanelPosition, "Hull level: 0", false);
+        gastankPanel = UISystem::addPanel(Constants::gastankPanelPosition, "Gas tank level: 0", false);
     }
 
     void Inventory::addMineral(MineralType mineral)
     {
         this->minerals[mineral]++;
         updateMineral(mineral);
+        hasMinerals = true;
     }
 
     void Inventory::updateMineral(MineralType mineral)
@@ -37,19 +50,19 @@ namespace Motherload
             case (MineralType::Granite):
             {
                 mineralString = "Granite: " + std::to_string(minerals[mineral]);
-                Game::instance->granitePanel->setText(mineralString);
+                granitePanel->setText(mineralString);
                 break;
             }
             case (MineralType::Iron):
             {
                 mineralString = "Iron: " + std::to_string(minerals[mineral]);
-                Game::instance->ironPanel->setText(mineralString);
+                ironPanel->setText(mineralString);
                 break;
             }
             case (MineralType::Gold):
             {
                 mineralString = "Gold: " + std::to_string(minerals[mineral]);
-                Game::instance->goldPanel->setText(mineralString);
+                goldPanel->setText(mineralString);
                 break;
             }
         }
@@ -61,12 +74,13 @@ namespace Motherload
         {
             updateMineral((MineralType) i);
         }
+        hasMinerals = false;
     }
 
     void Inventory::addMoney(int amount)
     {
         money += amount;
-        Game::instance->moneyPanel->setText("$" + std::to_string(money));
+        moneyPanel->setText("$" + std::to_string(money));
     }
 
     void Inventory::upgradeItem(UpgradeType type)

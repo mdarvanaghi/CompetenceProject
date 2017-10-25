@@ -141,13 +141,6 @@ namespace Motherload
     {
         depthPanel = UISystem::addPanel(Constants::depthPanelPosition, "Depth: 0", false);
         lowestDepthPanel = UISystem::addPanel(Constants::lowestDepthPanelPosition, "Lowest depth: 0", false);
-        moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$20", true);
-        granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite: 0", false);
-        ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron: 0", false);
-        goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold: 0", false);
-        drillPanel = UISystem::addPanel(Constants::drillPanelPosition, "Drill level: 0", false);
-        hullPanel = UISystem::addPanel(Constants::hullPanelPosition, "Hull level: 0", false);
-        gastankPanel = UISystem::addPanel(Constants::gastankPanelPosition, "Gas tank level: 0", false);
     }
 
     void Game::mainloop()

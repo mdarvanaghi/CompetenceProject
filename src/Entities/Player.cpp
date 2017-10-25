@@ -17,6 +17,7 @@ namespace Motherload
     {
         this->name = "Player";
         this->texture = ResourceManager::getTexture("data/textures/tank.png");
+        this->inventory->initializeUi();
 
         /* Physics */
         this->collider = new Physics::Collider(this);

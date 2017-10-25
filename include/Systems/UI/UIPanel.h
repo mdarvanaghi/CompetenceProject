@@ -27,8 +27,8 @@ namespace Motherload
 
         UIPanel(glm::vec2 position, bool centered, const char* fontFamily, int wrapAfterPixels = 0);
         void setBackgroundPanel(SDL_Texture* texture, float padding = 5.0f);
-        void setText(std::string text);
-        void setText(std::vector<std::string> text);
+        void setText(std::string text, SDL_Color textColor = Constants::textColor);
+        void setText(std::vector<std::string> text, SDL_Color textColor = Constants::textColor);
         void setActive(bool value);
     };
 } // namespace Motherload

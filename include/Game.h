@@ -71,15 +71,6 @@ namespace Motherload
 
         UIPanel* depthPanel;
         UIPanel* lowestDepthPanel;
-        UIPanel* moneyPanel;
-
-        UIPanel* granitePanel;
-        UIPanel* ironPanel;
-        UIPanel* goldPanel;
-
-        UIPanel* drillPanel;
-        UIPanel* hullPanel;
-        UIPanel* gastankPanel;
 
         static Game* instance;
         float deltaTime;
