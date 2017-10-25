@@ -19,6 +19,7 @@ namespace Motherload
 
         UIPanel* moneyPanel;
         UIPanel* fuelPanel;
+        
         UIPanel* granitePanel;
         UIPanel* ironPanel;
         UIPanel* goldPanel;

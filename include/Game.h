@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Standard
 #include <iostream>
@@ -49,6 +49,7 @@ namespace Motherload
         RenderSystem* renderSystem;
         Camera* camera;
         int horizontalBlocks;
+        UIPanel* gameOverPanel;
         
         std::vector<int> entitiesFlaggedForDestruction;
         std::vector<int> dynamicPhysicsEntitiesFlaggedForDestruction;
@@ -64,7 +65,9 @@ namespace Motherload
         void initializeEntities();
         void spawnStores();
         void populateBlockGrid();
+        void addUiPanels();
         void mainloop();
+        void checkGameEnded();
         void handleInput();
         void exit();
         void cleanup();
@@ -79,10 +82,12 @@ namespace Motherload
         std::vector<Physics::PhysicsEntity*> staticPhysicsEntities;
         std::vector<std::vector<Block*>> blocks;
         bool quit = 0;
+        bool gameOver = 0;
 
         static Game* instance;
         float deltaTime;
         float time;
+        float timeScale = 1.0f;
 
         // Methods
         Game();

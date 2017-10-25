@@ -1,4 +1,4 @@
-#include "Systems/Physics/PhysicsSystem.h"
+﻿#include "Systems/Physics/PhysicsSystem.h"
 
 namespace Motherload
 {
@@ -8,7 +8,6 @@ namespace Motherload
         // Private
         Collision* PhysicsSystem::detectCollision(Collider* a, Collider* b)
         {
-            /* Tutorial from https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331 */
             glm::vec2 deltaDirection = b->entity->transform->positionWorldSpace - a->entity->transform->positionWorldSpace;
             
             glm::vec2 aTopLeft = a->getTopLeft();
@@ -167,7 +166,7 @@ namespace Motherload
             for (auto& entity : Game::instance->staticPhysicsEntities)
             {
                 /* Don't check for collisions if entities are far apart */
-                if(glm::distance(Game::instance->player->transform->positionWorldSpace, entity->transform->positionWorldSpace) > 100.0f)
+                if(glm::distance(Game::instance->player->transform->positionWorldSpace, entity->transform->positionWorldSpace) > Constants::cellSize * 2)
                 {
                     continue;
                 }

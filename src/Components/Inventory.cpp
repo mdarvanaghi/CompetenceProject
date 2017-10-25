@@ -1,4 +1,4 @@
-#include "Components/Inventory.h"
+﻿#include "Components/Inventory.h"
 
 namespace Motherload
 {
@@ -97,6 +97,11 @@ namespace Motherload
 
     void Inventory::checkFuel()
     {
+        if (fuelPercentage <= 0)
+        {
+            Game::instance->gameOver = true;
+            return;
+        }
         if (fuelPercentage < 25)
         {
             fuelPanel->setText(std::to_string((int) fuelPercentage) + "%", Constants::lowFuelTextColor);

@@ -1,4 +1,4 @@
-#include "Entities/Player.h"
+﻿#include "Entities/Player.h"
 
 namespace Motherload
 {
@@ -58,6 +58,15 @@ namespace Motherload
         {
             decelerate();
         }
+        checkBounds();
+    }
+    
+    void Player::checkBounds()
+    {
+        if (transform->positionWorldSpace.x < 0 || transform->positionWorldSpace.x > Constants::initialWindowWidth)
+        {
+            velocity.x = -velocity.x;
+        }
     }
 
     void Player::update(float deltaTime)
@@ -95,13 +104,13 @@ namespace Motherload
         startDrilling = false;
     }
 
-    void Player::isColliding(PhysicsEntity* block)
+    void Player::isColliding(PhysicsEntity* other)
     {
-        if ((PhysicsEntity*) currentBlockBelow == block)
+        if ((PhysicsEntity*) currentBlockBelow == other)
         {
             isGrounded = true;
         }
-        if ((PhysicsEntity*) blockCurrentlyDrilling == block)
+        if ((PhysicsEntity*) blockCurrentlyDrilling == other)
         {
             collidingWithBlockDrilling = true;
         }
@@ -264,6 +273,12 @@ namespace Motherload
         {
             inventory->spendFuel(deltaTime * Constants::idleFuelRate);
         }
+    }
+    
+    void Player::takeDamage(float amount)
+    {
+        inventory->health -= amount;
+        std::cout << inventory->health << std::endl;
     }
     
 } // namespace Motherload

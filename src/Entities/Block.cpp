@@ -39,9 +39,24 @@ namespace Motherload
                 this->texture = ResourceManager::getTexture("data/textures/iron.png");
                 break;
             }
+            case (MineralType::Silver):
+            {
+                this->texture = ResourceManager::getTexture("data/textures/silver.png");
+                break;
+            }
             case (MineralType::Gold):
             {
                 this->texture = ResourceManager::getTexture("data/textures/gold.png");
+                break;
+            }
+            case (MineralType::Platinum):
+            {
+                this->texture = ResourceManager::getTexture("data/textures/platinum.png");
+                break;
+            }
+            case (MineralType::Diamonds):
+            {
+                this->texture = ResourceManager::getTexture("data/textures/diamonds.png");
                 break;
             }
         }

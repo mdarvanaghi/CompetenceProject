@@ -43,6 +43,8 @@ namespace Motherload
         void collectMineral();
         void updateDepthMeters();
         void spendFuel(float deltaTime);
+        void checkBounds();
+        void takeDamage(float amount);
         
         UIPanel* depthPanel;
         UIPanel* lowestDepthPanel;
@@ -57,7 +59,7 @@ namespace Motherload
         void update(float deltaTime);
         void lateUpdate(float deltaTime);
         void physicsUpdate(float deltaTime);
-        void isColliding(PhysicsEntity* block);
+        void isColliding(PhysicsEntity* other);
         std::vector<std::vector<Block*>> getNeighborBlocks(int range = 1);
     };
 } // namespace Motherload

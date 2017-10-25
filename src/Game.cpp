@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 
 namespace Motherload
 {
@@ -17,6 +17,7 @@ namespace Motherload
     {
         initializeSystems();
         populateScene();
+        addUiPanels();
         initializeEntities();
         mainloop();
         exit();
@@ -47,8 +48,8 @@ namespace Motherload
             "Motherload",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
-            Constants::intitialWindowWidth,
-            Constants::intitialWindowHeight,
+            Constants::initialWindowWidth,
+            Constants::initialWindowHeight,
             SDL_WINDOW_SHOWN
         );
         /* /SDL SYSTEMS */
@@ -71,7 +72,7 @@ namespace Motherload
         (
             glm::vec2
             (
-                Constants::intitialWindowWidth / 2 - 100.0f,
+                Constants::initialWindowWidth / 2 - 100.0f,
                 -100.0f
             )
         );
@@ -85,7 +86,7 @@ namespace Motherload
         blocks = std::vector<std::vector<Block*>>(Constants::worldDepth);
         std::srand(SDL_GetPerformanceCounter());
         float randMax = (float) RAND_MAX;
-        horizontalBlocks = (int) Constants::intitialWindowWidth / Constants::cellSize;
+        horizontalBlocks = (int) Constants::initialWindowWidth / Constants::cellSize;
         for (int i = 0; i < Constants::worldDepth; i++)
         {
             blocks.at(i) = std::vector<Block*>();
@@ -93,9 +94,21 @@ namespace Motherload
             {
                 float roll = (float) std::rand() / randMax;
                 MineralType mineralType = MineralType::Dirt;
-                if (i > Constants::goldThreshold && roll < Constants::spawnChanceGold)
+                if (i > Constants::diamondsThreshold && roll < Constants::spawnChanceDiamonds)
+                {
+                    mineralType = MineralType::Diamonds;
+                }
+                else if (i > Constants::platinumThreshold && roll < Constants::spawnChancePlatinum)
+                {
+                    mineralType = MineralType::Platinum;
+                }
+                else if (i > Constants::goldThreshold && roll < Constants::spawnChanceGold)
                 {
                     mineralType = MineralType::Gold;
+                }
+                else if (i > Constants::silverThreshold && roll < Constants::spawnChanceSilver)
+                {
+                    mineralType = MineralType::Silver;
                 }
                 else if (i > Constants::ironThreshold && roll < Constants::spawnChanceIron)
                 {
@@ -105,6 +118,7 @@ namespace Motherload
                 {
                     mineralType = MineralType::Granite;
                 }
+                
                 Block* block = new Block
                 (
                     glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
@@ -135,6 +149,15 @@ namespace Motherload
         staticPhysicsEntities.push_back(upgradeStore);
     }
     
+    void Game::addUiPanels()
+    {
+        std::vector<std::string> gameOverStrings;
+        gameOverStrings.push_back("   Game over!");
+        gameOverStrings.push_back("Press Q to quit.");
+        gameOverPanel = UISystem::addPanel(Constants::centerScreen, gameOverStrings, true);
+        gameOverPanel->setActive(false);
+    }
+    
     void Game::initializeEntities()
     {
         for (auto& entity : entities)
@@ -161,34 +184,45 @@ namespace Motherload
             handleInput();
 
             /* Step physics system */
-            Physics::PhysicsSystem::step(deltaTime);
+            Physics::PhysicsSystem::step(deltaTime * timeScale);
 
             /* Update entities */
             for (auto& entity : entities)
             {
-                entity->update(deltaTime);
+                entity->update(deltaTime * timeScale);
             }
             
             /* Late update entities */
             for (auto& entity : entities)
             {
-                entity->lateUpdate(deltaTime);
+                entity->lateUpdate(deltaTime * timeScale);
             }
+            
+            checkGameEnded();
            
             /* Update debug system */
-            DebugSystem::update(deltaTime);
+            DebugSystem::update(deltaTime * timeScale);
 
             /* Update UI System */
-            UISystem::update(deltaTime);
+            UISystem::update(deltaTime * timeScale);
 
             /* Update camera position */
-            camera->updatePosition(deltaTime);
+            camera->updatePosition(deltaTime * timeScale);
 
             /* Render scene */
             renderSystem->renderScene();
 
             /* Destroy entities flagged for destruction */
             destroyFlaggedEntities();
+        }
+    }
+    
+    void Game::checkGameEnded()
+    {
+        if (gameOver)
+        {
+            gameOverPanel->setActive(true);
+            timeScale = 0.0f;
         }
     }
 
