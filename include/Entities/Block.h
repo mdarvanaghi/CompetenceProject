@@ -16,7 +16,7 @@ namespace Motherload
     public:
         MineralType mineralType;
         glm::vec2 coordinates;
-        Block(glm::vec2 position, glm::vec2 size = glm::vec2(Constants::cellSize, Constants::cellSize));
-        void initialize(MineralType mineralType, glm::vec2 coordinates);
+        Block(glm::vec2 position, glm::vec2 coordinates, glm::vec2 size = glm::vec2(Constants::cellSize, Constants::cellSize));
+        void initialize();
     };
 } // namespace Motherload    

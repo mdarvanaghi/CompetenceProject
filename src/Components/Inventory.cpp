@@ -17,22 +17,27 @@ namespace Motherload
             upgrades.push_back(Upgrade((UpgradeType) i, 0.3f));
         }
         this->money = Constants::startMoney;
+        this->drillModifier = 0.5f;
         this->maxFuel = 100.0f;
         this->maxHealth = 100.0f;
         this->fuel = 50.0f;
         this->health = 70.0f;
+        this->drillLevel = 0;
+        this->hullLevel = 0;
+        this->fueltankLevel = 0;
         this->hasMinerals = false;
     }
 
     void Inventory::initializeUi()
     {
         moneyPanel = UISystem::addPanel(Constants::moneyPanelPosition, "$20", true);
+        fuelPanel = UISystem::addPanel(Constants::fuelPanelPosition, "50%", true);
         granitePanel = UISystem::addPanel(Constants::granitePanelPosition, "Granite: 0", false);
         ironPanel = UISystem::addPanel(Constants::ironPanelPosition, "Iron: 0", false);
         goldPanel = UISystem::addPanel(Constants::goldPanelPosition, "Gold: 0", false);
         drillPanel = UISystem::addPanel(Constants::drillPanelPosition, "Drill level: 0", false);
         hullPanel = UISystem::addPanel(Constants::hullPanelPosition, "Hull level: 0", false);
-        gastankPanel = UISystem::addPanel(Constants::gastankPanelPosition, "Gas tank level: 0", false);
+        fueltankPanel = UISystem::addPanel(Constants::gastankPanelPosition, "Gas tank level: 0", false);
     }
 
     void Inventory::addMineral(MineralType mineral)
@@ -82,10 +87,22 @@ namespace Motherload
         money += amount;
         moneyPanel->setText("$" + std::to_string(money));
     }
-
-    void Inventory::upgradeItem(UpgradeType type)
+    
+    void Inventory::spendFuel(float amount)
     {
+        fuel -= amount;
+        fuelPercentage = (fuel / maxFuel) * 100;
+        checkFuel();
+    }
 
+    void Inventory::checkFuel()
+    {
+        if (fuelPercentage < 25)
+        {
+            fuelPanel->setText(std::to_string((int) fuelPercentage) + "%", Constants::lowFuelTextColor);
+            return;
+        }
+        fuelPanel->setText(std::to_string((int) fuelPercentage) + "%");
     }
 
 } // namespace Motherload

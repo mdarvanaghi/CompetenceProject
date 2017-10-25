@@ -1,7 +1,8 @@
 #pragma once
 
 enum MineralType
-{ 
+{
+    None,
     Dirt, 
     Granite, 
     Iron, 

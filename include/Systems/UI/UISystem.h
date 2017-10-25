@@ -17,7 +17,7 @@ namespace Motherload
         static std::vector<int> panelsToBeRemoved;
 
         static void updateDepthMeters();
-        static void clearPanels();
+        static void removeFlaggedPanels();
     public:
         static std::vector<UIPanel*> panels;
 
@@ -25,7 +25,7 @@ namespace Motherload
         static void update(float deltaTime);
         // Single line overloads
         static UIPanel* addPanel(glm::vec2 position, std::string text = "", bool centered = false);
-        static UIPanel* addPanel(glm::vec2 position, std::string text = "", const char* fontFamily = Constants::uiFont, bool centered = false);
+        static UIPanel* addPanel(glm::vec2 position, std::string text = "", const char* fontFamily = Constants::debugFont, bool centered = false);
         static UIPanel* addPanel(UIPanel* panel, std::string text);
         // Multiple line overloads
         static UIPanel* addPanel(glm::vec2 position, std::vector<std::string> textStrings, bool centered);

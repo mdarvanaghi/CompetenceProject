@@ -25,5 +25,6 @@ namespace Motherload
         }
         virtual void initialize() {}
         virtual void update(float deltaTime) {}
+        virtual void lateUpdate(float deltaTime) {}
     };
 } // namespace Motherload

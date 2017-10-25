@@ -17,7 +17,7 @@ namespace Motherload
     {
         initializeSystems();
         populateScene();
-        addUiPanels();
+        initializeEntities();
         mainloop();
         exit();
     }
@@ -75,26 +75,8 @@ namespace Motherload
                 -100.0f
             )
         );
-        player->initialize();
         entities.push_back(player);
         dynamicPhysicsEntities.push_back(player);
-    }
-    void Game::spawnStores()
-    {
-        fuelStore = new FuelStore(Constants::fuelStorePosition, Constants::storeSize);
-        fuelStore->initialize();
-        entities.push_back(fuelStore);
-        staticPhysicsEntities.push_back(fuelStore);
-
-        refinery = new Refinery(Constants::refineryPosition, Constants::storeSize);
-        refinery->initialize();
-        entities.push_back(refinery);
-        staticPhysicsEntities.push_back(refinery);
-
-//        upgradeStore = new Store(Constants::upgradeStorePosition, glm::vec2(Constants::cellSize*3, Constants::cellSize*2));
-//        upgradeStore->initialize(StoreType::UpgradeStore, "data/textures/upgradestore.png");
-//        entities.push_back(upgradeStore);
-//        staticPhysicsEntities.push_back(upgradeStore);
     }
 
     void Game::populateBlockGrid()
@@ -111,11 +93,11 @@ namespace Motherload
             {
                 float roll = (float) std::rand() / randMax;
                 MineralType mineralType = MineralType::Dirt;
-                if (roll < Constants::spawnChanceGold)
+                if (i > Constants::goldThreshold && roll < Constants::spawnChanceGold)
                 {
                     mineralType = MineralType::Gold;
                 }
-                else if (roll < Constants::spawnChanceIron)
+                else if (i > Constants::ironThreshold && roll < Constants::spawnChanceIron)
                 {
                     mineralType = MineralType::Iron;
                 }
@@ -126,9 +108,10 @@ namespace Motherload
                 Block* block = new Block
                 (
                     glm::vec2(j * Constants::cellSize + Constants::cellSize / 2,
-                    i * Constants::cellSize + Constants::cellSize / 2)
+                    i * Constants::cellSize + Constants::cellSize / 2),
+                    glm::vec2(i, j)
                 );
-                block->initialize(mineralType, glm::vec2(i, j));
+                block->mineralType = mineralType;
                 blocks.at(i).push_back(block);
                 entities.push_back(block);
                 staticPhysicsEntities.push_back(block);
@@ -137,10 +120,27 @@ namespace Motherload
         std::cout << " Done!" << std::endl;
     }
 
-    void Game::addUiPanels()
+    void Game::spawnStores()
     {
-        depthPanel = UISystem::addPanel(Constants::depthPanelPosition, "Depth: 0", false);
-        lowestDepthPanel = UISystem::addPanel(Constants::lowestDepthPanelPosition, "Lowest depth: 0", false);
+        fuelStore = new FuelStore(Constants::fuelStorePosition, Constants::storeSize);
+        entities.push_back(fuelStore);
+        staticPhysicsEntities.push_back(fuelStore);
+
+        refinery = new Refinery(Constants::refineryPosition, Constants::storeSize);
+        entities.push_back(refinery);
+        staticPhysicsEntities.push_back(refinery);
+
+        upgradeStore = new UpgradeStore(Constants::upgradeStorePosition, Constants::storeSize);
+        entities.push_back(upgradeStore);
+        staticPhysicsEntities.push_back(upgradeStore);
+    }
+    
+    void Game::initializeEntities()
+    {
+        for (auto& entity : entities)
+        {
+            entity->initialize();
+        }
     }
 
     void Game::mainloop()
@@ -167,6 +167,12 @@ namespace Motherload
             for (auto& entity : entities)
             {
                 entity->update(deltaTime);
+            }
+            
+            /* Late update entities */
+            for (auto& entity : entities)
+            {
+                entity->lateUpdate(deltaTime);
             }
            
             /* Update debug system */

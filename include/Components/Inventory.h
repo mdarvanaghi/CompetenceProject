@@ -16,24 +16,35 @@ namespace Motherload
     {
     private:
         void updateMineral(MineralType mineral);
+
         UIPanel* moneyPanel;
+        UIPanel* fuelPanel;
         UIPanel* granitePanel;
         UIPanel* ironPanel;
         UIPanel* goldPanel;
-        UIPanel* drillPanel;
-        UIPanel* hullPanel;
-        UIPanel* gastankPanel;
 
+        void checkFuel();
     public:
         // Variables
         std::vector<int> minerals;
         std::vector<Upgrade> upgrades;
         int money = Constants::startMoney;
         float fuel;
-        float maxFuel;
+        float fuelPercentage;
         float health;
-        float maxHealth;
         bool hasMinerals;
+        
+        UIPanel* drillPanel;
+        UIPanel* hullPanel;
+        UIPanel* fueltankPanel;
+        
+        // Item attributes
+        float drillModifier;
+        float maxFuel;
+        float maxHealth;
+        int drillLevel;
+        int fueltankLevel;
+        int hullLevel;        
 
         // Methods
         Inventory(Entity* entity);
@@ -41,6 +52,6 @@ namespace Motherload
         void addMineral(MineralType mineral);
         void resetMinerals();
         void addMoney(int amount);
-        void upgradeItem(UpgradeType type);
+        void spendFuel(float deltaTime);
     };
 } // namespace Motherload

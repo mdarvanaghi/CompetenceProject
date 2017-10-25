@@ -22,6 +22,7 @@ namespace Motherload
         uiPanel = UISystem::addPanel(Constants::centerScreen, buyString, true);
         uiPanel->setBackgroundPanel(ResourceManager::getTexture("data/textures/uipanel.png"), 30.0f);
         uiPanel->setActive(false);
+        playerInventory = Game::instance->player->inventory;
     }
 
     void FuelStore::activeUpdate()
@@ -30,8 +31,8 @@ namespace Motherload
         {
             if
             (
-                Game::instance->player->inventory->money >= fuelPrice && // Player has enough money
-                Game::instance->player->inventory->fuel / Game::instance->player->inventory->maxFuel >= 0.98f) // And tank is not nearly full
+                playerInventory->money >= fuelPrice && // Player has enough money
+                playerInventory->fuel / playerInventory->maxFuel < 0.98f) // And tank is not nearly full
             {
                 buyFuel();
             }
@@ -40,14 +41,14 @@ namespace Motherload
 
     void FuelStore::buyFuel()
     {
-        Game::instance->player->inventory->fuel = Game::instance->player->inventory->maxFuel;
-        Game::instance->player->inventory->addMoney(-Constants::fuelPrice);
+        playerInventory->fuel = playerInventory->maxFuel;
+        playerInventory->addMoney(-Constants::fuelPrice);
         resetUi();
     }
 
     void FuelStore::resetUi()
     {
-        if (Game::instance->player->inventory->fuel / Game::instance->player->inventory->maxFuel >= 0.98f)
+        if (playerInventory->fuel / playerInventory->maxFuel >= 0.98f)
         {
             uiPanel->setText(tankFullString);
         }

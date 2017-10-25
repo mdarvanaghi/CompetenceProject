@@ -5,12 +5,15 @@
 namespace Motherload
 {
     struct UIPanel;
+    class Inventory;
+    
     class Store : public Physics::PhysicsEntity
     {
     protected:
         bool active;
         bool activeLastFrame = false;
         UIPanel* uiPanel;
+        Inventory* playerInventory;
 
         virtual void activeUpdate() {}
         virtual void resetUi() {}

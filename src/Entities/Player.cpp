@@ -4,11 +4,12 @@ namespace Motherload
 {
     Player::Player(glm::vec2 position)
     {
-        this->transform = new Transform(this, position);
+        this->transform = new Transform(this, position, glm::vec2(36, 36));
         this->inventory = new Inventory(this);
         this->isDrilling = false;
         this->isGrounded = false;
         this->accelerating = false;
+        this->lifting = false;
         this->startDrilling = false;
         this->collidingWithBlockDrilling = false;
     }
@@ -28,6 +29,10 @@ namespace Motherload
         this->maxSpeedX = Constants::playerMaxSpeedX;
         this->maxSpeedY = Constants::playerTerminalVelocity;
         this->isDynamic = true;
+        
+        /* UI */
+        depthPanel = UISystem::addPanel(Constants::depthPanelPosition, "Depth: 0", false);
+        lowestDepthPanel = UISystem::addPanel(Constants::lowestDepthPanelPosition, "Lowest depth: 0", false);
     }
 
     void Player::physicsUpdate(float deltaTime)
@@ -48,7 +53,6 @@ namespace Motherload
             }
         }
 
-        accelerating = false;
         handleInput(deltaTime);
         if (!accelerating)
         {
@@ -107,6 +111,7 @@ namespace Motherload
     {
         if (InputSystem::getKey(SDL_SCANCODE_UP))
         {
+            lifting = true;
             addForce(Constants::up * accelerationY * deltaTime);
         }
         if (InputSystem::getKey(SDL_SCANCODE_LEFT))
@@ -170,7 +175,7 @@ namespace Motherload
             return;
         }
         timeDrilled += deltaTime;
-        float progress = timeDrilled / Constants::drillTime;
+        float progress = timeDrilled / Constants::baseDrillTime * inventory->drillModifier;
         transform->positionWorldSpace = Extensions::Vector2::lerp(drillOrigin, blockCurrentlyDrilling->transform->positionWorldSpace, progress);
         if (progress >= 1.0f)
         {
@@ -222,5 +227,43 @@ namespace Motherload
         }
         return neighbors;
     }
+    
+    void Player::lateUpdate(float deltaTime)
+    {
+        updateDepthMeters();
+        spendFuel(deltaTime);
+        accelerating = false;
+        lifting = false;
+    }
+    
+    void Player::updateDepthMeters()
+    {
+        int currentDepth = int (transform->positionWorldSpace.y);
+        std::string depthString = "Depth: " + std::to_string(currentDepth);
+        depthPanel->setText(depthString);
 
+        if (currentDepth > lowestDepth)
+        {
+            lowestDepth = currentDepth;
+            std::string lowestDepthString = "Lowest depth: " + std::to_string(lowestDepth);
+            lowestDepthPanel->setText(lowestDepthString);
+        }
+    }
+    
+    void Player::spendFuel(float deltaTime)
+    {
+        if (isDrilling)
+        {
+            inventory->spendFuel(deltaTime * Constants::drillingFuelRate);
+        }
+        else if (accelerating || lifting)
+        {
+            inventory->spendFuel(deltaTime * Constants::acceleratingFuelRate);
+        }
+        else
+        {
+            inventory->spendFuel(deltaTime * Constants::idleFuelRate);
+        }
+    }
+    
 } // namespace Motherload

@@ -12,24 +12,7 @@ namespace Motherload
 
     void UISystem::update(float deltaTime)
     {
-        /* Update depth meters */
-        updateDepthMeters();
-
-        clearPanels();
-    }
-
-    void UISystem::updateDepthMeters()
-    {
-        int currentDepth = int (Game::instance->player->transform->positionWorldSpace.y);
-        std::string depthString = "Depth: " + std::to_string(currentDepth);
-        Game::instance->depthPanel->setText(depthString);
-
-        if (currentDepth > Game::instance->lowestDepth)
-        {
-            Game::instance->lowestDepth = currentDepth;
-            std::string lowestDepthString = "Lowest depth: " + std::to_string(Game::instance->lowestDepth);
-            Game::instance->lowestDepthPanel->setText(lowestDepthString);
-        }
+        removeFlaggedPanels();
     }
 
     UIPanel* UISystem::addPanel(glm::vec2 position, std::string text, bool centered)
@@ -81,7 +64,7 @@ namespace Motherload
         }   
     }
 
-    void UISystem::clearPanels()
+    void UISystem::removeFlaggedPanels()
     {
         std::sort(panelsToBeRemoved.begin(), panelsToBeRemoved.end());
 

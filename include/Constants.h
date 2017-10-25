@@ -19,23 +19,36 @@ namespace Motherload
         const float playerMaxSpeedX = 5.0f;
         const float playerTerminalVelocity = 9.0f; 
         const float gravity = 9.82f;
-        const float drillTime = 1.0f;
+        const float baseDrillTime = 0.5f;
+        const float idleFuelRate = 0.8f;
+        const float acceleratingFuelRate = 2;
+        const float drillingFuelRate = 3;
         const int startMoney = 20;
         
         /* Blocks */
         const float cellSize = 40;
-        const int worldDepth = 50;
+        const int worldDepth = 500;
+        const int ironThreshold = 10;
+        const int goldThreshold = 25;
+        const float spawnChanceDirt = 0.9;
         const float spawnChanceGranite = 0.1;
-        const float spawnChanceIron = 0.05;
+        const float spawnChanceIron = 0.02;
         const float spawnChanceGold = 0.005;
         
         /* Stores */
         const glm::vec2 storeSize(Constants::cellSize*3, Constants::cellSize*2);
         const glm::vec2 fuelStorePosition(cellSize * 4, -cellSize);
-        const int fuelPrice = 8;
         const glm::vec2 refineryPosition(cellSize * 16, -cellSize);
-        const int mineralPrices[] = {0, 2, 4, 10};
         const glm::vec2 upgradeStorePosition(cellSize * 28, -cellSize);
+        const int fuelPrice = 8;
+        const int mineralPrices[] = {0, 2, 4, 10};
+        const float tankCapacityModifierIncrease = 1.3f;
+        const float healthCapacityModifierIncrease = 1.3f;
+        const float drillSpeedModifierIncrease = 0.3f;
+        const float priceIncrease = 2;
+        const int baseFueltankPrice = 65;
+        const int baseHullPrice = 80;
+        const int baseDrillPrice = 100;
         
         /* Debug */
         const float cameraSpeed = 300;
@@ -62,18 +75,20 @@ namespace Motherload
 
         const glm::vec2 depthPanelPosition(20, 20);
         const glm::vec2 lowestDepthPanelPosition(20, 60);
-        const glm::vec2 moneyPanelPosition(intitialWindowWidth / 2, 20);
+        
+        const glm::vec2 fuelPanelPosition(intitialWindowWidth / 2 - 50, 20);
+        const glm::vec2 moneyPanelPosition(intitialWindowWidth / 2 + 50, 20);
 
-        const glm::vec2 granitePanelPosition(20, intitialWindowHeight / 2);
-        const glm::vec2 ironPanelPosition(20, intitialWindowHeight / 2 + cellSize);
-        const glm::vec2 goldPanelPosition(20, intitialWindowHeight / 2 + cellSize * 2);
+        const glm::vec2 granitePanelPosition(20, intitialWindowHeight - 100);
+        const glm::vec2 ironPanelPosition(20, intitialWindowHeight - 70);
+        const glm::vec2 goldPanelPosition(20, intitialWindowHeight - 40);
 
-        const glm::vec2 drillPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight / 2);
-        const glm::vec2 hullPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight / 2 + cellSize);
-        const glm::vec2 gastankPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight / 2 + cellSize * 2);
+        const glm::vec2 drillPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight - 100);
+        const glm::vec2 hullPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight - 70);
+        const glm::vec2 gastankPanelPosition(intitialWindowWidth - intitialWindowWidth / 5, intitialWindowHeight - 40);
 
         const SDL_Color textColor = {100, 255, 100, 255};
-        static const char* uiFont = "data/fonts/Capture_it.ttf";
+        const SDL_Color lowFuelTextColor = {255, 80, 60, 255};
         const int fontSize = 20;
         
         /* Clear colors */

@@ -23,12 +23,12 @@ namespace Motherload
 
     void Refinery::initialize()
     {
-
         this->texture = ResourceManager::getTexture("data/textures/refinery.png");
         uiPanel = UISystem::addPanel(Constants::centerScreen, buyStrings, true);
         uiPanel->wrapAfterPixels = uiPanel->size.x;
         uiPanel->setBackgroundPanel(ResourceManager::getTexture("data/textures/uipanel.png"), 30.0f);
         uiPanel->setActive(false);
+        playerInventory = Game::instance->player->inventory;
     }
 
     void Refinery::resetUi()
@@ -37,31 +37,31 @@ namespace Motherload
         totalMoney = 0;
         for (int i = 0; i < MineralType::NUM_MINERALS; i++)
         {
-            totalMoney += Game::instance->player->inventory->minerals[i] * Constants::mineralPrices[i];
+            totalMoney += playerInventory->minerals[i] * Constants::mineralPrices[i];
         }
 
         this->buyStrings.push_back
         (
             "Granite: " +
-            std::to_string(Game::instance->player->inventory->minerals[MineralType::Granite]) +
+            std::to_string(playerInventory->minerals[MineralType::Granite]) +
             " x $" + std::to_string(Constants::mineralPrices[MineralType::Granite])
         );
         this->buyStrings.push_back
         (
             "Iron:    " +
-            std::to_string(Game::instance->player->inventory->minerals[MineralType::Iron]) +
+            std::to_string(playerInventory->minerals[MineralType::Iron]) +
                 " x $" + std::to_string(Constants::mineralPrices[MineralType::Iron])
         );
         this->buyStrings.push_back
         (
             "Gold:    " +
-            std::to_string(Game::instance->player->inventory->minerals[MineralType::Gold]) +
+            std::to_string(playerInventory->minerals[MineralType::Gold]) +
                 " x $" + std::to_string(Constants::mineralPrices[MineralType::Gold])
         );
         this->buyStrings.push_back("----------------------------");
         this->buyStrings.push_back("Total:       $" + std::to_string(totalMoney));
         this->buyStrings.push_back("----------------------------");
-        if (Game::instance->player->inventory->hasMinerals)
+        if (playerInventory->hasMinerals)
         {
             this->buyStrings.push_back("Press SPACE to sell minerals.");
         }
@@ -74,12 +74,12 @@ namespace Motherload
 
     void Refinery::sellMinerals()
     {
-        for (int& mineral: Game::instance->player->inventory->minerals)
+        for (int& mineral: playerInventory->minerals)
         {
             mineral = 0;
         }
-        Game::instance->player->inventory->addMoney(totalMoney);
-        Game::instance->player->inventory->resetMinerals();
+        playerInventory->addMoney(totalMoney);
+        playerInventory->resetMinerals();
         resetUi();
     }
 

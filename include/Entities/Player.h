@@ -18,6 +18,7 @@ namespace Motherload
     {
     private:
         bool accelerating;
+        bool lifting;
         bool startDrilling;
         bool isDrilling;
         bool isGrounded;
@@ -25,8 +26,7 @@ namespace Motherload
 
         float accelerationX, decelerationX;
         float accelerationY;
-
-
+        
         Block* currentBlockBelow;
         Block* currentBlockLeft;
         Block* currentBlockRight;
@@ -41,14 +41,21 @@ namespace Motherload
         void requestDrillingMode(bool value);
         void drill(float deltaTime);
         void collectMineral();
+        void updateDepthMeters();
+        void spendFuel(float deltaTime);
+        
+        UIPanel* depthPanel;
+        UIPanel* lowestDepthPanel;
         
     public:
         std::vector<std::vector<Block*>> neighbors;
         Inventory* inventory;
+        int lowestDepth = 0;
         
         Player(glm::vec2 position);
-        void update(float deltaTime);
         void initialize();
+        void update(float deltaTime);
+        void lateUpdate(float deltaTime);
         void physicsUpdate(float deltaTime);
         void isColliding(PhysicsEntity* block);
         std::vector<std::vector<Block*>> getNeighborBlocks(int range = 1);
