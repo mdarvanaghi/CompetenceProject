@@ -43,11 +43,11 @@ namespace Motherload
     void Inventory::addMineral(MineralType mineral)
     {
         this->minerals[mineral]++;
-        updateMineral(mineral);
+        updateMineralPanel(mineral);
         hasMinerals = true;
     }
 
-    void Inventory::updateMineral(MineralType mineral)
+    void Inventory::updateMineralPanel(MineralType mineral)
     {
         std::string mineralString;
         switch (mineral)
@@ -77,7 +77,7 @@ namespace Motherload
     {
         for (int i = 0; i < MineralType::NUM_MINERALS; i++)
         {
-            updateMineral((MineralType) i);
+            updateMineralPanel((MineralType) i);
         }
         hasMinerals = false;
     }

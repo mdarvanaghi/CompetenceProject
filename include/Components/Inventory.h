@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include <string>
@@ -15,7 +15,7 @@ namespace Motherload
     class Inventory : public Component
     {
     private:
-        void updateMineral(MineralType mineral);
+        void updateMineralPanel(MineralType mineral);
 
         UIPanel* moneyPanel;
         UIPanel* fuelPanel;

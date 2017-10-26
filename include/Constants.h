@@ -50,7 +50,7 @@ namespace Motherload
         const glm::vec2 refineryPosition(cellSize * 16, -cellSize);
         const glm::vec2 upgradeStorePosition(cellSize * 28, -cellSize);
         const int fuelPrice = 8;
-        const int mineralPrices[] = {2, 4, 10};
+        const int mineralPrices[] = {0, 0, 2, 4, 10, 25, 50, 100};
         const float tankCapacityModifierIncrease = 1.3f;
         const float healthCapacityModifierIncrease = 1.3f;
         const float drillSpeedModifierIncrease = 0.3f;

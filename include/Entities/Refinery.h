@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include "SDL.h"
 #include "Entities/Store.h"
