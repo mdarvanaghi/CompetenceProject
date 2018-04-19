@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 #include <vector>
 #include "Components/Collider.h"
 #include "Systems/Physics/Collision.h"

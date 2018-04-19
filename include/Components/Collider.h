@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 #include "Components/Component.h"
 #include "Entities/PhysicsEntity.h"
 

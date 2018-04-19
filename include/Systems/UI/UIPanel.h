@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 #include "Constants.h"
 #include "Systems/RenderSystem.h"
 

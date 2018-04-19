@@ -29,7 +29,7 @@ namespace Motherload
     void UIPanel::setText(std::vector<std::string> textStrings, SDL_Color textColor)
     {
         this->text = textStrings;
-        int height;
+        int height = 0;
         int width = 0;
         std::string combinedString = "";
         for (auto& text : textStrings)

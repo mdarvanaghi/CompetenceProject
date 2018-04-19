@@ -2,7 +2,7 @@
 
 #include <string>
 #include "SDL.h"
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 namespace Motherload
 {
     namespace Constants

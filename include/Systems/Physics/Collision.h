@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entities/PhysicsEntity.h"
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 
 namespace Motherload
 {

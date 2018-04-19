@@ -2,3 +2,7 @@
 /bin/
 Makefile
 CMakeCache.txt
+
+\.vs/CompetenceProject/v15/
+
+\.vs/

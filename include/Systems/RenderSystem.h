@@ -5,8 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include "SDL_image.h"
-#include "glm/glm/glm.hpp"
-#include "glm/glm/gtc/constants.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/constants.hpp"
 #include "Constants.h"
 #include "Game.h"
 #include "Systems/Debug/DebugLine.h"
