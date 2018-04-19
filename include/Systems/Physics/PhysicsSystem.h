@@ -18,9 +18,9 @@ namespace Motherload
             static void resolveCollision(Collision* collision, float deltaTime);
         public:
             static void initialize();
-            static void step(float deltaTime);
+            static void step(float scaledDeltaTime);
             static void detectCollisions();
-            static void resolveCollisions(float deltaTime);
+            static void resolveCollisions(float scaledDeltaTime);
         };
     } // namespace Physics
 } // namespace Motherload

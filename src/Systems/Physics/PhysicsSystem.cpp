@@ -74,7 +74,7 @@ namespace Motherload
             return nullptr;
         }
 
-        void PhysicsSystem::resolveCollision(Collision* collision, float deltaTime)
+        void PhysicsSystem::resolveCollision(Collision* collision, float scaledDeltaTime)
         {
             DebugSystem::addDebugLine
             (
@@ -84,7 +84,7 @@ namespace Motherload
                 Constants::debugLineColor
             );
 
-            glm::vec2 relativeVelocity = (collision->a->velocity - collision->b->velocity) * deltaTime;
+            glm::vec2 relativeVelocity = (collision->a->velocity - collision->b->velocity) * scaledDeltaTime;
             float velocityAlongNormal = glm::dot(relativeVelocity, collision->normal);
 
             if (velocityAlongNormal > 0.0f)
@@ -123,7 +123,7 @@ namespace Motherload
             collisions = std::vector<Collision*>();
         }
 
-        void PhysicsSystem::step(float deltaTime)
+        void PhysicsSystem::step(float scaledDeltaTime)
         {
             /* Update dynamic entity positions */
             for (auto& entity : Game::instance->dynamicPhysicsEntities)
@@ -133,10 +133,10 @@ namespace Motherload
                     continue;
                 }
                 // Call physicsUpdate()
-                entity->physicsUpdate(deltaTime);
+                entity->physicsUpdate(scaledDeltaTime);
                 
                 // Add gravity
-                entity->velocity.y += Constants::gravity * deltaTime;
+                entity->velocity.y += Constants::gravity * scaledDeltaTime;
 
                 // Limit velocity
                 if (entity->velocity.x > entity->maxSpeedX) entity->velocity.x = entity->maxSpeedX;
@@ -147,14 +147,12 @@ namespace Motherload
                 // Translate entity by velocity
                 entity->transform->positionWorldSpace += entity->velocity;
             }
-            /* Detect collisions */
+
             detectCollisions();
             if (!collisions.empty())
             {
-                resolveCollisions(deltaTime);
+                resolveCollisions(scaledDeltaTime);
             }
-
-            /* Resolve collisions */
         }
 
         void PhysicsSystem::detectCollisions()
@@ -165,6 +163,7 @@ namespace Motherload
             }
             for (auto& entity : Game::instance->staticPhysicsEntities)
             {
+				// @TODO Implement some sort of tree structure for optimization
                 /* Don't check for collisions if entities are far apart */
                 if(glm::distance(Game::instance->player->transform->positionWorldSpace, entity->transform->positionWorldSpace) > Constants::cellSize * 2)
                 {
@@ -180,13 +179,13 @@ namespace Motherload
             }
         }
 
-        void PhysicsSystem::resolveCollisions(float deltaTime)
+        void PhysicsSystem::resolveCollisions(float scaledDeltaTime)
         {
             for (auto& collision : collisions)
             {
                 if (!collision->a->collider->isTrigger && !collision->b->collider->isTrigger)
                 {
-                    resolveCollision(collision, deltaTime);
+                    resolveCollision(collision, scaledDeltaTime);
                 }
                 collision->a->isColliding(collision->b);
                 collision->b->isColliding(collision->a);
