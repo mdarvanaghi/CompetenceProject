@@ -6,3 +6,11 @@ CMakeCache.txt
 \.vs/CompetenceProject/v15/
 
 \.vs/
+*\.vscode/
+
+*/*.creator
+*/*.config
+*/*.user
+*/*.files
+*/*.includes
+cmake_install.cmake
